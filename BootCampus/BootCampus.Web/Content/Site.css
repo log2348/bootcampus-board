@@ -1,0 +1,67 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+table {
+    border: 1px solid;
+    margin-top: 2em;
+    width: 1140px;
+}
+
+td {
+    border: 1px solid;
+    text-align: center;
+}
+
+#lbl_No, #lbl_P_No, #lbl_View_Count {
+    width: 25px;
+    text-align: center;
+}
+
+#lbl_Title {
+    width: 180px;
+}
+
+#lbl_Writer, #lbl_Create_User, #lbl_Update_User {
+    width: 60px;
+}
+
+#lbl_Content {
+    width: 250px;
+}
+
+#lbl_Create_Date, #lbl_Update_Date {
+    width: 85px;
+}
+
+#p_writer {
+    text-align: right;
+}
+
+.div_writer {
+    width: 600px;
+}
+.tb_wrtier {
+    width: 600px;
+}
