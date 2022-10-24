@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,15 +27,31 @@ namespace BootCampus.CMM.Notice.DSL
         {
             conn = DbConn();
 
-            string sql = "SELECT PASSWORD FROM [dbo].[TB_USER] WHERE USERNAME = " + userModel.USERNAME;
+            SqlCommand cmd = new SqlCommand("SELECT PASSWORD FROM [dbo].[TB_USER] WHERE USERNAME = @USERNAME", conn);
+            cmd.Parameters.AddWithValue("@USERNAME", userModel.USERNAME);
 
-            SqlCommand cmd = new SqlCommand(sql, conn);
+            // 쿼리 결과 담기
+            SqlDataReader reader = cmd.ExecuteReader();
 
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+            // 다음 항목 유무 true/false 반환
+            if (reader.Read())
+            {
+                if (reader["PASSWORD"].Equals(userModel.PASSWORD))
+                {
+                    // 로그인 성공   
+                    return 1;
+                } else
+                {
+                    // 비밀번호 불일치
+                    return 0;
+                }
+            } else
+            {
+                // 아이디 존재하지 않음
+                return -1;
+            }
 
             conn.Close();
-
-            return 0;
 
         }
     }

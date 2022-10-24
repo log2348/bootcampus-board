@@ -1,4 +1,5 @@
-﻿using BootCampus.Models;
+﻿using BootCampus.CMM.Notice.BSL;
+using BootCampus.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace BootCampus.Web.Controllers
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns></returns>
-        public string Login(UserModel userModel)
+        public int Login(UserModel userModel)
         {
+            UserBsl userBsl = new UserBsl();
+            int result = userBsl.Login(userModel);
 
-            return "username : " + userModel.USERNAME;
+            return result;
         }
     }
 }

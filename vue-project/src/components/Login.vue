@@ -3,9 +3,8 @@
     <div class="container" style="padding: 50px">
       <h2><b>로그인</b></h2>
       <br />
-      <form>
         <div class="mb-3 mt-3">
-          <label for="email">ID:</label>
+          <label>ID:</label>
           <input
             type="text"
             class="form-control"
@@ -24,10 +23,9 @@
         </div>
         <router-link to="/List"> 리스트 </router-link>
 
-        <button class="btn btn-primary" @click="login({ username, password })">
+        <button class="btn btn-primary" @click="login(username, password)">
           로그인
         </button>
-      </form>
     </div>
   </div>
 </template>
@@ -43,15 +41,18 @@ export default {
     };
   },
   methods: {
-    login(userInfo) {
+    login(username, password) {
       let objUser = {
-        username: userInfo.username,
-        password: userInfo.password,
+        USERNAME: username,
+        PASSWORD: password,
       };
 
-      service.login(objUser).then((data) => {
+      service.login(objUser).then((response) => {
         console.log(objUser);
-        console.log(data);
+        if (response == 1) {
+          alert('로그인 성공');
+        }
+        console.log(response);
         // 성공하면 페이지 이동
       });
     },

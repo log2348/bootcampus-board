@@ -3,18 +3,23 @@ import axios from "axios";
 const service = {
   /**
    *
-   * @param {username}
-   * @param {password}
+   * @param {*} params
+   * @returns
    */
-  login(params) {
+  login(userData) {
     const data = axios
       .post("/User/Login", {
-        params,
+        USERNAME: userData.USERNAME,
+        PASSWORD: userData.PASSWORD,
       })
-      .then((response) => {
+      .then(function(response) {
+        this.$store.state.username = userData.USERNAME;
+        this.$store.state.password = userData.PASSWORD;
         console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
       });
-
     return data;
   },
 
