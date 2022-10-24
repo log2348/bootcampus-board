@@ -1,18 +1,33 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
-import Main from "./views/Main,vue";
+import Vuex from "vuex";
 
-Vue.use(VueRouter);
+Vue.use(Vuex);
 
-const router = new VueRouter({
-  mode: "history",
-  routes: [
-    {
-      name: "home",
-      path: "/",
-      component: Main,
-    },
-  ],
+export default new Vuex.Store({
+  state() {
+    return {
+      username: "",
+      password: ""
+    }
+  },
+  actions: {
+
+  },
+  mutations: {
+    // LOGIN(state, data) {
+    //   if (data.username == "") {
+    //     alert("아이디를 입력하세요.");
+    //     return;
+    //   }
+
+    //   if (data.password == "") {
+    //     alert("비밀번호를 입력하세요.");
+    //     return;
+    //   }
+      
+    // }
+  },
+  getters: {
+
+  }
 });
-
-export default router;

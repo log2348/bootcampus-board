@@ -1,8 +1,24 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import VueRouter from "vue-router";
+import Login from "../components/Login.vue";
+import List from "../components/List.vue";
 
-Vue.use(Vuex);
+Vue.use(VueRouter);
 
-export default new Vuex.Store({
-
+const router = new VueRouter({
+  mode: "history",
+  routes: [
+    {
+      name: "login",
+      path: "/",
+      component: Login,
+    },
+    {
+      name: "boardList",
+      path: "/List",
+      component: List,
+    },
+  ],
 });
+
+export default router;

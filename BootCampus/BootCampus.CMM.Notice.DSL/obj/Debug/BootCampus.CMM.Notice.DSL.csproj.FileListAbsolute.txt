@@ -16,3 +16,12 @@ C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.CMM.Notice.D
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.CMM.Notice.DSL\obj\Debug\BootCampus.CMM.Notice.DSL.csproj.CopyComplete
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.CMM.Notice.DSL\obj\Debug\BootCampus.CMM.Notice.DSL.dll
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.CMM.Notice.DSL\obj\Debug\BootCampus.CMM.Notice.DSL.pdb
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\bin\Debug\BootCampus.CMM.Notice.DSL.dll
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\bin\Debug\BootCampus.CMM.Notice.DSL.pdb
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\bin\Debug\BootCampus.Models.dll
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\bin\Debug\BootCampus.Models.pdb
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\obj\Debug\BootCampus.CMM.Notice.DSL.csproj.AssemblyReference.cache
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\obj\Debug\BootCampus.CMM.Notice.DSL.csproj.CoreCompileInputs.cache
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\obj\Debug\BootCampus.CMM.Notice.DSL.csproj.CopyComplete
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\obj\Debug\BootCampus.CMM.Notice.DSL.dll
+D:\project-board\BootCampus\BootCampus.CMM.Notice.DSL\obj\Debug\BootCampus.CMM.Notice.DSL.pdb

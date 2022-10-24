@@ -20,3 +20,14 @@ C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.CMM.Notice.B
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.CMM.Notice.BSL\obj\Debug\BootCampus.CMM.Notice.BSL.csproj.CopyComplete
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.CMM.Notice.BSL\obj\Debug\BootCampus.CMM.Notice.BSL.dll
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.CMM.Notice.BSL\obj\Debug\BootCampus.CMM.Notice.BSL.pdb
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\bin\Debug\BootCampus.CMM.Notice.BSL.dll
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\bin\Debug\BootCampus.CMM.Notice.BSL.pdb
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\bin\Debug\BootCampus.CMM.Notice.DSL.dll
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\bin\Debug\BootCampus.Models.dll
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\bin\Debug\BootCampus.CMM.Notice.DSL.pdb
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\bin\Debug\BootCampus.Models.pdb
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\obj\Debug\BootCampus.CMM.Notice.BSL.csproj.AssemblyReference.cache
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\obj\Debug\BootCampus.CMM.Notice.BSL.csproj.CoreCompileInputs.cache
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\obj\Debug\BootCampus.CMM.Notice.BSL.csproj.CopyComplete
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\obj\Debug\BootCampus.CMM.Notice.BSL.dll
+D:\project-board\BootCampus\BootCampus.CMM.Notice.BSL\obj\Debug\BootCampus.CMM.Notice.BSL.pdb

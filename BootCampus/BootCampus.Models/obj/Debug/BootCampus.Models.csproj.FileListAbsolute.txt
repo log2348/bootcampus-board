@@ -10,3 +10,9 @@ C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.Models\obj\D
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.Models\obj\Debug\BootCampus.Models.csproj.CoreCompileInputs.cache
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.Models\obj\Debug\BootCampus.Models.dll
 C:\Users\wonsg.WEBFOX\Downloads\BootCampus_MVC_이환희\BootCampus.Models\obj\Debug\BootCampus.Models.pdb
+D:\project-board\BootCampus\BootCampus.Models\bin\Debug\BootCampus.Models.dll
+D:\project-board\BootCampus\BootCampus.Models\bin\Debug\BootCampus.Models.pdb
+D:\project-board\BootCampus\BootCampus.Models\obj\Debug\BootCampus.Models.csproj.AssemblyReference.cache
+D:\project-board\BootCampus\BootCampus.Models\obj\Debug\BootCampus.Models.csproj.CoreCompileInputs.cache
+D:\project-board\BootCampus\BootCampus.Models\obj\Debug\BootCampus.Models.dll
+D:\project-board\BootCampus\BootCampus.Models\obj\Debug\BootCampus.Models.pdb

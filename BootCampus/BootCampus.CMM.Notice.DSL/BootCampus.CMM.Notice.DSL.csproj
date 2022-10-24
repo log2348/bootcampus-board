@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoardDsl.cs" />
     <Compile Include="NoticeDsl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
