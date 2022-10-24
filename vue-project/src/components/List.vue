@@ -5,7 +5,11 @@
     <div class="row">
       <div class="col-2">
         <p>상태</p>
-        <select class="form-select" v-model="state" @change="selectByState(state)">
+        <select
+          class="form-select"
+          v-model="state"
+          @change="getListByState(state)"
+        >
           <option>전체</option>
           <option v-for="item in stateList" :key="item">{{ item }}</option>
         </select>
@@ -24,7 +28,7 @@
           class="col form-control"
           placeholder="검색어를 입력하세요."
         />&nbsp;
-        <button @click="getBoard" class="col btn btn-primary">검색</button>
+        <button class="col btn btn-primary">검색</button>
       </div>
     </div>
     <br />
@@ -88,18 +92,23 @@ export default {
     return {
       // 게시글 상태 정보
       stateList: [],
+      filteredList: [],
+      state: "전체",
     };
   },
   mounted() {
     service.getBoardList().then((response) => {
-      this.stateList = Array.from(new Set(response.map((a) => a.STATE)));
       this.$store.state.boardList = response;
+      // 상태 정보 배열에 담기
+      this.stateList = Array.from(new Set(response.map((a) => a.STATE)));
     });
   },
   methods: {
-    selectByState() {
-
-    }
+    getListByState(state) {
+      service.getListByState(state).then((response) => {
+        this.$store.state.boardList = response;
+      });
+    },
   },
 };
 </script>

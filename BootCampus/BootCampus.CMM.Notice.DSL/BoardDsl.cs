@@ -64,10 +64,8 @@ namespace BootCampus.CMM.Notice.DSL
         {
             conn = DbConn();
 
-            string sql = "SELECT * FROM [dbo].[TB_BOARD]";
-
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.CommandType = CommandType.Text;
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -90,7 +88,11 @@ namespace BootCampus.CMM.Notice.DSL
 
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@STATE", state);
+
+            if (state != null)
+            {
+                cmd.Parameters.AddWithValue("@STATE", state);
+            }
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();

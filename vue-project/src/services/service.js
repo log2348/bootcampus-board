@@ -24,8 +24,8 @@ const service = {
    */
   getBoard(seq) {
     const params = {
-      seq: seq
-    }
+      seq: seq,
+    };
     const data = axios
       .get("/Board/Detail", { params })
       .then((response) => response.data);
@@ -38,6 +38,19 @@ const service = {
   getBoardList() {
     const data = axios
       .get("/Board/BoardList")
+      .then((response) => response.data);
+    return data;
+  },
+
+  /**
+   * 상태별 게시글 목록 조회
+   */
+  getListByState(state) {
+    const params = {
+      state: state,
+    };
+    const data = axios
+      .get("/Board/BoardListByState", { params })
       .then((response) => response.data);
     return data;
   },

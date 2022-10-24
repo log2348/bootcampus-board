@@ -36,7 +36,6 @@ namespace BootCampus.CMM.Notice.BSL
                 boardModel.BOARD_SEQ = Convert.ToInt32(dr["BOARD_SEQ"]);
                 boardModel.STATE = Convert.ToString(dr["STATE"]);
                 boardModel.TITLE = Convert.ToString(dr["TITLE"]);
-                boardModel.CONTENTS = Convert.ToString(dr["CONTENTS"]);
                 boardModel.USER_ID = Convert.ToString(dr["USER_ID"]);
                 boardModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
                 boardModel.VIEW_COUNT = Convert.ToInt32(dr["VIEW_COUNT"]);
@@ -82,6 +81,11 @@ namespace BootCampus.CMM.Notice.BSL
 
             return boardList;
         }
+        #endregion
+
+        #region
+
+
         #endregion
     }
 }
