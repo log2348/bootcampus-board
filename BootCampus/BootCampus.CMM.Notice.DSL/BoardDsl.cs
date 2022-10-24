@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BootCampus.Models;
 
 namespace BootCampus.CMM.Notice.DSL
 {
@@ -49,13 +50,10 @@ namespace BootCampus.CMM.Notice.DSL
         {
             conn = DbConn();
 
-            SqlCommand cmd = new SqlCommand("dbo.UP_BOOTCAMPUS_BOARD_L", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@STATE", 5);
-            cmd.Parameters.AddWithValue("@SEARCH_TYPE", 5);
-            cmd.Parameters.AddWithValue("@SEARCH_WORD", 5);
-            cmd.Parameters.AddWithValue("@PAGE", 5);
-            cmd.Parameters.AddWithValue("@ROW_COUNT", 5);
+            string sql = "SELECT * FROM dbo.TB_BOARD";
+
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.CommandType = CommandType.Text;
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -66,6 +64,9 @@ namespace BootCampus.CMM.Notice.DSL
 
             return ds;
         }
+        #endregion
+
+        #region Board 등록
         #endregion
     }
 }

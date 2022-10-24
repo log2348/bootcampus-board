@@ -10,12 +10,6 @@ namespace BootCampus.Web.Controllers
 {
     public class BoardController : Controller
     {
-        // GET: Board
-        public string Index()
-        {
-            return "test";
-        }
-
         /// <summary>
         /// 게시글 목록 조회
         /// </summary>
@@ -26,6 +20,24 @@ namespace BootCampus.Web.Controllers
             List<BoardModel> list = boardBsl.SelectBoard();
 
             return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult BoardList()
+        {
+            BoardBsl boardBsl = new BoardBsl();
+            List<BoardModel> list = boardBsl.SelectBoardList();
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 게시글 등록
+        /// </summary>
+        public void Create(BoardModel newBoard)
+        {
+            BoardBsl boardBsl = new BoardBsl();
+            BoardModel boardModel = boardBsl.CreateBoard(newBoard);
+
         }
     }
 }

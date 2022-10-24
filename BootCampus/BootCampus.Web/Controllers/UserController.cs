@@ -9,14 +9,14 @@ namespace BootCampus.Web.Controllers
 {
     public class UserController : Controller
     {
-        // GET: User
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        /// <summary>
+        /// 로그인
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         public string Login(UserModel userModel)
         {
+
             return "username : " + userModel.USERNAME;
         }
     }

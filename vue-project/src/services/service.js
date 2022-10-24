@@ -2,17 +2,6 @@ import axios from "axios";
 
 const service = {
   /**
-   * @param {*} params
-   */
-  getNoticeList(params) {
-    const data = axios.get("/Notice/NoticeList", params).then((response) => {
-      console.log(response);
-    });
-
-    return data;
-  },
-
-  /**
    *
    * @param {username}
    * @param {password}
@@ -29,14 +18,22 @@ const service = {
     return data;
   },
 
-  // test API
+  /**
+   *
+   * @returns
+   */
   getBoard() {
-    const data = axios
-      .get("/Board/Board")
-      .then((response) => {
-        console.log(response);
-      });
+    const data = axios.get("/Board/Board").then((response) => response.data);
+    return data;
+  },
 
+  /**
+   * Board List 조회
+   */
+  getBoardList() {
+    const data = axios
+      .get("/Board/BoardList")
+      .then((response) => response.data);
     return data;
   },
 };

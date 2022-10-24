@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state() {
     return {
       username: "",
-      password: ""
+      password: "",
+      boardList: []
     }
   },
   actions: {
