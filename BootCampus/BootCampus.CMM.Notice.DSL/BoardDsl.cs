@@ -50,7 +50,7 @@ namespace BootCampus.CMM.Notice.DSL
         {
             conn = DbConn();
 
-            string sql = "SELECT * FROM dbo.TB_BOARD";
+            string sql = "SELECT * FROM [dbo].[TB_BOARD]";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
