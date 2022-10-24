@@ -22,13 +22,18 @@ const service = {
    *
    * @returns
    */
-  getBoard() {
-    const data = axios.get("/Board/Board").then((response) => response.data);
+  getBoard(seq) {
+    const params = {
+      seq: seq
+    }
+    const data = axios
+      .get("/Board/Detail", { params })
+      .then((response) => response.data);
     return data;
   },
 
   /**
-   * Board List 조회
+   * 게시글 전체 목록 조회
    */
   getBoardList() {
     const data = axios
@@ -36,6 +41,10 @@ const service = {
       .then((response) => response.data);
     return data;
   },
+
+  /**
+   * 로그인
+   */
 };
 
 export default service;

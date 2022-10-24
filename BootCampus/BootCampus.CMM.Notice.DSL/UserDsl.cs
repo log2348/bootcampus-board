@@ -22,18 +22,19 @@ namespace BootCampus.CMM.Notice.DSL
             return conn;
         }
 
-        public UserModel Login(UserModel userModel)
+        public int Login(UserModel userModel)
         {
             conn = DbConn();
 
-            string sql = "SELECT * FROM [dbo].[TB_USER] WHERE USERNAME = " + userModel.USERNAME + " AND PASSWORD = " + userModel.PASSWORD;
+            string sql = "SELECT PASSWORD FROM [dbo].[TB_USER] WHERE USERNAME = " + userModel.USERNAME;
+
             SqlCommand cmd = new SqlCommand(sql, conn);
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
 
             conn.Close();
 
-            return userModel;
+            return 0;
 
         }
     }

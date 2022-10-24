@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state() {
     return {
+      // 로그인된 유저 정보
       username: "",
       password: "",
       boardList: []

@@ -11,23 +11,27 @@ namespace BootCampus.Web.Controllers
     public class BoardController : Controller
     {
         /// <summary>
-        /// 게시글 목록 조회
+        /// 게시글 상세 조회
         /// </summary>
         /// <returns></returns>
-        public ActionResult Board()
+        public ActionResult Detail(int seq)
         {
             BoardBsl boardBsl = new BoardBsl();
-            List<BoardModel> list = boardBsl.SelectBoard();
+            BoardModel target = boardBsl.SelectBoard(seq);
 
-            return Json(list, JsonRequestBehavior.AllowGet);
+            return Json(target, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// 전체 게시글 목록 조회
+        /// </summary>
+        /// <returns></returns>
         public ActionResult BoardList()
         {
             BoardBsl boardBsl = new BoardBsl();
-            List<BoardModel> list = boardBsl.SelectBoardList();
+            List<BoardModel> boardList = boardBsl.SelectBoardList();
 
-            return Json(list, JsonRequestBehavior.AllowGet);
+            return Json(boardList, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -39,5 +43,21 @@ namespace BootCampus.Web.Controllers
             BoardModel boardModel = boardBsl.CreateBoard(newBoard);
 
         }
+
+        /// <summary>
+        /// 상태별 게시글 목록 조회
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult BoardListByState(string state)
+        {
+            BoardBsl boardBsl = new BoardBsl();
+            List<BoardModel> boardList = boardBsl.SelectBoardListByState(state);
+            return Json(boardList, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+
+
     }
 }

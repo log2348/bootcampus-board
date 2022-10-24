@@ -11,14 +11,10 @@ namespace BootCampus.CMM.Notice.BSL
     public class UserBsl
     {
         #region 로그인
-        public UserModel Login(UserModel userModel)
+        public int Login(UserModel userModel)
         {
             UserDsl userDsl = new UserDsl();
-            UserModel um = userDsl.Login(userModel);
-
-
-            return userModel;
-
+            return userDsl.Login(userModel);
         }
         #endregion
     }

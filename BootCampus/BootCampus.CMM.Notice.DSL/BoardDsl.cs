@@ -25,23 +25,37 @@ namespace BootCampus.CMM.Notice.DSL
         }
         #endregion
 
-        #region Board 조회
-        public DataSet SelectBoard()
+        #region 게시글 상세 조회
+        public BoardModel SelectBoard(int seq)
         {
             conn = DbConn();
 
-            SqlCommand cmd = new SqlCommand("dbo.UP_BOOTCAMPUS_BOARD_R", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@BOARD_SEQ", 5);
+            string sql = "SELECT * FROM [dbo].[TB_BOARD] WHERE BOARD_SEQ = @BOARD_SEQ";
 
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@BOARD_SEQ", seq);
+            cmd.CommandType = CommandType.Text;
 
-            dataAdapter.Fill(ds, "Board");
+            BoardModel model = new BoardModel();
+
+            // 쿼리 결과 불러와서 저장
+            SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+            if (sqlDataReader.Read())
+            {
+                model.BOARD_SEQ = Convert.ToInt32( sqlDataReader["BOARD_SEQ"]);
+                model.STATE = Convert.ToString(sqlDataReader["STATE"]);
+                model.TITLE = Convert.ToString(sqlDataReader["TITLE"]);
+                model.CONTENTS = Convert.ToString(sqlDataReader["CONTENTS"]);
+                model.WRITE_DATE = Convert.ToDateTime(sqlDataReader["WRITE_DATE"]);
+                model.USER_ID = Convert.ToString(sqlDataReader["USER_ID"]);
+                model.VIEW_COUNT = Convert.ToInt32(sqlDataReader["VIEW_COUNT"]);
+
+            }
 
             conn.Close();
 
-            return ds;
+            return model;
         }
         #endregion
 
@@ -67,6 +81,26 @@ namespace BootCampus.CMM.Notice.DSL
         #endregion
 
         #region Board 등록
+        #endregion
+
+        #region 게시글 상태별 검색
+        public DataSet SelectBoardByState(string state)
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@STATE", state);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+
+            dataAdapter.Fill(ds, "Board");
+
+            conn.Close();
+
+            return ds;
+        }
         #endregion
     }
 }

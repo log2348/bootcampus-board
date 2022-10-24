@@ -1,15 +1,48 @@
 <template>
-  <div>
-    
+  <div class="container" style="padding: 20px">
+    <div>
+      <h2>게시글 상세</h2>
+    </div>
+    <br />
+    <br />
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>제목</th>
+          <td>{{ board.TITLE }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>작성자</th>
+          <td>{{ board.USER_ID }}</td>
+          <th>작성일</th>
+          <td>{{ board.WRITE_DATE }}</td>
+          <th>조회수</th>
+          <td>{{ board.VIEW_COUNT }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="border: 1px">{{ board.CONTENTS }}</div>
   </div>
 </template>
 
 <script>
-export default {
+import service from "../services/service.js";
 
-}
+export default {
+  data() {
+    return {
+      board: {},
+    };
+  },
+  mounted() {
+    service.getBoard(this.$route.params.seq).then((response) => {
+      console.log(response);
+      this.board = response;
+    });
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
