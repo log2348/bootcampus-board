@@ -20,22 +20,6 @@ const router = new VueRouter({
       name: "boardList",
       path: "/List",
       component: List,
-      /*
-      beforeEnter: (to, next) => {
-        // to : 이동할 URL 정보가 담긴 라우터 객체
-        // from : 현재 URL 정보가 담긴 라우터 객체
-        // next : to에서 지정한 URL로 이동하기 위해 반드시 호출해야 하는 함수
-        console.log(to);
-
-        next();
-        if (store.state.isAuthenticated) {
-          alert('next 호출');
-          next();
-        } else {
-          alert("로그인 후 이용 가능합니다.");
-        }
-      },
-      */
     },
     {
       name: "edit",
@@ -48,6 +32,21 @@ const router = new VueRouter({
       component: Detail,
     },
   ],
+});
+
+router.beforeEach(function (to, from, next) {
+  // to: 이동할 url에 해당하는 라우팅 객체
+  if (
+    to.matched.some(function (routeInfo) {
+      return routeInfo.meta.authRequired;
+    })
+  ) {
+    // 이동할 페이지에 인증 정보가 필요하면 경고 창을 띄우고 페이지 전환은 하지 않음
+    alert("Login Please!");
+  } else {
+    console.log("routing success : '" + to.path + "'");
+    next(); // 페이지 전환
+  }
 });
 
 export default router;

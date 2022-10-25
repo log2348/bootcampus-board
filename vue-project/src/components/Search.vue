@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-2">
-        <p>상태</p>
+        <p><b>상태</b></p>
         <select
           class="form-select"
           v-model="state"
@@ -14,7 +14,7 @@
       </div>
       <br />
       <div class="row col-6">
-        <p>검색조건</p>
+        <p><b>검색조건</b></p>
         <select class="col form-select" v-model="searchType">
           <option>제목</option>
           <option>내용</option>
@@ -28,7 +28,7 @@
           placeholder="검색어를 입력하세요."
         />&nbsp;
         <button
-          class="col btn btn-primary"
+          class="col-sm-2 btn btn-primary"
           @click="$store.commit('SEARCH_BOARD', {searchType, searchWord})"
         >
           검색

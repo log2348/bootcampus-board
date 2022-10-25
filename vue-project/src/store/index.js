@@ -15,6 +15,7 @@ export default new Vuex.Store({
 
       boardList: [],
       filteredList: [],
+      replyList: [],
       isFiltered: false,
       isAuthenticated: false,
     };
@@ -124,6 +125,20 @@ export default new Vuex.Store({
         .updateBoard(boardData)
         .then((response) => {
           console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    /**
+     * 댓글 목록 조회
+     */
+    GET_REPLY_LIST(state, boardSeq) {
+      service
+        .getReplyList(boardSeq)
+        .then((response) => {
+          state.replyList = response;
         })
         .catch((error) => {
           console.log(error);

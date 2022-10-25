@@ -11,10 +11,7 @@
           수정
         </button></router-link
       >&nbsp;
-      <button
-        class="btn btn-primary"
-        @click="$bvModal.show('modal-scoped')"
-      >
+      <button class="btn btn-primary" @click="$bvModal.show('modal-scoped')">
         <!-- @click="$store.commit('DELETE_BOARD', board.BOARD_SEQ)" -->
         삭제
       </button>
@@ -60,10 +57,12 @@ export default {
       console.log(response);
       this.board = response;
     });
+
+    
   },
   components: {
     Comment,
-    Confirm
+    Confirm,
   },
 };
 </script>

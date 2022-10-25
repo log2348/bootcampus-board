@@ -1,31 +1,40 @@
 <template>
   <div>
     <div class="container" style="padding: 50px">
-      <h2><b>로그인</b></h2>
-      <br />
-      <div class="mb-3 mt-3">
-        <label>ID:</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Enter ID"
-          v-model="userId"
-        />
+      <div style="text-align: center">
+        <h2><b>로그인</b></h2>
       </div>
-      <div class="mb-3">
-        <label for="pwd">Password:</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Enter password"
-          v-model="password"
-        />
+      <br />
+      <br />
+
+      <div class="row" style="justify-content: center">
+        <div class="col-sm-3">
+          <label><b>ID:</b></label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter ID"
+            v-model="userId"
+          />
+        </div>
+
+        <div class="col-sm-3">
+          <label for="pwd"><b>Password:</b></label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter password"
+            v-model="password"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="container" style="text-align: center; width: 20%">
+        <button class="btn btn-primary" @click="login(userId, password)">
+          로그인
+        </button>
       </div>
       <router-link to="/List"> 리스트 </router-link>
-
-      <button class="btn btn-primary" @click="login(userId, password)">
-        로그인
-      </button>
     </div>
   </div>
 </template>

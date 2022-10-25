@@ -154,6 +154,18 @@ const service = {
 
     return data;
   },
+
+  /**
+   * 댓글 목록 조회
+   */
+  getReplyList(boardSeq) {
+    const data = axios
+      .get("/Reply/ReplyList", boardSeq)
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+      return data;
+  },
 };
 
 export default service;

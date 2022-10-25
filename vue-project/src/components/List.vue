@@ -43,13 +43,13 @@
             <td>{{ item.TITLE }}</td>
           </router-link>
           <td>{{ item.USER_ID }}</td>
-          <td>{{ item.WRITE_DATE }}</td>
+          <td>{{ $moment(item.WRITE_DATE).format('YYYY-MM-DD') }}</td>
           <td>{{ item.VIEW_COUNT }}</td>
         </tr>
       </tbody>
     </table>
-    <div style="text-align: center">
-      <ul class="pagination">
+    <div class="container">
+      <ul class="pagination" style="justify-content: center">
         <li class="page-item disabled">
           <a class="page-link" href="#">Prev</a>
         </li>
@@ -65,14 +65,17 @@
 
     <div class="row">
       <div class="col" style="text-align: left">
-        <button class="btn btn-light">엑셀 업로드</button>&nbsp;
+        <button class="btn btn-light" @click="importExcel">엑셀 업로드</button
+        >&nbsp;
         <button class="btn btn-light" @click="getExcelFile">
           엑셀 다운로드
         </button>
       </div>
       <div class="col" style="text-align: right">
         <router-link to="/Edit">
-          <button class="btn btn-primary" @click="$store.state.mode = 'CREATE'">작성</button>
+          <button class="btn btn-primary" @click="$store.state.mode = 'CREATE'">
+            작성
+          </button>
         </router-link>
       </div>
     </div>
@@ -107,6 +110,8 @@ export default {
       Xlsx.utils.book_append_sheet(workBook, workSheet, "myLog");
       Xlsx.writeFile(workBook, "myLog.xlsx");
     },
+
+    importExcel() {},
   },
 
   components: {
