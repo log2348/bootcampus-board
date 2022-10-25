@@ -6,14 +6,20 @@
     <br />
     <br />
     <div>
-      <button class="btn btn-primary">수정</button>
+      <router-link :to="{ name: 'edit', params: { boardSeq: board.BOARD_SEQ } }"
+        ><button class="btn btn-primary" @click="$store.state.mode = 'UPDATE'">
+          수정
+        </button></router-link
+      >&nbsp;
       <button
         class="btn btn-primary"
-        @click="$store.commit('DELETE_BOARD', board.BOARD_SEQ)"
+        @click="$bvModal.show('modal-scoped')"
       >
+        <!-- @click="$store.commit('DELETE_BOARD', board.BOARD_SEQ)" -->
         삭제
       </button>
     </div>
+    <br />
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -32,14 +38,16 @@
         </tr>
       </tbody>
     </table>
-    <div style="border: 1px">{{ board.CONTENTS }}</div>
+    <div class="container p-5 my-5 border">{{ board.CONTENTS }}</div>
     <Comment></Comment>
+    <Confirm></Confirm>
   </div>
 </template>
 
 <script>
 import service from "../services/service.js";
 import Comment from "../components/Comment.vue";
+import Confirm from "../components/Confirm.vue";
 
 export default {
   data() {
@@ -55,6 +63,7 @@ export default {
   },
   components: {
     Comment,
+    Confirm
   },
 };
 </script>

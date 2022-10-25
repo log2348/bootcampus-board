@@ -1,7 +1,8 @@
 <template>
   <div class="container" style="padding: 20px">
     <div>
-      <h2>게시글 등록/수정</h2>
+      <h2 v-if="$store.state.mode == 'UPDATE'">게시글 수정</h2>
+      <h2 v-else>게시글 등록</h2>
     </div>
     <br />
     <br />
@@ -14,7 +15,10 @@
       <thead>
         <tr>
           <th>제목</th>
-          <td><input v-model="title" /></td>
+          <td v-if="$store.state.mode == 'UPDATE'">
+            <input value="board.TITLE" v-model="title" />
+          </td>
+          <td v-else><input v-model="title" /></td>
         </tr>
       </thead>
       <tbody>
@@ -27,6 +31,14 @@
       </tbody>
     </table>
     <textarea
+      v-if="$store.state.mode == 'UPDATE'"
+      class="form-control"
+      rows="10"
+      placeholder="내용을 입력하세요"
+      v-model="contents"
+    ></textarea>
+    <textarea
+      v-else
       class="form-control"
       rows="10"
       placeholder="내용을 입력하세요"
@@ -45,8 +57,10 @@ export default {
     return {
       title: "",
       contents: "",
+      board: this.$route.params,
     };
   },
+  mounted: {},
   components: {
     Confirm,
   },

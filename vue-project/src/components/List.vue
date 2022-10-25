@@ -72,7 +72,7 @@
       </div>
       <div class="col" style="text-align: right">
         <router-link to="/Edit">
-          <button class="btn btn-primary">작성</button>
+          <button class="btn btn-primary" @click="$store.state.mode = 'CREATE'">작성</button>
         </router-link>
       </div>
     </div>

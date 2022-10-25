@@ -8,13 +8,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state() {
     return {
+      mode: "UPDATE", // delete, create
       // 로그인된 유저 정보
       userId: "",
       password: "",
 
       boardList: [],
       filteredList: [],
-      updateMode: false,
       isFiltered: false,
       isAuthenticated: false,
     };

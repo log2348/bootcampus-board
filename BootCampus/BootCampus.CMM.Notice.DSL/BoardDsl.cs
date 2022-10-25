@@ -162,7 +162,7 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.Parameters.AddWithValue("@STATE", "접수됨");
             cmd.Parameters.AddWithValue("@TITLE", newBoard.TITLE);
             cmd.Parameters.AddWithValue("@CONTENTS", newBoard.CONTENTS);
-            cmd.Parameters.AddWithValue("@USER_ID", newBoard.USER_ID);
+            cmd.Parameters.AddWithValue("@USER_ID", "user1"); // 수정할 것
 
             // 삽입 쿼리 사용시
             // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
