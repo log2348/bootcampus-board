@@ -6,7 +6,7 @@
         <select
           class="form-select"
           v-model="state"
-          @change="$emit('getListByState', state)"
+          @change="$store.commit('GET_LIST_BY_STATE', state)"
         >
           <option>전체</option>
           <option v-for="item in stateList" :key="item">{{ item }}</option>
@@ -16,7 +16,7 @@
       <div class="row col-6">
         <p>검색조건</p>
         <select class="col form-select" v-model="searchType">
-          <option>전체</option>
+          <!-- <option>전체</option> -->
           <option>제목</option>
           <option>내용</option>
           <option>번호</option>
@@ -30,7 +30,7 @@
         />&nbsp;
         <button
           class="col btn btn-primary"
-          @click="$emit('searchBoard', searchType, searchWord)"
+          @click="$store.commit('SEARCH_BOARD', {searchType, searchWord})"
         >
           검색
         </button>

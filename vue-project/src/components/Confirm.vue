@@ -5,8 +5,8 @@
         <h3>저장(수정)하시겠습니까?</h3>
       </template>
 
-      <template #modal-footer="{ confirm, cancel }">
-        <b-button size="m" variant="success" @click="confirm"> 확인 </b-button>
+      <template #modal-footer>
+        <b-button size="m" variant="success" @click="confirm()"> 확인 </b-button>
         <b-button size="m" variant="danger" @click="cancel()"> 취소 </b-button>
       </template>
     </b-modal>
@@ -17,15 +17,13 @@
 export default {
   props: ["title", "contents"],
   methods: {
-    methods: {
-      confirm() {
-        let data = {
-          TITLE: this.title,
-          CONTENTS: this.contents,
-          USER_ID: this.$store.state.userId,
-        };
-        this.$store.commit("CREATE_BOARD", data);
-      },
+    confirm() {
+      let data = {
+        TITLE: this.title,
+        CONTENTS: this.contents,
+        USER_ID: this.$store.state.userId,
+      };
+      this.$store.commit("CREATE_BOARD", data);
     },
   },
 };

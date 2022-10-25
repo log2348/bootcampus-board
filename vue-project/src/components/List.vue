@@ -2,11 +2,7 @@
   <div class="container" style="padding: 20px">
     <h2>Q&A 게시판</h2>
     <br /><br />
-    <Search
-      :stateList="stateList"
-      @getListByState="getListByState"
-      @searchBoard="searchBoard"
-    ></Search>
+    <Search :stateList="stateList" @searchBoard="searchBoard"></Search>
     <br />
     <table class="table table-bordered">
       <thead>
@@ -21,7 +17,7 @@
       </thead>
 
       <!-- 필터링 되지 않은 리스트 -->
-      <tbody v-if="!isFiltered">
+      <tbody v-if="!$store.state.isFiltered">
         <tr v-for="item in $store.state.boardList" :key="item.BOARD_SEQ">
           <td>{{ item.BOARD_SEQ }}</td>
           <td>{{ item.STATE }}</td>
@@ -37,8 +33,8 @@
       </tbody>
 
       <!-- 필터링된 리스트 -->
-      <tbody v-if="isFiltered">
-        <tr v-for="item in filteredList" :key="item.BOARD_SEQ">
+      <tbody v-if="$store.state.isFiltered">
+        <tr v-for="item in $store.state.filteredList" :key="item.BOARD_SEQ">
           <td>{{ item.BOARD_SEQ }}</td>
           <td>{{ item.STATE }}</td>
           <router-link
@@ -52,24 +48,27 @@
         </tr>
       </tbody>
     </table>
-
     <div style="text-align: center">
       <ul class="pagination">
         <li class="page-item disabled">
-          <a class="page-link" href="#">Previous</a>
+          <a class="page-link" href="#">Prev</a>
         </li>
         <li class="page-item"><a class="page-link" href="#">1</a></li>
         <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li class="page-item disabled">
+          <a class="page-link" href="#">Next</a>
+        </li>
       </ul>
     </div>
+    <br />
+    <br />
+
     <div class="row">
-      <div style="text-align: left">
+      <div class="col" style="text-align: left">
         <button class="btn btn-light">엑셀 업로드</button>&nbsp;
         <button class="btn btn-light">엑셀 다운로드</button>
       </div>
-      <div style="text-align: right">
+      <div class="col" style="text-align: right">
         <router-link to="/Edit">
           <button class="btn btn-primary">작성</button>
         </router-link>
@@ -87,8 +86,6 @@ export default {
     return {
       // 게시글 상태 정보
       stateList: [],
-      filteredList: [],
-      isFiltered: false,
     };
   },
   mounted() {
@@ -98,39 +95,7 @@ export default {
       this.stateList = Array.from(new Set(response.map((a) => a.STATE)));
     });
   },
-  methods: {
-    getListByState(state) {
-      service.getListByState(state).then((response) => {
-        if (state != "전체") {
-          this.isFiltered = true;
-          this.filteredList = response;
-        } else {
-          this.isFiltered = false;
-        }
-      });
-    },
 
-    searchBoard(searchType, searchWord) {
-      const data = {
-        searchType: searchType,
-        searchWord: searchWord,
-      };
-      service
-        .searchBoard(data)
-        .then((response) => {
-          console.log(response);
-          if (searchType == "전체" || searchWord == "") {
-            this.isFiltered = false;
-          } else {
-            this.isFiltered = true;
-            this.filteredList = response;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  },
   components: {
     Search,
   },

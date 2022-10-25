@@ -6,9 +6,9 @@
     <br />
     <br />
 
-    <b-button @click="$bvModal.show('modal-scoped')">Open Modal</b-button>
+    <b-button @click="$bvModal.show('modal-scoped')">등록</b-button>
 
-    <Confirm :titld="title" :contents="contents"></Confirm>
+    <Confirm :title="title" :contents="contents"></Confirm>
 
     <table class="table table-bordered">
       <thead>

@@ -48,9 +48,7 @@ export default {
       };
 
       service.login(objUser).then((response) => {
-        console.log(objUser);
-        alert("11111111" + response);
-        // 성공하면 페이지 이동
+        console.log(response);
       });
     },
   },

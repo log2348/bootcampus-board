@@ -67,6 +67,8 @@ namespace BootCampus.CMM.Notice.DSL
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
+            cmd.Parameters.AddWithValue("@ROW_COUNT", 5);
+
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
 
@@ -90,6 +92,7 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@STATE", state);
+            cmd.Parameters.AddWithValue("@ROW_COUNT", 5);
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -134,6 +137,8 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@PAGE", pageNumber);
+            cmd.Parameters.AddWithValue("@ROW_COUNT", 5);
+
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -152,7 +157,7 @@ namespace BootCampus.CMM.Notice.DSL
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_C]", conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@STATE", newBoard.STATE);
+            cmd.Parameters.AddWithValue("@STATE", "접수됨");
             cmd.Parameters.AddWithValue("@TITLE", newBoard.TITLE);
             cmd.Parameters.AddWithValue("@CONTENTS", newBoard.CONTENTS);
             cmd.Parameters.AddWithValue("@USER_ID", newBoard.USER_ID);

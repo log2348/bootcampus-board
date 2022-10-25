@@ -1,5 +1,5 @@
 import axios from "axios";
-//import router from "../router/index.js";
+import router from "../router/index.js";
 import store from "../store/index.js";
 
 const service = {
@@ -32,7 +32,7 @@ const service = {
           store.state.userId = userData.USER_ID;
           store.state.password = userData.PASSWORD;
           store.state.isAuthenticated = true;
-          //router.push("/List");
+          router.push("/List");
         }
 
         return response.data;
@@ -112,6 +112,18 @@ const service = {
       .catch((error) => console.log(error));
 
     return data;
+  },
+
+  /**
+   * 게시글 페이징
+   */
+  selectPage(pageNumber) {
+    const data = axios
+      .get("/Board/BoardPage", pageNumber)
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+      return data;
   },
 };
 
