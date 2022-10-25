@@ -27,8 +27,8 @@ namespace BootCampus.CMM.Notice.DSL
         {
             conn = DbConn();
 
-            SqlCommand cmd = new SqlCommand("SELECT PASSWORD FROM [dbo].[TB_USER] WHERE USERNAME = @USERNAME", conn);
-            cmd.Parameters.AddWithValue("@USERNAME", userModel.USERNAME);
+            SqlCommand cmd = new SqlCommand("SELECT PASSWORD FROM [dbo].[TB_USER] WHERE USER_ID = @USER_ID", conn);
+            cmd.Parameters.AddWithValue("@USER_ID", userModel.USER_ID);
 
             // 쿼리 결과 담기
             SqlDataReader reader = cmd.ExecuteReader();

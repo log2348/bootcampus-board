@@ -11,7 +11,7 @@ const service = {
   login(userData) {
     const data = axios
       .post("/User/Login", {
-        USERNAME: userData.USERNAME,
+        USER_ID: userData.USER_ID,
         PASSWORD: userData.PASSWORD,
       })
       .then(function (response) {
@@ -29,7 +29,7 @@ const service = {
 
         if (response.data == 1) {
           alert("로그인 성공");
-          store.state.username = userData.USERNAME;
+          store.state.userId = userData.USER_ID;
           store.state.password = userData.PASSWORD;
           store.state.isAuthenticated = true;
           //router.push("/List");
@@ -90,6 +90,24 @@ const service = {
     };
     const data = axios
       .get("/Board/Search", { params })
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+    return data;
+  },
+
+  /**
+   * 게시글 등록
+   */
+  createBoard(boardData) {
+    const params = {
+      STATE: boardData.STATE,
+      TITLE: boardData.TITLE,
+      CONTENTS: boardData.CONTENTS,
+      USER_ID: boardData.USER_ID,
+    };
+    const data = axios
+      .get("/Board/Create", { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 

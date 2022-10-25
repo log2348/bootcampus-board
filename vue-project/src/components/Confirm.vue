@@ -1,46 +1,38 @@
 <template>
   <div>
-    <div>
-      <!-- <b-button id="show-btn" @click="showModal">Open Modal</b-button> -->
+    <b-modal id="modal-scoped">
+      <template>
+        <h3>저장(수정)하시겠습니까?</h3>
+      </template>
 
-      <b-modal
-        ref="my-modal"
-        v-show="showModal"
-        hide-footer
-        title="Using Component Methods"
-      >
-        <div class="d-block text-center">
-          <h3>Hello From My Modal!</h3>
-        </div>
-        <b-button class="mt-3" variant="outline-danger" block @click="hideModal"
-          >Close Me</b-button
-        >
-        <b-button
-          class="mt-2"
-          variant="outline-warning"
-          block
-          @click="toggleModal"
-          >Toggle Me</b-button
-        >
-      </b-modal>
-    </div>
+      <template #modal-footer="{ confirm, cancel }">
+        <b-button size="m" variant="success" @click="confirm"> 확인 </b-button>
+        <b-button size="m" variant="danger" @click="cancel()"> 취소 </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["showModal"],
+  props: ["title", "contents"],
   methods: {
-    // hideModal() {
-    //   this.$refs["my-modal"].hide();
-    // },
-    // toggleModal() {
-    //   // We pass the ID of the button that we want to return focus to
-    //   // when the modal has hidden
-    //   this.$refs["my-modal"].toggle("#toggle-btn");
-    // },
+    methods: {
+      confirm() {
+        let data = {
+          TITLE: this.title,
+          CONTENTS: this.contents,
+          USER_ID: this.$store.state.userId,
+        };
+        this.$store.commit("CREATE_BOARD", data);
+      },
+    },
   },
 };
 </script>
 
-<style></style>
+<style>
+.close {
+  display: "none";
+}
+</style>

@@ -89,10 +89,7 @@ namespace BootCampus.CMM.Notice.DSL
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            if (state != null)
-            {
-                cmd.Parameters.AddWithValue("@STATE", state);
-            }
+            cmd.Parameters.AddWithValue("@STATE", state);
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -146,6 +143,25 @@ namespace BootCampus.CMM.Notice.DSL
             conn.Close();
 
             return ds;
+        }
+
+        public int CreateBoard(BoardModel newBoard)
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_C]", conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@STATE", newBoard.STATE);
+            cmd.Parameters.AddWithValue("@TITLE", newBoard.TITLE);
+            cmd.Parameters.AddWithValue("@CONTENTS", newBoard.CONTENTS);
+            cmd.Parameters.AddWithValue("@USER_ID", newBoard.USER_ID);
+
+            // 삽입 쿼리 사용시
+            // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
+            int result = cmd.ExecuteNonQuery();
+
+            return result;
         }
         #endregion
     }

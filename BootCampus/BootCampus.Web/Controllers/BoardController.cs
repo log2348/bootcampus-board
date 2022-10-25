@@ -38,10 +38,12 @@ namespace BootCampus.Web.Controllers
         /// <summary>
         /// 게시글 등록
         /// </summary>
-        public void Create(BoardModel newBoard)
+        public int Create(BoardModel newBoard)
         {
             BoardBsl boardBsl = new BoardBsl();
-            BoardModel boardModel = boardBsl.CreateBoard(newBoard);
+            int result = boardBsl.CreateBoard(newBoard);
+
+            return result;
 
         }
 
@@ -71,6 +73,11 @@ namespace BootCampus.Web.Controllers
 
         }
 
+        /// <summary>
+        /// 게시글 목록 페이징
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public ActionResult BoardPage(int pageNumber)
         {
             BoardBsl boardBsl = new BoardBsl();
@@ -90,6 +97,7 @@ namespace BootCampus.Web.Controllers
             string filename = "myfile.xlsx.txt";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
         }
+
 
     }
 }

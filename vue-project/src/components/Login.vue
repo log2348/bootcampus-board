@@ -9,7 +9,7 @@
           type="text"
           class="form-control"
           placeholder="Enter ID"
-          v-model="username"
+          v-model="userId"
         />
       </div>
       <div class="mb-3">
@@ -23,7 +23,7 @@
       </div>
       <router-link to="/List"> 리스트 </router-link>
 
-      <button class="btn btn-primary" @click="login(username, password)">
+      <button class="btn btn-primary" @click="login(userId, password)">
         로그인
       </button>
     </div>
@@ -36,14 +36,14 @@ import service from "../services/service.js";
 export default {
   data() {
     return {
-      username: "",
+      userId: "",
       password: "",
     };
   },
   methods: {
-    login(username, password) {
+    login(userId, password) {
       let objUser = {
-        USERNAME: username,
+        USER_ID: userId,
         PASSWORD: password,
       };
 

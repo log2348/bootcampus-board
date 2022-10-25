@@ -48,11 +48,21 @@ namespace BootCampus.CMM.Notice.BSL
         #endregion
 
         #region 게시글 등록
-        public BoardModel CreateBoard(BoardModel board)
+        public int CreateBoard(BoardModel board)
         {
-            BoardModel newBoard = new BoardModel();
+            BoardDsl boardDsl = new BoardDsl();
+            //BoardModel newBoard = new BoardModel();
 
-            return board;
+            int result = boardDsl.CreateBoard(board);
+
+            /*
+            newBoard.TITLE = board.TITLE;
+            newBoard.CONTENTS = board.CONTENTS;
+            newBoard.WRITE_DATE = board.WRITE_DATE;
+            newBoard.USER_ID = board.USER_ID;
+            newBoard.VIEW_COUNT = board.VIEW_COUNT;
+            */
+            return result;
 
         }
         #endregion
