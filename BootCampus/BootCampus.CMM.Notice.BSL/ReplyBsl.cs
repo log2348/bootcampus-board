@@ -22,7 +22,11 @@ namespace BootCampus.CMM.Notice.BSL
             foreach (DataRow dr in dataTable.Rows)
             {
                 ReplyModel replyModel = new ReplyModel();
+                replyModel.REPLY_SEQ = Convert.ToInt32(dr["REPLY_SEQ"]);
                 replyModel.BOARD_SEQ = Convert.ToInt32(dr["BOARD_SEQ"]);
+                replyModel.REPLY_CONTENTS = Convert.ToString(dr["REPLY_CONTENTS"]);
+                replyModel.USER_ID = Convert.ToString(dr["USER_ID"]);
+                // replyModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
 
                 replyList.Add(replyModel);
             }

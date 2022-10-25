@@ -10,7 +10,7 @@ namespace BootCampus.Models
     {
         public int REPLY_SEQ { get; set; }
 
-        public int PARENT_ID { get; set; }
+        public int PARENT_SEQ { get; set; }
 
         public int BOARD_SEQ { get; set; }
 
