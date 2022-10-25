@@ -51,17 +51,8 @@ namespace BootCampus.CMM.Notice.BSL
         public int CreateBoard(BoardModel board)
         {
             BoardDsl boardDsl = new BoardDsl();
-            //BoardModel newBoard = new BoardModel();
-
             int result = boardDsl.CreateBoard(board);
 
-            /*
-            newBoard.TITLE = board.TITLE;
-            newBoard.CONTENTS = board.CONTENTS;
-            newBoard.WRITE_DATE = board.WRITE_DATE;
-            newBoard.USER_ID = board.USER_ID;
-            newBoard.VIEW_COUNT = board.VIEW_COUNT;
-            */
             return result;
 
         }
@@ -156,6 +147,14 @@ namespace BootCampus.CMM.Notice.BSL
 
             return result;
             
+        }
+
+        public int UpdateBoard(BoardModel boardModel)
+        {
+            BoardDsl boardDsl = new BoardDsl();
+            int result = boardDsl.UpdateBoard(boardModel);
+
+            return result;
         }
         #endregion
     }

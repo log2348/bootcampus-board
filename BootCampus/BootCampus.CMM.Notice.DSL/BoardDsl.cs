@@ -137,7 +137,7 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@PAGE", pageNumber);
-            cmd.Parameters.AddWithValue("@ROW_COUNT", 5);
+            cmd.Parameters.AddWithValue("@ROW_COUNT", 7);
 
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
@@ -149,7 +149,9 @@ namespace BootCampus.CMM.Notice.DSL
 
             return ds;
         }
+        #endregion 
 
+        #region 게시글 등록
         public int CreateBoard(BoardModel newBoard)
         {
             conn = DbConn();
@@ -168,7 +170,9 @@ namespace BootCampus.CMM.Notice.DSL
 
             return result;
         }
+        #endregion
 
+        #region 게시글 삭제
         public int DeleteBoard(int boardSeq)
         {
             conn = DbConn();
@@ -177,6 +181,27 @@ namespace BootCampus.CMM.Notice.DSL
 
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@BOARD_SEQ", boardSeq);
+
+            // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
+            int result = cmd.ExecuteNonQuery();
+
+            return result;
+        }
+        #endregion
+
+        #region 게시글 수정
+        public int UpdateBoard(BoardModel boardModel)
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_U]", conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@STATE", boardModel.STATE);
+            cmd.Parameters.AddWithValue("@TITLE", boardModel.TITLE);
+            cmd.Parameters.AddWithValue("@USER_ID", boardModel.USER_ID);
+            cmd.Parameters.AddWithValue("@CONTENTS", boardModel.CONTENTS);
+            cmd.Parameters.AddWithValue("@BOARD_SEQ", boardModel.BOARD_SEQ);
 
             // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
             int result = cmd.ExecuteNonQuery();

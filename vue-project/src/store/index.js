@@ -89,7 +89,7 @@ export default new Vuex.Store({
     /**
      * 게시글 삭제
      */
-    DELETE_BOARD(boardSeq) {
+    DELETE_BOARD(state, boardSeq) {
       service
         .deleteBoard(boardSeq)
         .then((response) => {
@@ -110,6 +110,20 @@ export default new Vuex.Store({
         .selectPage(pageNumber)
         .then((response) => {
           state.boardList = response;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    /**
+     * 게시글 수정
+     */
+    UPDATE_BOARD(state, boardData) {
+      service
+        .updateBoard(boardData)
+        .then((response) => {
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);

@@ -6,7 +6,7 @@
       </template>
 
       <template #modal-footer>
-        <b-button size="m" variant="success" @click="confirm()"> 확인 </b-button>
+        <b-button size="m" variant="success" @click="save()"> 확인 </b-button>
         <b-button size="m" variant="danger" @click="cancel()"> 취소 </b-button>
       </template>
     </b-modal>
@@ -17,7 +17,7 @@
 export default {
   props: ["title", "contents"],
   methods: {
-    confirm() {
+    save() {
       let data = {
         TITLE: this.title,
         CONTENTS: this.contents,
@@ -30,6 +30,7 @@ export default {
 </script>
 
 <style>
+/* TODO */
 .close {
   display: "none";
 }

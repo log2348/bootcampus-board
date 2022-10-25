@@ -16,7 +16,6 @@
       <div class="row col-6">
         <p>검색조건</p>
         <select class="col form-select" v-model="searchType">
-          <!-- <option>전체</option> -->
           <option>제목</option>
           <option>내용</option>
           <option>번호</option>

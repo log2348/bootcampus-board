@@ -7,7 +7,12 @@
     <br />
     <div>
       <button class="btn btn-primary">수정</button>
-      <button class="btn btn-primary">삭제</button>
+      <button
+        class="btn btn-primary"
+        @click="$store.commit('DELETE_BOARD', board.BOARD_SEQ)"
+      >
+        삭제
+      </button>
     </div>
     <table class="table table-bordered">
       <thead>

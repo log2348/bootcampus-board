@@ -2,7 +2,7 @@
   <div class="container" style="padding: 20px">
     <h2>Q&A 게시판</h2>
     <br /><br />
-    <Search :stateList="stateList" @searchBoard="searchBoard"></Search>
+    <Search :stateList="stateList"></Search>
     <br />
     <table class="table table-bordered">
       <thead>
@@ -66,7 +66,9 @@
     <div class="row">
       <div class="col" style="text-align: left">
         <button class="btn btn-light">엑셀 업로드</button>&nbsp;
-        <button class="btn btn-light">엑셀 다운로드</button>
+        <button class="btn btn-light" @click="getExcelFile">
+          엑셀 다운로드
+        </button>
       </div>
       <div class="col" style="text-align: right">
         <router-link to="/Edit">
@@ -78,6 +80,7 @@
 </template>
 
 <script>
+import Xlsx from "xlsx";
 import service from "../services/service.js";
 import Search from "../components/Search.vue";
 
@@ -94,6 +97,16 @@ export default {
       // 상태 정보 배열에 담기
       this.stateList = Array.from(new Set(response.map((a) => a.STATE)));
     });
+  },
+  methods: {
+    getExcelFile() {
+      const workBook = Xlsx.utils.book_new();
+      const workSheet = Xlsx.utils.json_to_sheet(
+        this.$store.state.filteredList
+      );
+      Xlsx.utils.book_append_sheet(workBook, workSheet, "myLog");
+      Xlsx.writeFile(workBook, "myLog.xlsx");
+    },
   },
 
   components: {

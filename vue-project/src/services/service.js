@@ -118,12 +118,17 @@ const service = {
    * 게시글 삭제
    */
   deleteBoard(boardSeq) {
+    const params = {
+      boardSeq: boardSeq,
+    };
     const data = axios
-      .get("/Board/Delete", boardSeq)
+      .get("/Board/Delete", { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
-      return data;
+    router.push("/List");
+
+    return data;
   },
 
   /**
@@ -132,6 +137,18 @@ const service = {
   selectPage(pageNumber) {
     const data = axios
       .get("/Board/BoardPage", pageNumber)
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+    return data;
+  },
+
+  /**
+   * 게시글 수정
+   */
+  updateBoard(boardData) {
+    const data = axios
+      .post("/Board/Update", boardData)
       .then((response) => response.data)
       .catch((error) => console.log(error));
 

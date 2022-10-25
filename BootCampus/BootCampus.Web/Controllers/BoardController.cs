@@ -44,7 +44,6 @@ namespace BootCampus.Web.Controllers
             int result = boardBsl.CreateBoard(newBoard);
 
             return result;
-
         }
 
         /// <summary>
@@ -98,10 +97,24 @@ namespace BootCampus.Web.Controllers
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
         }
 
+        /// <summary>
+        /// 게시글 삭제
+        /// </summary>
+        /// <param name="boardSeq"></param>
+        /// <returns></returns>
         public int Delete(int boardSeq)
         {
             BoardBsl boardBsl = new BoardBsl();
             int result = boardBsl.DeleteBoard(boardSeq);
+
+            return result;
+        }
+
+
+        public int Update(BoardModel boardModel)
+        {
+            BoardBsl boardBsl = new BoardBsl();
+            int result = boardBsl.UpdateBoard(boardModel);
 
             return result;
         }
