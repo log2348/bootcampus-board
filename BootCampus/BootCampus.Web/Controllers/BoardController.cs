@@ -98,6 +98,13 @@ namespace BootCampus.Web.Controllers
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
         }
 
+        public int Delete(int boardSeq)
+        {
+            BoardBsl boardBsl = new BoardBsl();
+            int result = boardBsl.DeleteBoard(boardSeq);
+
+            return result;
+        }
 
     }
 }

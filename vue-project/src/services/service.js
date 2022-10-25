@@ -115,6 +115,18 @@ const service = {
   },
 
   /**
+   * 게시글 삭제
+   */
+  deleteBoard(boardSeq) {
+    const data = axios
+      .get("/Board/Delete", boardSeq)
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+      return data;
+  },
+
+  /**
    * 게시글 페이징
    */
   selectPage(pageNumber) {
@@ -123,7 +135,7 @@ const service = {
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
-      return data;
+    return data;
   },
 };
 

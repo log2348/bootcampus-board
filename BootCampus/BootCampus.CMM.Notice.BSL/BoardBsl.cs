@@ -145,6 +145,19 @@ namespace BootCampus.CMM.Notice.BSL
 
             return boardList;
         }
+
+        #endregion
+        
+        #region 게시글 삭제
+        public int DeleteBoard(int boardSeq)
+        {
+            BoardDsl boardDsl = new BoardDsl();
+            int result = boardDsl.DeleteBoard(boardSeq);
+
+            return result;
+            
+        }
         #endregion
     }
+
 }

@@ -168,6 +168,21 @@ namespace BootCampus.CMM.Notice.DSL
 
             return result;
         }
+
+        public int DeleteBoard(int boardSeq)
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_D]", conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@BOARD_SEQ", boardSeq);
+
+            // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
+            int result = cmd.ExecuteNonQuery();
+
+            return result;
+        }
         #endregion
     }
 }

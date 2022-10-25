@@ -5,6 +5,10 @@
     </div>
     <br />
     <br />
+    <div>
+      <button class="btn btn-primary">수정</button>
+      <button class="btn btn-primary">삭제</button>
+    </div>
     <table class="table table-bordered">
       <thead>
         <tr>

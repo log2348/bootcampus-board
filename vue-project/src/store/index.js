@@ -11,8 +11,10 @@ export default new Vuex.Store({
       // 로그인된 유저 정보
       userId: "",
       password: "",
+
       boardList: [],
       filteredList: [],
+      updateMode: false,
       isFiltered: false,
       isAuthenticated: false,
     };
@@ -77,6 +79,22 @@ export default new Vuex.Store({
           } else {
             state.isFiltered = true;
             state.filteredList = response;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    /**
+     * 게시글 삭제
+     */
+    DELETE_BOARD(boardSeq) {
+      service
+        .deleteBoard(boardSeq)
+        .then((response) => {
+          if (response == 1) {
+            alert("삭제 성공");
           }
         })
         .catch((error) => {
