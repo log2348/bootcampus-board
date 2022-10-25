@@ -43,7 +43,7 @@ namespace BootCampus.CMM.Notice.DSL
 
             if (sqlDataReader.Read())
             {
-                model.BOARD_SEQ = Convert.ToInt32( sqlDataReader["BOARD_SEQ"]);
+                model.BOARD_SEQ = Convert.ToInt32(sqlDataReader["BOARD_SEQ"]);
                 model.STATE = Convert.ToString(sqlDataReader["STATE"]);
                 model.TITLE = Convert.ToString(sqlDataReader["TITLE"]);
                 model.CONTENTS = Convert.ToString(sqlDataReader["CONTENTS"]);
@@ -93,6 +93,50 @@ namespace BootCampus.CMM.Notice.DSL
             {
                 cmd.Parameters.AddWithValue("@STATE", state);
             }
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+
+            dataAdapter.Fill(ds, "Board");
+
+            conn.Close();
+
+            return ds;
+        }
+
+        #endregion
+
+        #region 게시글 검색
+        public DataSet SearchList(string searchType, string searchWord)
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@SEARCH_TYPE", searchType);
+            cmd.Parameters.AddWithValue("@SEARCH_WORD", searchWord);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+
+            dataAdapter.Fill(ds, "Board");
+
+            conn.Close();
+
+            return ds;
+        }
+        #endregion
+
+        #region 게시글 페이징
+        public DataSet SelectPage(int pageNumber)
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@PAGE", pageNumber);
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();

@@ -2,35 +2,11 @@
   <div class="container" style="padding: 20px">
     <h2>Q&A 게시판</h2>
     <br /><br />
-    <div class="row">
-      <div class="col-2">
-        <p>상태</p>
-        <select
-          class="form-select"
-          v-model="state"
-          @change="getListByState(state)"
-        >
-          <option>전체</option>
-          <option v-for="item in stateList" :key="item">{{ item }}</option>
-        </select>
-      </div>
-      <br />
-      <div class="row col-6">
-        <p>검색조건</p>
-        <select class="col form-select">
-          <option>제목</option>
-          <option>내용</option>
-          <option>번호</option>
-          <option>작성자</option></select
-        >&nbsp;
-        <input
-          type="text"
-          class="col form-control"
-          placeholder="검색어를 입력하세요."
-        />&nbsp;
-        <button class="col btn btn-primary">검색</button>
-      </div>
-    </div>
+    <Search
+      :stateList="stateList"
+      @getListByState="getListByState"
+      @searchBoard="searchBoard"
+    ></Search>
     <br />
     <table class="table table-bordered">
       <thead>
@@ -43,8 +19,26 @@
           <th>조회수</th>
         </tr>
       </thead>
-      <tbody>
+
+      <!-- 필터링 되지 않은 리스트 -->
+      <tbody v-if="!isFiltered">
         <tr v-for="item in $store.state.boardList" :key="item.BOARD_SEQ">
+          <td>{{ item.BOARD_SEQ }}</td>
+          <td>{{ item.STATE }}</td>
+          <router-link
+            :to="{ name: 'detail', params: { seq: item.BOARD_SEQ } }"
+          >
+            <td>{{ item.TITLE }}</td>
+          </router-link>
+          <td>{{ item.USER_ID }}</td>
+          <td>{{ item.WRITE_DATE }}</td>
+          <td>{{ item.VIEW_COUNT }}</td>
+        </tr>
+      </tbody>
+
+      <!-- 필터링된 리스트 -->
+      <tbody v-if="isFiltered">
+        <tr v-for="item in filteredList" :key="item.BOARD_SEQ">
           <td>{{ item.BOARD_SEQ }}</td>
           <td>{{ item.STATE }}</td>
           <router-link
@@ -86,6 +80,7 @@
 
 <script>
 import service from "../services/service.js";
+import Search from "../components/Search.vue";
 
 export default {
   data() {
@@ -93,7 +88,7 @@ export default {
       // 게시글 상태 정보
       stateList: [],
       filteredList: [],
-      state: "전체",
+      isFiltered: false,
     };
   },
   mounted() {
@@ -106,9 +101,38 @@ export default {
   methods: {
     getListByState(state) {
       service.getListByState(state).then((response) => {
-        this.$store.state.boardList = response;
+        if (state != "전체") {
+          this.isFiltered = true;
+          this.filteredList = response;
+        } else {
+          this.isFiltered = false;
+        }
       });
     },
+
+    searchBoard(searchType, searchWord) {
+      const data = {
+        searchType: searchType,
+        searchWord: searchWord,
+      };
+      service
+        .searchBoard(data)
+        .then((response) => {
+          console.log(response);
+          if (searchType == "전체" || searchWord == "") {
+            this.isFiltered = false;
+          } else {
+            this.isFiltered = true;
+            this.filteredList = response;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  components: {
+    Search,
   },
 };
 </script>

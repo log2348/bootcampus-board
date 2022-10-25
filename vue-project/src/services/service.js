@@ -1,4 +1,6 @@
 import axios from "axios";
+//import router from "../router/index.js";
+import store from "../store/index.js";
 
 const service = {
   /**
@@ -12,12 +14,30 @@ const service = {
         USERNAME: userData.USERNAME,
         PASSWORD: userData.PASSWORD,
       })
-      .then(function(response) {
-        this.$store.state.username = userData.USERNAME;
-        this.$store.state.password = userData.PASSWORD;
-        console.log(response);
+      .then(function (response) {
+        if (response.data != 1) {
+          if (response.data == 0) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+          }
+
+          if (response.data == -1) {
+            alert("아이디가 존재하지 않습니다.");
+            return;
+          }
+        }
+
+        if (response.data == 1) {
+          alert("로그인 성공");
+          store.state.username = userData.USERNAME;
+          store.state.password = userData.PASSWORD;
+          store.state.isAuthenticated = true;
+          //router.push("/List");
+        }
+
+        return response.data;
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
     return data;
@@ -61,8 +81,20 @@ const service = {
   },
 
   /**
-   * 로그인
+   * 게시글 검색
    */
+  searchBoard(searchData) {
+    const params = {
+      searchType: searchData.searchType,
+      searchWord: searchData.searchWord,
+    };
+    const data = axios
+      .get("/Board/Search", { params })
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+    return data;
+  },
 };
 
 export default service;

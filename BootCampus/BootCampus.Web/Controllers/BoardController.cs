@@ -58,19 +58,38 @@ namespace BootCampus.Web.Controllers
         }
 
         /// <summary>
+        /// 게시글 검색
+        /// </summary>
+        /// <param name="searchType"></param>
+        /// <param name="searchWord"></param>
+        /// <returns></returns>
+        public ActionResult Search(string searchType, string searchWord)
+        {
+            BoardBsl boardBsl = new BoardBsl();
+            List<BoardModel> boardList = boardBsl.SearchList(searchType, searchWord);
+            return Json(boardList, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult BoardPage(int pageNumber)
+        {
+            BoardBsl boardBsl = new BoardBsl();
+            List<BoardModel> boardList = boardBsl.SelectPage(pageNumber);
+
+            return Json(boardList, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// 엑셀 파일 다운로드
         /// </summary>
         /// <returns></returns>
-        //public FileStreamResult FileDownload()
-        //{
-        //    FileStream fs = new FileStream(@"D:\Log\ServiceLayer\20150321.__Anonymous.1.log", FileMode.Open);​
-
-        //    FileStreamResult fsr = new FileStreamResult(fs, System.Net.Mime.MediaTypeNames.Application.Octet.ToString());​
-
-        //    fsr.FileDownloadName = "myfile.log";​
-
-        //    return fsr;​
-        //}
+        public FileResult FileDownload()
+        {
+            // 파일 컨텐츠 반환
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"D:\log\myfile.xlsx");
+            string filename = "myfile.xlsx.txt";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
+        }
 
     }
 }

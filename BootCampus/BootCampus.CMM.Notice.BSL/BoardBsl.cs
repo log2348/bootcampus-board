@@ -81,11 +81,60 @@ namespace BootCampus.CMM.Notice.BSL
 
             return boardList;
         }
+
         #endregion
 
-        #region
+        #region 게시글 검색
+        public List<BoardModel> SearchList(string searchType, string searchWord)
+        {
+            BoardDsl boardDsl = new BoardDsl();
+            DataSet ds = boardDsl.SearchList(searchType, searchWord);
 
+            DataTable dataTable = ds.Tables["Board"];
 
+            List<BoardModel> boardList = new List<BoardModel>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                BoardModel boardModel = new BoardModel();
+                boardModel.BOARD_SEQ = Convert.ToInt32(dr["BOARD_SEQ"]);
+                boardModel.STATE = Convert.ToString(dr["STATE"]);
+                boardModel.TITLE = Convert.ToString(dr["TITLE"]);
+                boardModel.USER_ID = Convert.ToString(dr["USER_ID"]);
+                boardModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
+                boardModel.VIEW_COUNT = Convert.ToInt32(dr["VIEW_COUNT"]);
+
+                boardList.Add(boardModel);
+            }
+
+            return boardList;
+        }
+
+        #endregion
+
+        #region 게시글 페이징
+        public List<BoardModel> SelectPage(int pageNumber)
+        {
+            BoardDsl boardDsl = new BoardDsl();
+            DataSet ds = boardDsl.SelectPage(pageNumber);
+
+            DataTable dataTable = ds.Tables["Board"];
+
+            List<BoardModel> boardList = new List<BoardModel>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                BoardModel boardModel = new BoardModel();
+                boardModel.BOARD_SEQ = Convert.ToInt32(dr["BOARD_SEQ"]);
+                boardModel.STATE = Convert.ToString(dr["STATE"]);
+                boardModel.TITLE = Convert.ToString(dr["TITLE"]);
+                boardModel.USER_ID = Convert.ToString(dr["USER_ID"]);
+                boardModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
+                boardModel.VIEW_COUNT = Convert.ToInt32(dr["VIEW_COUNT"]);
+
+                boardList.Add(boardModel);
+            }
+
+            return boardList;
+        }
         #endregion
     }
 }

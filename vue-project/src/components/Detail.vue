@@ -24,11 +24,13 @@
       </tbody>
     </table>
     <div style="border: 1px">{{ board.CONTENTS }}</div>
+    <Comment></Comment>
   </div>
 </template>
 
 <script>
 import service from "../services/service.js";
+import Comment from "../components/Comment.vue";
 
 export default {
   data() {
@@ -41,6 +43,9 @@ export default {
       console.log(response);
       this.board = response;
     });
+  },
+  components: {
+    Comment,
   },
 };
 </script>

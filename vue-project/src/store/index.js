@@ -9,6 +9,7 @@ export default new Vuex.Store({
       // 로그인된 유저 정보
       username: "",
       password: "",
+      isAuthenticated: false,
       boardList: []
     }
   },
@@ -16,18 +17,7 @@ export default new Vuex.Store({
 
   },
   mutations: {
-    // LOGIN(state, data) {
-    //   if (data.username == "") {
-    //     alert("아이디를 입력하세요.");
-    //     return;
-    //   }
 
-    //   if (data.password == "") {
-    //     alert("비밀번호를 입력하세요.");
-    //     return;
-    //   }
-      
-    // }
   },
   getters: {
 
