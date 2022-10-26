@@ -1,6 +1,7 @@
 <template>
   <div>
     <label for="comment"><b>> 댓글</b></label>
+    <br />
     <textarea class="form-control" rows="4" id="comment" name="text"></textarea>
     <br />
 
@@ -18,7 +19,7 @@
 export default {
   mounted() {
     this.$store.commit("GET_REPLY_LIST", this.$route.params.seq);
-  }
+  },
 };
 </script>
 

@@ -11,6 +11,8 @@ namespace BootCampus.CMM.Notice.BSL
 {
     public class ReplyBsl
     {
+       
+        #region 게시글별 댓글 목록 조회
         public List<ReplyModel> SelectReplyList(int boardSeq)
         {
             ReplyDsl replyDsl = new ReplyDsl();
@@ -26,12 +28,48 @@ namespace BootCampus.CMM.Notice.BSL
                 replyModel.BOARD_SEQ = Convert.ToInt32(dr["BOARD_SEQ"]);
                 replyModel.REPLY_CONTENTS = Convert.ToString(dr["REPLY_CONTENTS"]);
                 replyModel.USER_ID = Convert.ToString(dr["USER_ID"]);
-                // replyModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
+                // replyModel.WRITE_DATE = Convert.ToString(dr["WRITE_DATE"]); // TODO 오류 수정
+
+                if (dr["PARENT_SEQ"] != null)
+                {
+                    replyModel.PARENT_SEQ = Convert.ToInt32(dr["PARENT_SEQ"]);
+                }
 
                 replyList.Add(replyModel);
             }
 
             return replyList;
         }
+        #endregion
+
+        #region 댓글 수정
+        public int UpdateReply(ReplyModel replyModel)
+        {
+            ReplyDsl replyDsl = new ReplyDsl();
+            int result = replyDsl.UpdateReply(replyModel);
+
+            return result;
+        }
+        #endregion
+
+        #region 댓글 삭제
+        public int DeleteReply(int replySeq)
+        {
+            ReplyDsl replyDsl = new ReplyDsl();
+            int result = replyDsl.DeleteReply(replySeq);
+
+            return result;
+        }
+        #endregion
+
+        #region 댓글 등록
+        public int CreateReply(ReplyModel replyModel)
+        {
+            ReplyDsl replyDsl = new ReplyDsl();
+            int result = replyDsl.CreateReply(replyModel);
+
+            return result;
+        }
+        #endregion
     }
 }

@@ -1,18 +1,28 @@
 <template>
   <div class="container" style="padding: 20px">
     <div>
-      <h2>게시글 상세</h2>
+      <h2 style="text-align: center"><b>게시글 상세</b></h2>
     </div>
     <br />
     <br />
-    <div>
-      <router-link :to="{ name: 'edit', params: { boardSeq: board.BOARD_SEQ } }"
-        ><button class="btn btn-primary" @click="$store.state.mode = 'UPDATE'">
+    <div class="container flex" style="text-align: right">
+      <router-link to="/List"
+        ><button class="btn btn-secondary">목록</button></router-link
+      >&nbsp;
+      <router-link :to="{ name: 'edit', params: { seq: board.BOARD_SEQ } }"
+        ><button
+          v-show="$store.state.userId == board.USER_ID"
+          class="btn btn-success"
+          @click="$store.state.mode = 'UPDATE'"
+        >
           수정
         </button></router-link
       >&nbsp;
-      <button class="btn btn-primary" @click="$bvModal.show('modal-scoped')">
-        <!-- @click="$store.commit('DELETE_BOARD', board.BOARD_SEQ)" -->
+      <button
+        v-show="$store.state.userId == board.USER_ID"
+        class="btn btn-danger"
+        @click="clickDeleteBtn"
+      >
         삭제
       </button>
     </div>
@@ -37,7 +47,7 @@
     </table>
     <div class="container p-5 my-5 border">{{ board.CONTENTS }}</div>
     <Comment></Comment>
-    <Confirm></Confirm>
+    <Confirm :boardSeq="this.board.BOARD_SEQ"></Confirm>
   </div>
 </template>
 
@@ -52,13 +62,17 @@ export default {
       board: {},
     };
   },
+  methods: {
+    clickDeleteBtn() {
+      this.$store.state.mode = "DELETE";
+      this.$bvModal.show("modal-scoped");
+    },
+  },
   mounted() {
     service.getBoard(this.$route.params.seq).then((response) => {
       console.log(response);
       this.board = response;
     });
-
-    
   },
   components: {
     Comment,

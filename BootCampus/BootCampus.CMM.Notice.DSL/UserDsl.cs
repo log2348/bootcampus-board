@@ -51,7 +51,7 @@ namespace BootCampus.CMM.Notice.DSL
                 return -1;
             }
 
-            conn.Close();
+            //conn.Close();
 
         }
     }

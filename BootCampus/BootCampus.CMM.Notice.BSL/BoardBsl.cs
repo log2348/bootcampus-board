@@ -37,7 +37,7 @@ namespace BootCampus.CMM.Notice.BSL
                 boardModel.STATE = Convert.ToString(dr["STATE"]);
                 boardModel.TITLE = Convert.ToString(dr["TITLE"]);
                 boardModel.USER_ID = Convert.ToString(dr["USER_ID"]);
-                boardModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
+                boardModel.WRITE_DATE = Convert.ToString(dr["WRITE_DATE"]);
                 boardModel.VIEW_COUNT = Convert.ToInt32(dr["VIEW_COUNT"]);
 
                 boardList.Add(boardModel);
@@ -74,7 +74,7 @@ namespace BootCampus.CMM.Notice.BSL
                 boardModel.STATE = Convert.ToString(dr["STATE"]);
                 boardModel.TITLE = Convert.ToString(dr["TITLE"]);
                 boardModel.USER_ID = Convert.ToString(dr["USER_ID"]);
-                boardModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
+                boardModel.WRITE_DATE = Convert.ToString(dr["WRITE_DATE"]);
                 boardModel.VIEW_COUNT = Convert.ToInt32(dr["VIEW_COUNT"]);
 
                 boardList.Add(boardModel);
@@ -101,7 +101,7 @@ namespace BootCampus.CMM.Notice.BSL
                 boardModel.STATE = Convert.ToString(dr["STATE"]);
                 boardModel.TITLE = Convert.ToString(dr["TITLE"]);
                 boardModel.USER_ID = Convert.ToString(dr["USER_ID"]);
-                boardModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
+                boardModel.WRITE_DATE = Convert.ToString(dr["WRITE_DATE"]);
                 boardModel.VIEW_COUNT = Convert.ToInt32(dr["VIEW_COUNT"]);
 
                 boardList.Add(boardModel);
@@ -128,7 +128,7 @@ namespace BootCampus.CMM.Notice.BSL
                 boardModel.STATE = Convert.ToString(dr["STATE"]);
                 boardModel.TITLE = Convert.ToString(dr["TITLE"]);
                 boardModel.USER_ID = Convert.ToString(dr["USER_ID"]);
-                boardModel.WRITE_DATE = Convert.ToDateTime(dr["WRITE_DATE"]);
+                boardModel.WRITE_DATE = Convert.ToString(dr["WRITE_DATE"]);
                 boardModel.VIEW_COUNT = Convert.ToInt32(dr["VIEW_COUNT"]);
 
                 boardList.Add(boardModel);
@@ -138,7 +138,7 @@ namespace BootCampus.CMM.Notice.BSL
         }
 
         #endregion
-        
+
         #region 게시글 삭제
         public int DeleteBoard(int boardSeq)
         {
@@ -146,7 +146,7 @@ namespace BootCampus.CMM.Notice.BSL
             int result = boardDsl.DeleteBoard(boardSeq);
 
             return result;
-            
+
         }
 
         public int UpdateBoard(BoardModel boardModel)

@@ -47,7 +47,7 @@ namespace BootCampus.CMM.Notice.DSL
                 model.STATE = Convert.ToString(sqlDataReader["STATE"]);
                 model.TITLE = Convert.ToString(sqlDataReader["TITLE"]);
                 model.CONTENTS = Convert.ToString(sqlDataReader["CONTENTS"]);
-                model.WRITE_DATE = Convert.ToDateTime(sqlDataReader["WRITE_DATE"]);
+                model.WRITE_DATE = Convert.ToString(sqlDataReader["WRITE_DATE"]);
                 model.USER_ID = Convert.ToString(sqlDataReader["USER_ID"]);
                 model.VIEW_COUNT = Convert.ToInt32(sqlDataReader["VIEW_COUNT"]);
 

@@ -126,8 +126,6 @@ const service = {
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
-    router.push("/List");
-
     return data;
   },
 
@@ -147,8 +145,15 @@ const service = {
    * 게시글 수정
    */
   updateBoard(boardData) {
+    const params = {
+      BOARD_SEQ: boardData.BOARD_SEQ,
+      STATE: boardData.STATE,
+      TITLE: boardData.TITLE,
+      USER_ID: boardData.USER_ID,
+      CONTENTS: boardData.CONTENTS,
+    };
     const data = axios
-      .post("/Board/Update", boardData)
+      .post("/Board/Update", { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
@@ -164,7 +169,19 @@ const service = {
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
-      return data;
+    return data;
+  },
+
+  /**
+   * 댓글 등록
+   */
+  createReply(replyData) {
+    const data = axios
+      .post("/Reply/Create", replyData)
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+    return data;
   },
 };
 

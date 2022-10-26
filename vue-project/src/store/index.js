@@ -55,7 +55,7 @@ export default new Vuex.Store({
         .then((response) => {
           if (response == 1) {
             state.boardList.push();
-            alert("저장 성공");
+            alert("게시글이 등록되었습니다.");
             // 등록 성공시 목록 화면으로 이동
             router.push("/List");
           } else {
@@ -95,7 +95,10 @@ export default new Vuex.Store({
         .deleteBoard(boardSeq)
         .then((response) => {
           if (response == 1) {
-            alert("삭제 성공");
+            alert("게시글이 삭제되었습니다.");
+            router.push("/List");
+          } else {
+            alert("게시글이 삭제되지 않았습니다.");
           }
         })
         .catch((error) => {
@@ -124,9 +127,14 @@ export default new Vuex.Store({
       service
         .updateBoard(boardData)
         .then((response) => {
-          console.log(response);
+          if (response == 1) {
+            alert("수정이 완료되었습니다.");
+          } else {
+            alert("수정이 완료되지 않았습니다");
+          }
         })
         .catch((error) => {
+          alert("수정 실패. 다시 시도해주세요.");
           console.log(error);
         });
     },
@@ -139,6 +147,25 @@ export default new Vuex.Store({
         .getReplyList(boardSeq)
         .then((response) => {
           state.replyList = response;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    /**
+     * 댓글 등록
+     */
+    CREATE_REPLY(state, replyData) {
+      service
+        .createReply(replyData)
+        .then((response) => {
+          if(response == 1) {
+            state.replyList = response;
+            
+          } else {
+            alert("댓글이 등록되지 않았습니다.");
+          }
         })
         .catch((error) => {
           console.log(error);

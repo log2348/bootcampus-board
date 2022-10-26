@@ -22,5 +22,45 @@ namespace BootCampus.Web.Controllers
 
             return Json(replyList, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// 댓글 등록
+        /// </summary>
+        /// <param name="replyModel"></param>
+        /// <returns></returns>
+        public int Create(ReplyModel replyModel)
+        {
+            ReplyBsl replyBsl = new ReplyBsl();
+            int result = replyBsl.CreateReply(replyModel);
+
+            return result;
+        }
+
+        /// <summary>
+        /// 댓글 수정
+        /// </summary>
+        /// <param name="replyModel"></param>
+        /// <returns></returns>
+        public int Update(ReplyModel replyModel)
+        {
+            ReplyBsl replyBsl = new ReplyBsl();
+            int result = replyBsl.UpdateReply(replyModel);
+
+            return result;
+        }
+
+        /// <summary>
+        /// 댓글 삭제
+        /// </summary>
+        /// <param name="replySeq"></param>
+        /// <returns></returns>
+        public int Delete(int replySeq)
+        {
+            ReplyBsl replyBsl = new ReplyBsl();
+            int result = replyBsl.DeleteReply(replySeq);
+
+            return result;
+        }
+
     }
 }

@@ -18,7 +18,7 @@ namespace BootCampus.Models
 
         public string USER_ID { get; set; }
 
-        public DateTime WRITE_DATE { get; set; }
+        public String WRITE_DATE { get; set; }
 
     }
 }

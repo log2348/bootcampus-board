@@ -43,7 +43,7 @@
             <td>{{ item.TITLE }}</td>
           </router-link>
           <td>{{ item.USER_ID }}</td>
-          <td>{{ $moment(item.WRITE_DATE).format('YYYY-MM-DD') }}</td>
+          <td>{{ item.WRITE_DATE }}</td>
           <td>{{ item.VIEW_COUNT }}</td>
         </tr>
       </tbody>

@@ -10,14 +10,20 @@
     <b-button @click="$bvModal.show('modal-scoped')">등록</b-button>&nbsp;
     <router-link to="/List"><b-button>목록</b-button></router-link>
 
-    <Confirm :title="title" :contents="contents"></Confirm>
+    <Confirm
+      v-if="$store.state.mode == 'UPDATE'"
+      :title="board.TITLE"
+      :contents="board.CONTENTS"
+    ></Confirm>
+    <Confirm v-else :title="title" :contents="contents"></Confirm>
+
     <br />
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>제목</th>
           <td v-if="$store.state.mode == 'UPDATE'">
-            <input value="board.TITLE" v-model="title" />
+            <input v-model="board.TITLE" />
           </td>
           <td v-else><input v-model="title" /></td>
         </tr>
@@ -36,7 +42,7 @@
       class="form-control"
       rows="10"
       placeholder="내용을 입력하세요"
-      v-model="contents"
+      v-model="board.CONTENTS"
     ></textarea>
     <textarea
       v-else
@@ -66,6 +72,7 @@
 </template>
 
 <script>
+import service from "../services/service.js";
 import Confirm from "../components/Confirm.vue";
 
 export default {
@@ -73,10 +80,17 @@ export default {
     return {
       title: "",
       contents: "",
-      board: this.$route.params,
+      board: "",
     };
   },
-  mounted: {},
+  mounted() {
+    if (this.$store.state.mode == "UPDATE") {
+      service.getBoard(this.$route.params.seq).then((response) => {
+        console.log(response);
+        this.board = response;
+      });
+    }
+  },
   components: {
     Confirm,
   },

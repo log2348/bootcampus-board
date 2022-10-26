@@ -110,7 +110,11 @@ namespace BootCampus.Web.Controllers
             return result;
         }
 
-
+        /// <summary>
+        /// 게시글 수정
+        /// </summary>
+        /// <param name="boardModel"></param>
+        /// <returns></returns>
         public int Update(BoardModel boardModel)
         {
             BoardBsl boardBsl = new BoardBsl();
