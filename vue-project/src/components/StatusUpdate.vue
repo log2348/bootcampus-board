@@ -54,7 +54,6 @@ export default {
         alert("현재 상태와 동일합니다.");
       } else {
         this.$store.commit("UPDATE_STATUS", data);
-        this.close();
       }
     },
   },
