@@ -59,7 +59,7 @@ namespace BootCampus.CMM.Notice.DSL
         }
         #endregion
 
-        #region Board List 조회
+        #region 게시글 전체 목록 조회
         public DataSet SelectBoardList()
         {
             conn = DbConn();
@@ -78,9 +78,6 @@ namespace BootCampus.CMM.Notice.DSL
 
             return ds;
         }
-        #endregion
-
-        #region Board 등록
         #endregion
 
         #region 게시글 상태별 검색

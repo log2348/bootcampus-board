@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace BootCampus.Models
 {
-    internal class ImageModel
+    public class ImageModel
     {
+        public int IMAGE_SEQ { get; set; }
+
+        public string FILE_NAME { get; set; }
+
+        public int BOARD_SEQ { get; set; }
     }
 }

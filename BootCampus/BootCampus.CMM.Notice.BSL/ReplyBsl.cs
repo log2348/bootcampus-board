@@ -28,9 +28,9 @@ namespace BootCampus.CMM.Notice.BSL
                 replyModel.BOARD_SEQ = Convert.ToInt32(dr["BOARD_SEQ"]);
                 replyModel.REPLY_CONTENTS = Convert.ToString(dr["REPLY_CONTENTS"]);
                 replyModel.USER_ID = Convert.ToString(dr["USER_ID"]);
-                // replyModel.WRITE_DATE = Convert.ToString(dr["WRITE_DATE"]); // TODO 오류 수정
+                replyModel.WRITE_DATE = Convert.ToString(dr["CREATE_DATE"]); // TODO 오류 수정
 
-                if (dr["PARENT_SEQ"] != null)
+                if (Convert.ToString(dr["PARENT_SEQ"]) != "")
                 {
                     replyModel.PARENT_SEQ = Convert.ToInt32(dr["PARENT_SEQ"]);
                 }

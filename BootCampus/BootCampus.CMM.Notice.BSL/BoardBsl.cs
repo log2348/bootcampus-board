@@ -136,7 +136,6 @@ namespace BootCampus.CMM.Notice.BSL
 
             return boardList;
         }
-
         #endregion
 
         #region 게시글 삭제

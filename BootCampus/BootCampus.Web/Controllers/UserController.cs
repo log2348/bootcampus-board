@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace BootCampus.Web.Controllers
 {
@@ -20,7 +21,17 @@ namespace BootCampus.Web.Controllers
             UserBsl userBsl = new UserBsl();
             int result = userBsl.Login(userModel);
 
+            if (result == 1)
+            {
+                FormsAuthentication.SetAuthCookie(userModel.USER_ID, false);
+            }
+
             return result;
+        }
+
+        public ActionResult LoginView()
+        {
+            return View("LoginView");
         }
     }
 }

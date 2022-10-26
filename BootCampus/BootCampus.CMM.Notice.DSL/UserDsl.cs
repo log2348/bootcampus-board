@@ -16,13 +16,16 @@ namespace BootCampus.CMM.Notice.DSL
 
         private SqlConnection conn = new SqlConnection(_connectionString);
 
+        #region DataBase Connection
         public SqlConnection DbConn()
         {
             conn.Open();
 
             return conn;
         }
+        #endregion
 
+        #region 로그인
         public int Login(UserModel userModel)
         {
             conn = DbConn();
@@ -54,5 +57,6 @@ namespace BootCampus.CMM.Notice.DSL
             //conn.Close();
 
         }
+        #endregion
     }
 }

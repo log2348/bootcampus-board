@@ -16,13 +16,13 @@
     >
       <li class="list-group-item">
         <input type="hidden" v-model="replySeq" value=item.REPLY_SEQ />
-        <div>
+        <div class="container">
           <span>
             <b>{{ item.USER_ID }}</b
-            ><span>현재날짜</span>
+            >&nbsp;&nbsp;<span>(현재날짜)</span>
             <span
               @click="deleteReply(replySeq)"
-              style="color: red; cursor: pointer"
+              style="color: red; cursor: pointer; text-align: end"
               >삭제</span
             >
           </span>
