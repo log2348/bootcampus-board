@@ -1,14 +1,17 @@
 <template>
   <div class="container" style="padding: 25px">
     <div>
-      <h2 v-if="$store.state.mode == 'UPDATE'">게시글 수정</h2>
-      <h2 v-else>게시글 등록</h2>
+      <h2 v-if="$store.state.mode == 'UPDATE'" style="text-align: center"><b>게시글 수정</b></h2>
+      <h2 v-else style="text-align: center"><b>게시글 등록</b></h2>
     </div>
     <br />
-    <br />
 
-    <b-button @click="$bvModal.show('modal-scoped')">등록</b-button>&nbsp;
-    <router-link to="/List"><b-button>목록</b-button></router-link>
+    <div class="container" style="text-align: right">
+      <b-button variant="success" @click="$bvModal.show('modal-scoped')"
+        >등록</b-button
+      >&nbsp;
+      <router-link to="/List"><b-button>목록</b-button></router-link>
+    </div>
 
     <Confirm
       v-if="$store.state.mode == 'UPDATE'"
@@ -54,9 +57,13 @@
     <br />
     <br />
 
-    <h4>이미지 등록</h4>
+    <h4><b>이미지 등록</b></h4>
 
-      <img :src="preview" title="이미지 미리보기" style="width: 250px; height: 250px; margin: 10px;" />
+    <img
+      :src="preview"
+      title="이미지 미리보기"
+      style="width: 250px; height: 250px; margin: 10px"
+    />
     <input type="file" accept="image/*" @change="onFileSelected()" />
   </div>
 </template>
