@@ -175,7 +175,16 @@ export default new Vuex.Store({
     /**
      * 댓글 삭제
      */
-    
+    DELETE_REPLY(state, replySeq) {
+      service.deleteReply(replySeq).then((response) => {
+        if (response == 1) {
+          state.replyList.fillter((a) => a.REPLY_SEQ != replySeq);
+          alert("댓글이 삭제되었습니다.");
+        } else {
+          alert("댓글이 삭제되지 않았습니다.");
+        }
+      });
+    },
   },
   getters: {},
 });

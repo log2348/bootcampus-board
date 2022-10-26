@@ -186,6 +186,18 @@ const service = {
 
     return data;
   },
+
+  /**
+   * 댓글 삭제
+   */
+  deleteReply(replySeq) {
+    const data = axios
+      .get("/Reply/Delete", replySeq)
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+      return data;
+  },
 };
 
 export default service;

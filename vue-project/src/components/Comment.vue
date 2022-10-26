@@ -15,11 +15,18 @@
       :key="item.REPLY_SEQ"
     >
       <li class="list-group-item">
-        <p>
-          <b>{{ item.USER_ID }}</b
-          >현재날짜
-        </p>
-
+        <input type="hidden" v-model="replySeq" value=item.REPLY_SEQ />
+        <div>
+          <span>
+            <b>{{ item.USER_ID }}</b
+            ><span>현재날짜</span>
+            <span
+              @click="deleteReply(replySeq)"
+              style="color: red; cursor: pointer"
+              >삭제</span
+            >
+          </span>
+        </div>
         {{ item.REPLY_CONTENTS }}
       </li>
     </ul>
@@ -31,6 +38,7 @@ export default {
   data() {
     return {
       contents: "",
+      replySeq: "",
     };
   },
   props: ["boardSeq"],
@@ -50,7 +58,7 @@ export default {
 
     deleteReply(replySeq) {
       this.$store.commit("DELETE_REPLY", replySeq);
-    }
+    },
   },
 };
 </script>
