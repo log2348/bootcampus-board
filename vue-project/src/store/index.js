@@ -146,6 +146,7 @@ export default new Vuex.Store({
       service
         .getReplyList(boardSeq)
         .then((response) => {
+          console.log(response);
           state.replyList = response;
         })
         .catch((error) => {
@@ -160,9 +161,8 @@ export default new Vuex.Store({
       service
         .createReply(replyData)
         .then((response) => {
-          if(response == 1) {
-            state.replyList = response;
-            
+          if (response == 1) {
+            state.replyList.push(replyData);
           } else {
             alert("댓글이 등록되지 않았습니다.");
           }
@@ -171,6 +171,11 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+
+    /**
+     * 댓글 삭제
+     */
+    
   },
   getters: {},
 });

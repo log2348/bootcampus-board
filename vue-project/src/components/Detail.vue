@@ -46,7 +46,7 @@
       </tbody>
     </table>
     <div class="container p-5 my-5 border">{{ board.CONTENTS }}</div>
-    <Comment></Comment>
+    <Comment :boardSeq="$route.params.seq"></Comment>
     <Confirm :boardSeq="this.board.BOARD_SEQ"></Confirm>
   </div>
 </template>
@@ -69,6 +69,7 @@ export default {
     },
   },
   mounted() {
+    // 게시글 정보 세팅
     service.getBoard(this.$route.params.seq).then((response) => {
       console.log(response);
       this.board = response;

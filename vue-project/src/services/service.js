@@ -164,8 +164,11 @@ const service = {
    * 댓글 목록 조회
    */
   getReplyList(boardSeq) {
+    const params = {
+      boardSeq: boardSeq,
+    };
     const data = axios
-      .get("/Reply/ReplyList", boardSeq)
+      .get("/Reply/ReplyList", { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 

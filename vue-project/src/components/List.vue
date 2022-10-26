@@ -1,6 +1,6 @@
 <template>
   <div class="container" style="padding: 20px">
-    <h2>Q&A 게시판</h2>
+    <h2 style="text-align: center"><b>Q&A 게시판</b></h2>
     <br /><br />
     <Search :stateList="stateList"></Search>
     <br />
