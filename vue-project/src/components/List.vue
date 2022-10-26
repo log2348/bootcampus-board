@@ -2,7 +2,7 @@
   <div class="container" style="padding: 20px">
     <h2 style="text-align: center"><b>Q&A 게시판</b></h2>
     <br /><br />
-    <Search :stateList="stateList"></Search>
+    <Search></Search>
     <br />
     <table class="table table-bordered">
       <thead>
@@ -51,25 +51,30 @@
     <div class="container">
       <ul class="pagination" style="justify-content: center">
         <li class="page-item disabled">
-          <a class="page-link" href="#">Prev</a>
+          <a class="page-link" @click="onPageChange()">Prev</a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item">
+          <a class="page-link" @click="onPageChange()">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" @click="onPageChange(2)">2</a>
+        </li>
         <li class="page-item disabled">
           <a class="page-link" href="#">Next</a>
         </li>
       </ul>
     </div>
-    <br />
-    <br />
 
     <div class="row">
-      <div class="col" style="text-align: left">
-        <button class="btn btn-light" @click="importExcel">엑셀 업로드</button
-        >&nbsp;
-        <button class="btn btn-light" @click="getExcelFile">
-          엑셀 다운로드
-        </button>
+      <div class="col">
+        <button class="btn btn-light" @click="getExcelFile()">
+          엑셀 다운로드</button
+        >&nbsp;&nbsp;
+        <input
+          type="file"
+          @change="readExcelFile()"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        />
       </div>
       <div class="col" style="text-align: right">
         <router-link to="/Edit">
@@ -88,17 +93,13 @@ import service from "../services/service.js";
 import Search from "../components/Search.vue";
 
 export default {
-  data() {
-    return {
-      // 게시글 상태 정보
-      stateList: [],
-    };
-  },
   mounted() {
     service.getBoardList().then((response) => {
       this.$store.state.boardList = response;
       // 상태 정보 배열에 담기
-      this.stateList = Array.from(new Set(response.map((a) => a.STATE)));
+      this.$store.state.stateList = Array.from(
+        new Set(response.map((a) => a.STATE))
+      );
     });
   },
   methods: {
@@ -111,7 +112,25 @@ export default {
       Xlsx.writeFile(workBook, "myLog.xlsx");
     },
 
-    importExcel() {},
+    readExcelFile() {
+      const file = event.target.files[0];
+      console.log(this.$store.state.boardList);
+      let reader = new FileReader();
+      reader.onload = () => {
+        let data = reader.result;
+        let workbook = Xlsx.read(data, { type: "binary" });
+        workbook.SheetNames.forEach((sheetName) => {
+          const file = Xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+          this.$store.state.boardList.push(...file);
+          console.log(this.$store.state.boardList);
+        });
+      };
+      reader.readAsBinaryString(file);
+    },
+
+    onPageChange(page) {
+      this.$store.commit("SELECT_PAGE", page);
+    },
   },
 
   components: {

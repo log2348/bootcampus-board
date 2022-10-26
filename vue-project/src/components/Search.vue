@@ -9,7 +9,9 @@
           @change="$store.commit('GET_LIST_BY_STATE', state)"
         >
           <option>전체</option>
-          <option v-for="item in stateList" :key="item">{{ item }}</option>
+          <option v-for="item in $store.state.stateList" :key="item">
+            {{ item }}
+          </option>
         </select>
       </div>
       <br />
@@ -29,7 +31,7 @@
         />&nbsp;
         <button
           class="col-sm-2 btn btn-primary"
-          @click="$store.commit('SEARCH_BOARD', {searchType, searchWord})"
+          @click="$store.commit('SEARCH_BOARD', { searchType, searchWord })"
         >
           검색
         </button>
@@ -47,8 +49,6 @@ export default {
       searchWord: "",
     };
   },
-  props: ["stateList"],
-  
 };
 </script>
 

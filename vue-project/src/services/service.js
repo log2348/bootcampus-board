@@ -196,7 +196,22 @@ const service = {
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
-      return data;
+    return data;
+  },
+
+  /**
+   * 상태 업데이트
+   */
+  updateStatus(status) {
+    let params = {
+      STATE: status,
+    };
+    const data = axios
+      .post("/Board/Update", { params })
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+    return data;
   },
 };
 

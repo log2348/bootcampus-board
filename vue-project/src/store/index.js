@@ -15,7 +15,9 @@ export default new Vuex.Store({
 
       boardList: [],
       filteredList: [],
-      replyList: [],
+      stateList: [],
+      replyP: [], // 부모 댓글
+      replyC: [], // 자식 댓글
       isFiltered: false,
       isAuthenticated: false,
     };
@@ -147,7 +149,14 @@ export default new Vuex.Store({
         .getReplyList(boardSeq)
         .then((response) => {
           console.log(response);
-          state.replyList = response;
+          // 댓글, 대댓글 구분해서 넣기
+          response.forEach((element) => {
+            if (element.PARENT_SEQ != "") {
+              state.replyC.push(element);
+            } else {
+              state.replyP.push(element);
+            }
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -162,7 +171,7 @@ export default new Vuex.Store({
         .createReply(replyData)
         .then((response) => {
           if (response == 1) {
-            state.replyList.push(replyData);
+            state.replyP.push(replyData);
           } else {
             alert("댓글이 등록되지 않았습니다.");
           }
@@ -178,13 +187,26 @@ export default new Vuex.Store({
     DELETE_REPLY(state, replySeq) {
       service.deleteReply(replySeq).then((response) => {
         if (response == 1) {
-          state.replyList.fillter((a) => a.REPLY_SEQ != replySeq);
+          state.replyP.fillter((a) => a.REPLY_SEQ != replySeq);
           alert("댓글이 삭제되었습니다.");
         } else {
           alert("댓글이 삭제되지 않았습니다.");
         }
       });
     },
+
+    /**
+     * 상태 업데이트
+     */
+    UPDATE_STATUS(state, status) {
+      service.updateStatus(status).then((response) => {
+        if (response == 1) {
+          alert("게시글의 상태가 변경되었습니다.");
+        } else {
+          alert("게시글의 상태가 변경되지 않았습니다.");
+        }
+      });
+    }
   },
   getters: {},
 });

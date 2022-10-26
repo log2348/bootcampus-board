@@ -7,8 +7,8 @@ import service from "./services/service.js";
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
-Vue.use(require("vue-moment"));
 Vue.use(BootstrapVue);
 Vue.prototype.$axios = axios;
 

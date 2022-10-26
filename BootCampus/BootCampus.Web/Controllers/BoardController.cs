@@ -86,18 +86,6 @@ namespace BootCampus.Web.Controllers
         }
 
         /// <summary>
-        /// 엑셀 파일 다운로드
-        /// </summary>
-        /// <returns></returns>
-        public FileResult FileDownload()
-        {
-            // 파일 컨텐츠 반환
-            byte[] fileBytes = System.IO.File.ReadAllBytes(@"D:\log\myfile.xlsx");
-            string filename = "myfile.xlsx.txt";
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
-        }
-
-        /// <summary>
         /// 게시글 삭제
         /// </summary>
         /// <param name="boardSeq"></param>

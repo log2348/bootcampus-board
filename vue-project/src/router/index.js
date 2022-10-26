@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import store from "../store/index.js";
+import store from "../store/index.js";
 import Login from "../components/Login.vue";
 import List from "../components/List.vue";
 import Edit from "../components/Edit.vue";
@@ -15,6 +15,7 @@ const router = new VueRouter({
       name: "login",
       path: "/",
       component: Login,
+      meta: { authRequired: true },
     },
     {
       name: "boardList",
@@ -34,18 +35,21 @@ const router = new VueRouter({
   ],
 });
 
+// 네비게이션 가드
 router.beforeEach(function (to, from, next) {
-  // to: 이동할 url에 해당하는 라우팅 객체
   if (
     to.matched.some(function (routeInfo) {
       return routeInfo.meta.authRequired;
     })
   ) {
-    // 이동할 페이지에 인증 정보가 필요하면 경고 창을 띄우고 페이지 전환은 하지 않음
-    alert("Login Please!");
+    next();
   } else {
-    console.log("routing success : '" + to.path + "'");
-    next(); // 페이지 전환
+    if (store.state.userId != "") {
+      next();
+      return;
+    } else {
+      alert("로그인 후 이용가능합니다.");
+    }
   }
 });
 

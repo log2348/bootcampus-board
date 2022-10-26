@@ -6,9 +6,10 @@
     <br />
     <br />
     <div class="container flex" style="text-align: right">
-      <router-link to="/List"
-        ><button class="btn btn-secondary">목록</button></router-link
-      >&nbsp;
+      
+      <b-button variant="light" @click="$bvModal.show('update-status-modal')"
+          >상태 업데이트</b-button
+        >&nbsp;
       <router-link :to="{ name: 'edit', params: { seq: board.BOARD_SEQ } }"
         ><button
           v-show="$store.state.userId == board.USER_ID"
@@ -46,8 +47,13 @@
       </tbody>
     </table>
     <div class="container p-5 my-5 border">{{ board.CONTENTS }}</div>
+    <div style="text-align: right">
+    <router-link to="/List"
+        ><button class="btn btn-light" >목록</button></router-link
+      ></div>
     <Comment :boardSeq="$route.params.seq"></Comment>
     <Confirm :boardSeq="this.board.BOARD_SEQ"></Confirm>
+    <StatusUpdate :status="this.board.STATE"></StatusUpdate>
   </div>
 </template>
 
@@ -55,6 +61,7 @@
 import service from "../services/service.js";
 import Comment from "../components/Comment.vue";
 import Confirm from "../components/Confirm.vue";
+import StatusUpdate from "../components/StatusUpdate.vue";
 
 export default {
   data() {
@@ -78,6 +85,7 @@ export default {
   components: {
     Comment,
     Confirm,
+    StatusUpdate,
   },
 };
 </script>
