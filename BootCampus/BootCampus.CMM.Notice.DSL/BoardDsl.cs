@@ -133,9 +133,8 @@ namespace BootCampus.CMM.Notice.DSL
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@PAGE", pageNumber);
-            cmd.Parameters.AddWithValue("@ROW_COUNT", 7);
-
+            cmd.Parameters.AddWithValue("@PAGE", pageNumber); // 페이지 번호
+            cmd.Parameters.AddWithValue("@ROW_COUNT", 5); // 출력할 행의 수
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();

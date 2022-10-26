@@ -28,7 +28,7 @@ namespace BootCampus.CMM.Notice.DSL
         #region 이미지 등록
         public int CreateImage(ImageModel imageModel)
         {
-            FileStream fs = new FileStream(@"D:\test", FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(@"D:\test\data.bin", FileMode.Open, FileAccess.Read);
             byte[] bImage = new byte[fs.Length];
             fs.Read(bImage, 0, (int)fs.Length);
 

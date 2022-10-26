@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  props: ["title", "contents", "boardSeq"],
+  props: ["title", "contents", "boardSeq", "board"],
   methods: {
     save() {
       let data = {
@@ -48,14 +48,14 @@ export default {
 
     update() {
       let data = {
-        TITLE: this.title,
-        CONTENTS: this.contents,
-        BOARD_SEQ: 11,
-        STATE: "",
+        TITLE: this.board.TITLE,
+        CONTENTS: this.board.CONTENTS,
+        BOARD_SEQ: this.board.BOARD_SEQ,
+        STATE: this.board.STATE,
         USER_ID: this.$store.state.userId,
       };
       this.$store.commit("UPDATE_BOARD", data);
-      this.$route.push('/List');
+      this.$router.push('/List');
     },
     deleteBoard() {
       this.$store.commit('DELETE_BOARD', this.boardSeq);

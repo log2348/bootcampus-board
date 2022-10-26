@@ -48,13 +48,18 @@ export default {
     updateStatus() {
       let data = {
         boardSeq: this.boardSeq,
-        state: this.status,
+        state: this.newStatus,
       };
+      if (this.newStatus == "") {
+        alert("항목을 선택하세요.");
+        return;
+      }
+
       if (this.status == this.newStatus) {
         alert("현재 상태와 동일합니다.");
-      } else {
-        this.$store.commit("UPDATE_STATUS", data);
+        return;
       }
+      this.$store.commit("UPDATE_STATUS", data);
     },
   },
 };

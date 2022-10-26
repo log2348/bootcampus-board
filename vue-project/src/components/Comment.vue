@@ -15,7 +15,7 @@
         v-for="item in $store.state.replyP"
         :key="item.REPLY_SEQ"
       >
-        <input type="hidden" v-model="replySeq" />
+        <input type="hidden" v-model="parentSeq" value="item.REPLY_SEQ"/>
         <div class="container">
           <span>
             <b>{{ item.USER_ID }}</b
@@ -57,7 +57,7 @@
           <br />
           <button
             class="btn btn-primary"
-            @click="addReply()"
+            @click="addReply(parentSeq)"
             style="text-align: right"
           >
             등록
@@ -68,7 +68,7 @@
             class="list-group-item"
             v-for="item in $store.state.replyC"
             :key="item.REPLY_SEQ"
-          >
+          > 
             <input type="hidden" v-model="replySeq" />
             <div class="container">
               <span>
@@ -113,6 +113,8 @@ export default {
       contents: "",
       replySeq: "",
       reContents: "",
+      parentSeq: "",
+      isShow: false
     };
   },
   props: ["boardSeq"],
@@ -140,14 +142,15 @@ export default {
     },
 
     // 대댓글 등록
-    addReply() {
+    addReply(parentSeq) {
       let replyData = {
         USER_ID: this.$store.state.userId,
         BOARD_SEQ: this.boardSeq,
-        PARENT_SEQ: 0,
+        PARENT_SEQ: parentSeq,
         REPLY_CONTENTS: this.reContents,
       };
       this.$store.commit("CREATE_REPLY", replyData);
+      this.contents = "";
     },
   },
 };

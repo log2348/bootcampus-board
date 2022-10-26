@@ -1,7 +1,9 @@
 <template>
   <div class="container" style="padding: 25px">
     <div>
-      <h2 v-if="$store.state.mode == 'UPDATE'" style="text-align: center"><b>게시글 수정</b></h2>
+      <h2 v-if="$store.state.mode == 'UPDATE'" style="text-align: center">
+        <b>게시글 수정</b>
+      </h2>
       <h2 v-else style="text-align: center"><b>게시글 등록</b></h2>
     </div>
     <br />
@@ -17,6 +19,7 @@
       v-if="$store.state.mode == 'UPDATE'"
       :title="board.TITLE"
       :contents="board.CONTENTS"
+      :board="board"
     ></Confirm>
     <Confirm v-else :title="title" :contents="contents"></Confirm>
 
@@ -62,6 +65,7 @@
     <img
       :src="preview"
       title="이미지 미리보기"
+      ref="preview"
       style="width: 250px; height: 250px; margin: 10px"
     />
     <input type="file" accept="image/*" @change="onFileSelected()" />
@@ -79,6 +83,7 @@ export default {
       contents: "",
       board: "",
       preview: "",
+      imageFile: "",
     };
   },
   mounted() {
@@ -91,6 +96,16 @@ export default {
   },
   methods: {
     onFileSelected() {
+      let image = event.target;
+
+      if (image.files[0]) {
+        let itemImage = this.$refs.preview; //img dom 접근
+        itemImage.src = window.URL.createObjectURL(image.files[0]); //img src에 blob주소 변환
+        this.imageFile = itemImage.src; //이미지 주소 data 변수에 바인딩해서 나타내게 처리
+        itemImage.width = "200"; // 이미지 넓이
+        itemImage.onload = () => {
+          window.URL.revokeObjectURL(this.src); //나중에 반드시 해제해주어야 메모리 누수가 안생김.
+          /*
       let input = event.target;
       if (input.files && input.files[0]) {
         let reader = new FileReader();
@@ -98,6 +113,10 @@ export default {
           this.preview = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
+      }
+      */
+          this.$store.commit("SAVE_IMAGE", this.imageFile);
+        };
       }
     },
   },

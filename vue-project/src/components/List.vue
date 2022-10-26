@@ -48,19 +48,19 @@
         </tr>
       </tbody>
     </table>
+
     <div class="container">
       <ul class="pagination" style="justify-content: center">
-        <li class="page-item disabled">
-          <a class="page-link" @click="onPageChange()">Prev</a>
+        <li class="page-item">
+          <a class="page-link" @click="onPageChange(nowPage - 1)">Prev</a>
         </li>
         <li class="page-item">
-          <a class="page-link" @click="onPageChange()">1</a>
+          <a v-for="num in pages" :key="num" @click="onPageChange(num)">{{
+            num
+          }}</a>
         </li>
         <li class="page-item">
-          <a class="page-link" @click="onPageChange(2)">2</a>
-        </li>
-        <li class="page-item disabled">
-          <a class="page-link" href="#">Next</a>
+          <a class="page-link" @click="onPageChange(nowPage + 1)">Next</a>
         </li>
       </ul>
     </div>
@@ -93,6 +93,14 @@ import service from "../services/service.js";
 import Search from "../components/Search.vue";
 
 export default {
+  data() {
+    return {
+      // 페이지 블록 수
+      pages: this.$store.state.boardList.length / 5,
+      // 현재 페이지
+      nowPage: "",
+    };
+  },
   mounted() {
     service.getBoardList().then((response) => {
       this.$store.state.boardList = response;
@@ -103,6 +111,7 @@ export default {
     });
   },
   methods: {
+    // 엑셀 파일 다운로드
     getExcelFile() {
       const workBook = Xlsx.utils.book_new();
       const workSheet = Xlsx.utils.json_to_sheet(
@@ -112,6 +121,7 @@ export default {
       Xlsx.writeFile(workBook, "myLog.xlsx");
     },
 
+    // 엑셀 파일 업로드
     readExcelFile() {
       const file = event.target.files[0];
       console.log(this.$store.state.boardList);
@@ -129,7 +139,37 @@ export default {
     },
 
     onPageChange(page) {
+      if (page < 0) {
+        alert("첫 페이지입니다.");
+        return;
+      }
+      if (page >= this.endPage) {
+        alert("마지막 페이지입니다.");
+        return;
+      }
+
       this.$store.commit("SELECT_PAGE", page);
+    },
+  },
+
+  computed: {
+    pageCount: function () {
+      const list = [];
+      for (
+        let index = 1;
+        index < this.$store.state.boardList / 5 + 1;
+        index++
+      ) {
+        list.push(index);
+      }
+      return list;
+    },
+    startPage() {
+      return parseInt(this.currentPage / 5) * 5 + 1;
+    },
+    endPage() {
+      let lastPage = parseInt(this.currentPage / 5) * 5 + 5;
+      return lastPage <= this.totalPages ? lastPage : this.totalPages;
     },
   },
 

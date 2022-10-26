@@ -146,16 +146,20 @@ export default new Vuex.Store({
      */
     GET_REPLY_LIST(state, boardSeq) {
       service
-        .getReplyList(boardSeq)
-        .then((response) => {
-          console.log(response);
-          // 댓글, 대댓글 구분해서 넣기
-          response.forEach((element) => {
-            if (element.PARENT_SEQ != "") {
-              state.replyC.push(element);
-            } else {
-              state.replyP.push(element);
-            }
+      .getReplyList(boardSeq)
+      .then((response) => {
+        console.log(response);
+        // 댓글, 대댓글 구분해서 넣기
+        response.forEach((element) => {
+          if (element.PARENT_SEQ != "") {
+            state.replyC.push(element);
+          } else {
+            state.replyP.push(element);
+          }
+          alert("1111")
+            console.log(state.replyP);
+            console.log(state.replyC);
+
           });
         })
         .catch((error) => {
@@ -202,10 +206,27 @@ export default new Vuex.Store({
       service.updateStatus(data).then((response) => {
         if (response == 1) {
           alert("게시글의 상태가 변경되었습니다.");
+          router.push("/List");
         } else {
           alert("게시글의 상태가 변경되지 않았습니다.");
         }
       });
+    },
+
+    /**
+     * 이미지 저장
+     */
+    SAVE_IMAGE(state, image) {
+      
+      service.saveImageFile(image).then((response) => {
+        if (response == 1) {
+          alert("이미지 저장.");
+        } else {
+          alert("이미지 저장 실패.");
+        }
+      }).catch((error) => {
+        console.log(error);
+      })
     }
   },
   getters: {},

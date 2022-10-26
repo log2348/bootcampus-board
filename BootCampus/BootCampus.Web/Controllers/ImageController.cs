@@ -6,11 +6,12 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.UI.WebControls;
 
 namespace BootCampus.Web.Controllers
 {
-    public class ImageController
+    public class ImageController : Controller
     {
         /// <summary>
         /// 이미지 파일 저장

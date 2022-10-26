@@ -44,7 +44,7 @@ const service = {
 
   /**
    *
-   * @returns
+   * 게시글 상세 조회
    */
   getBoard(seq) {
     const params = {
@@ -132,8 +132,11 @@ const service = {
    * 게시글 페이징
    */
   selectPage(pageNumber) {
+    const params = {
+      pageNumber: pageNumber,
+    };
     const data = axios
-      .get("/Board/BoardPage", pageNumber)
+      .get("/Board/BoardPage", { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
@@ -152,7 +155,8 @@ const service = {
       CONTENTS: boardData.CONTENTS,
     };
     const data = axios
-      .post("/Board/Update", { params })
+      // axios post의 두 번째 인자를 null로 주고, 세 번째 인자에 매개변수를 주어야 한다.
+      .post("/Board/Update", null, { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
@@ -202,8 +206,27 @@ const service = {
    * 상태 업데이트
    */
   updateStatus(boardData) {
+    const params = {
+      boardSeq: boardData.boardSeq,
+      state: boardData.state
+    };
     const data = axios
-      .post("/Board/UpdateState", boardData)
+      .post("/Board/UpdateState", null, { params })
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+    return data;
+  },
+
+  /**
+   * 이미지 파일 저장
+   */
+  saveImageFile(image) {
+    const params = {
+      FILE_NAME: image,
+    };
+    const data = axios
+      .post("/Image/Create", { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
