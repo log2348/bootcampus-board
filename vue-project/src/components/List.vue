@@ -54,10 +54,8 @@
         <li class="page-item">
           <a class="page-link" @click="onPageChange(nowPage - 1)">Prev</a>
         </li>
-        <li class="page-item">
-          <a v-for="num in pages" :key="num" @click="onPageChange(num)">{{
-            num
-          }}</a>
+        <li class="page-item" v-for="item in pageNumbers" :key="item">
+          <a class="page-link" @click="onPageChange(item)">{{ item }}</a>
         </li>
         <li class="page-item">
           <a class="page-link" @click="onPageChange(nowPage + 1)">Next</a>
@@ -89,26 +87,16 @@
 
 <script>
 import Xlsx from "xlsx";
-import service from "../services/service.js";
 import Search from "../components/Search.vue";
 
 export default {
   data() {
     return {
-      // 페이지 블록 수
-      pages: this.$store.state.boardList.length / 5,
-      // 현재 페이지
-      nowPage: "",
+      nowPage: 1,
     };
   },
   mounted() {
-    service.getBoardList().then((response) => {
-      this.$store.state.boardList = response;
-      // 상태 정보 배열에 담기
-      this.$store.state.stateList = Array.from(
-        new Set(response.map((a) => a.STATE))
-      );
-    });
+    this.$store.commit("GET_BOARD_LIST");
   },
   methods: {
     // 엑셀 파일 다운로드
@@ -148,28 +136,29 @@ export default {
         return;
       }
 
+      this.nowPage = page;
       this.$store.commit("SELECT_PAGE", page);
     },
   },
 
   computed: {
-    pageCount: function () {
+    // 현재 화면에 보여질 페이지 블록의 시작 번호
+    startPage() {
+      return Math.max(this.nowPage - 2, 1);
+    },
+
+    // 현재 화면에 보여질 페이지 블록의 마지막 번호
+    endPage() {
+      return Math.min(this.nowPage + 2, this.$store.state.boardList.length / 5);
+    },
+
+    // 페이지 번호 배열에 담기
+    pageNumbers: function () {
       const list = [];
-      for (
-        let index = 1;
-        index < this.$store.state.boardList / 5 + 1;
-        index++
-      ) {
-        list.push(index);
+      for (let i = this.startPage; i < this.endPage + 1; i++) {
+        list.push(i);
       }
       return list;
-    },
-    startPage() {
-      return parseInt(this.currentPage / 5) * 5 + 1;
-    },
-    endPage() {
-      let lastPage = parseInt(this.currentPage / 5) * 5 + 5;
-      return lastPage <= this.totalPages ? lastPage : this.totalPages;
     },
   },
 

@@ -15,7 +15,6 @@
         v-for="item in $store.state.replyP"
         :key="item.REPLY_SEQ"
       >
-        <input type="hidden" v-model="parentSeq" value="item.REPLY_SEQ"/>
         <div class="container">
           <span>
             <b>{{ item.USER_ID }}</b
@@ -27,7 +26,7 @@
               >수정</span
             >&nbsp;<span
               type="button"
-              @click="deleteReply(replySeq)"
+              @click="deleteReply(item.REPLY_SEQ)"
               style="color: red; text-align: end"
               v-show="$store.state.userId == item.USER_ID"
               >삭제</span

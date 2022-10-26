@@ -106,7 +106,7 @@ const service = {
       USER_ID: boardData.USER_ID,
     };
     const data = axios
-      .get("/Board/Create", { params })
+      .post("/Board/Create", null, { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 

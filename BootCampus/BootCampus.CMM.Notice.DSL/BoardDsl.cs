@@ -67,7 +67,8 @@ namespace BootCampus.CMM.Notice.DSL
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            //cmd.Parameters.AddWithValue("@ROW_COUNT", 7);
+            //cmd.Parameters.AddWithValue("@ROW_COUNT", 5);
+            //cmd.Parameters.AddWithValue("@PAGE", 1);
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();

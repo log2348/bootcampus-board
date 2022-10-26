@@ -25,6 +25,17 @@ export default new Vuex.Store({
   actions: {},
   mutations: {
     /**
+     * 게시글 전체 목록 조회
+     */
+    GET_BOARD_LIST(state) {
+      service.getBoardList().then((response) => {
+        state.boardList = response;
+        // 상태 정보 배열에 담기
+        state.stateList = Array.from(new Set(response.map((a) => a.STATE)));
+      });
+    },
+
+    /**
      * 상태별 게시글 목록 조회
      */
     GET_LIST_BY_STATE(state, data) {
@@ -146,20 +157,18 @@ export default new Vuex.Store({
      */
     GET_REPLY_LIST(state, boardSeq) {
       service
-      .getReplyList(boardSeq)
-      .then((response) => {
-        console.log(response);
-        // 댓글, 대댓글 구분해서 넣기
-        response.forEach((element) => {
-          if (element.PARENT_SEQ != "") {
-            state.replyC.push(element);
-          } else {
-            state.replyP.push(element);
-          }
-          alert("1111")
+        .getReplyList(boardSeq)
+        .then((response) => {
+          console.log(response);
+          // 댓글, 대댓글 구분해서 넣기
+          response.forEach((element) => {
+            if (element.PARENT_SEQ != null) {
+              state.replyC.push(element);
+            } else {
+              state.replyP.push(element);
+            }
             console.log(state.replyP);
             console.log(state.replyC);
-
           });
         })
         .catch((error) => {
@@ -217,17 +226,19 @@ export default new Vuex.Store({
      * 이미지 저장
      */
     SAVE_IMAGE(state, image) {
-      
-      service.saveImageFile(image).then((response) => {
-        if (response == 1) {
-          alert("이미지 저장.");
-        } else {
-          alert("이미지 저장 실패.");
-        }
-      }).catch((error) => {
-        console.log(error);
-      })
-    }
+      service
+        .saveImageFile(image)
+        .then((response) => {
+          if (response == 1) {
+            alert("이미지 저장.");
+          } else {
+            alert("이미지 저장 실패.");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   getters: {},
 });
