@@ -28,7 +28,6 @@ const service = {
         }
 
         if (response.data == 1) {
-          alert("로그인 성공");
           store.state.userId = userData.USER_ID;
           store.state.password = userData.PASSWORD;
           store.state.isAuthenticated = true;

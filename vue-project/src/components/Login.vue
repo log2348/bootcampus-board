@@ -9,7 +9,7 @@
 
       <div class="row" style="justify-content: center">
         <div class="col-sm-3">
-          <label><b>ID:</b></label>
+          <label><b>아이디</b></label>
           <input
             type="text"
             class="form-control"
@@ -19,7 +19,7 @@
         </div>
 
         <div class="col-sm-3">
-          <label for="pwd"><b>Password:</b></label>
+          <label for="pwd"><b>비밀번호</b></label>
           <input
             type="password"
             class="form-control"

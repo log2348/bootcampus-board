@@ -55,19 +55,9 @@
     <br />
 
     <h4>이미지 등록</h4>
-    <div class="row">
-      <div class="col-sm-3">
-        <input
-          class="form-control"
-          placeholder="이미지 파일 첨부"
-          name="email"
-        />
-      </div>
-      <div class="col-sm-3">
-        <button class="btn btn-primary">찾아보기</button>
-        <button class="btn btn-danger">삭제</button>
-      </div>
-    </div>
+
+      <img :src="preview" title="이미지 미리보기" style="width: 250px; height: 250px; margin: 10px;" />
+    <input type="file" accept="image/*" @change="onFileSelected()" />
   </div>
 </template>
 
@@ -81,6 +71,7 @@ export default {
       title: "",
       contents: "",
       board: "",
+      preview: "",
     };
   },
   mounted() {
@@ -90,6 +81,18 @@ export default {
         this.board = response;
       });
     }
+  },
+  methods: {
+    onFileSelected() {
+      let input = event.target;
+      if (input.files && input.files[0]) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    },
   },
   components: {
     Confirm,
