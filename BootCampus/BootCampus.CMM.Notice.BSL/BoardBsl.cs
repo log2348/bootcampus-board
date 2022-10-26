@@ -156,6 +156,16 @@ namespace BootCampus.CMM.Notice.BSL
             return result;
         }
         #endregion
+
+        #region 상태 수정
+        public int UpdateState(int boardSeq, string state)
+        {
+            BoardDsl boardDsl = new BoardDsl();
+            int result = boardDsl.UpdateState(boardSeq, state);
+
+            return result;
+        }
+        #endregion
     }
 
 }

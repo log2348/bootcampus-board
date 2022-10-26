@@ -206,5 +206,22 @@ namespace BootCampus.CMM.Notice.DSL
             return result;
         }
         #endregion
+
+        #region 게시글 상태 수정
+        public int UpdateState(int boardSeq, string state)
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_STATE_U]", conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@BOARD_SEQ", boardSeq);
+            cmd.Parameters.AddWithValue("@STATE", state);
+
+            int result = cmd.ExecuteNonQuery();
+
+            return result;
+        }
+        #endregion
     }
 }

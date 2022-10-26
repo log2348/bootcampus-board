@@ -40,19 +40,24 @@
 export default {
   data() {
     return {
-      newStatus: ""
-    }
+      newStatus: "",
+    };
   },
-  props: ["status"],
+  props: ["status", "boardSeq", "showModal"],
   methods: {
     updateStatus() {
+      let data = {
+        boardSeq: this.boardSeq,
+        state: this.status,
+      };
       if (this.status == this.newStatus) {
         alert("현재 상태와 동일합니다.");
       } else {
-        this.$store.commit('UPDATE_STATUS', status)
+        this.$store.commit("UPDATE_STATUS", data);
+        this.close();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

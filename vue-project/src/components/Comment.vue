@@ -113,7 +113,6 @@ export default {
       contents: "",
       replySeq: "",
       reContents: "",
-      isShow: false,
     };
   },
   props: ["boardSeq"],

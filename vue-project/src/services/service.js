@@ -202,12 +202,9 @@ const service = {
   /**
    * 상태 업데이트
    */
-  updateStatus(status) {
-    let params = {
-      STATE: status,
-    };
+  updateStatus(boardData) {
     const data = axios
-      .post("/Board/Update", { params })
+      .post("/Board/UpdateState", boardData)
       .then((response) => response.data)
       .catch((error) => console.log(error));
 

@@ -6,10 +6,9 @@
     <br />
     <br />
     <div class="container flex" style="text-align: right">
-      
       <b-button variant="light" @click="$bvModal.show('update-status-modal')"
-          >상태 업데이트</b-button
-        >&nbsp;
+        >상태 업데이트</b-button
+      >&nbsp;
       <router-link :to="{ name: 'edit', params: { seq: board.BOARD_SEQ } }"
         ><button
           v-show="$store.state.userId == board.USER_ID"
@@ -48,12 +47,17 @@
     </table>
     <div class="container p-5 my-5 border">{{ board.CONTENTS }}</div>
     <div style="text-align: right">
-    <router-link to="/List"
-        ><button class="btn btn-light" >목록</button></router-link
-      ></div>
+      <router-link to="/List"
+        ><button class="btn btn-light">목록</button></router-link
+      >
+    </div>
     <Comment :boardSeq="$route.params.seq"></Comment>
     <Confirm :boardSeq="this.board.BOARD_SEQ"></Confirm>
-    <StatusUpdate :status="this.board.STATE"></StatusUpdate>
+    <StatusUpdate
+      :status="this.board.STATE"
+      :boardSeq="this.board.BOARD_SEQ"
+      :showModal="showModal"
+    ></StatusUpdate>
   </div>
 </template>
 

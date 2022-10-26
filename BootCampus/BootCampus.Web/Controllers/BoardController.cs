@@ -111,5 +111,18 @@ namespace BootCampus.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 게시글 상태 수정
+        /// </summary>
+        /// <param name="boardModel"></param>
+        /// <returns></returns>
+        public int UpdateState(int boardSeq, string state)
+        {
+            BoardBsl boardBsl = new BoardBsl();
+            int result = boardBsl.UpdateState(boardSeq, state);
+
+            return result;
+        }
+
     }
 }

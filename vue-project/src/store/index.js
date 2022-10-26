@@ -198,8 +198,8 @@ export default new Vuex.Store({
     /**
      * 상태 업데이트
      */
-    UPDATE_STATUS(state, status) {
-      service.updateStatus(status).then((response) => {
+    UPDATE_STATUS(state, data) {
+      service.updateStatus(data).then((response) => {
         if (response == 1) {
           alert("게시글의 상태가 변경되었습니다.");
         } else {
