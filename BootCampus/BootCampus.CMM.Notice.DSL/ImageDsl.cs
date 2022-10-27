@@ -32,19 +32,18 @@ namespace BootCampus.CMM.Notice.DSL
         #endregion
 
         #region 이미지 등록
-        public int CreateImage(string fileName)
+        public int CreateImage(ImageModel imageModel)
         {
             conn = DbConn();
-            /*
             FileStream fs = new FileStream(@"D:\test\data.bin", FileMode.Open, FileAccess.Read);
             byte[] bImage = new byte[fs.Length];
             fs.Read(bImage, 0, (int)fs.Length);
-            */
-            byte[] imageData = this.GetImageByte(fileName);
+
+            //byte[] imageData = this.GetImageByte(imageModel);
 
             SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[TB_IMAGE] (IMAGE_SEQ, FILE_NAME) VALUES(@IMAGE_SEQ, @FILE_NAME)", conn);
             cmd.Parameters.AddWithValue("@IMAGE_SEQ", 1);
-            cmd.Parameters.AddWithValue("@FILE_NAME", imageData);
+            cmd.Parameters.AddWithValue("@FILE_NAME", imageModel.FILE_NAME);
 
             //fs.Close();
 
@@ -54,7 +53,7 @@ namespace BootCampus.CMM.Notice.DSL
 
         private byte[] GetImageByte(string filePath)
         {
-            fs = new FileStream(directory + filePath, FileMode.Open, FileAccess.Read);
+            fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             br = new BinaryReader(fs);
 
             byte[] imageBytes = br.ReadBytes((int)fs.Length);

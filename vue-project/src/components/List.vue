@@ -63,7 +63,7 @@
         <li class="page-item disabled" v-if="this.endPage == this.nowPage">
           <a class="page-link">Next</a>
         </li>
-        <li class="page-item">
+        <li class="page-item" v-else>
           <a class="page-link" @click="onPageChange(nowPage + 1)">Next</a>
         </li>
       </ul>
@@ -147,7 +147,10 @@ export default {
 
     // 현재 화면에 보여질 페이지 블록의 마지막 번호
     endPage() {
-      return Math.min(this.nowPage + 2, this.$store.state.totalRow / 5);
+      return Math.min(
+        this.nowPage + 2,
+        Math.floor(this.$store.state.totalRow / 5)
+      );
     },
 
     // 페이지 번호 배열에 담기

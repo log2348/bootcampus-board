@@ -11,10 +11,10 @@ namespace BootCampus.CMM.Notice.BSL
     public class ImageBsl
     {
         #region 이미지 저장
-        public int CreateImage(string fileName)
+        public int CreateImage(ImageModel imageModel)
         {
             ImageDsl imageDsl = new ImageDsl();
-            int result = imageDsl.CreateImage(fileName);
+            int result = imageDsl.CreateImage(imageModel);
 
             return result;
         }

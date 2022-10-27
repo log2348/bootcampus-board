@@ -66,9 +66,13 @@
       :src="preview"
       title="이미지 미리보기"
       ref="preview"
+      name="chooseFile"
       style="width: 250px; height: 250px; margin: 10px"
     />
-    <input type="file" accept="image/*" @change="onFileSelected()" />
+    <form method="post" enctype="multipart/form-data" action="/Image/Create">
+      <input type="file" accept="image/*" @change="onFileSelected()" />
+      <button type="submit">클릭</button>
+    </form>
   </div>
 </template>
 
@@ -113,7 +117,7 @@ export default {
         };
         reader.readAsDataURL(input.files[0]);
       }
-      this.$store.commit("SAVE_IMAGE", input.files[0].name);
+      //this.$store.commit("SAVE_IMAGE", input.files[0].name);
     },
   },
   components: {
