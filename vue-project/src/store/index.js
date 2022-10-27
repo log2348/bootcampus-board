@@ -13,6 +13,8 @@ export default new Vuex.Store({
       userId: "",
       password: "",
 
+      totalRow: "",
+
       boardList: [],
       filteredList: [],
       stateList: [],
@@ -162,7 +164,7 @@ export default new Vuex.Store({
           console.log(response);
           // 댓글, 대댓글 구분해서 넣기
           response.forEach((element) => {
-            if (element.PARENT_SEQ != null) {
+            if (element.PARENT_SEQ != 0) {
               state.replyC.push(element);
             } else {
               state.replyP.push(element);
@@ -234,6 +236,20 @@ export default new Vuex.Store({
           } else {
             alert("이미지 저장 실패.");
           }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    /**
+     * 총 게시글 개수 가져오기
+     */
+    GET_TOTAL_BOARD_COUNT(state) {
+      service
+        .getTotalBoardCount()
+        .then((response) => {
+          state.totalRow = response;
         })
         .catch((error) => {
           console.log(error);

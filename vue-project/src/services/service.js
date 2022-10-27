@@ -208,7 +208,7 @@ const service = {
   updateStatus(boardData) {
     const params = {
       boardSeq: boardData.boardSeq,
-      state: boardData.state
+      state: boardData.state,
     };
     const data = axios
       .post("/Board/UpdateState", null, { params })
@@ -230,6 +230,17 @@ const service = {
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
+    return data;
+  },
+
+  /**
+   * 총 게시물 개수 가져오기
+   */
+  getTotalBoardCount() {
+    const data = axios
+      .get("/Board/TotalRowCount")
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
     return data;
   },
 };

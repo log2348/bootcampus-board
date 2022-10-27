@@ -50,12 +50,18 @@
     </table>
 
     <div class="container">
-      <ul class="pagination" style="justify-content: center">
-        <li class="page-item">
+      <ul class="pagination" style="justify-content: center; cursor: pointer">
+        <li class="page-item" v-if="this.nowPage != 1">
           <a class="page-link" @click="onPageChange(nowPage - 1)">Prev</a>
+        </li>
+        <li class="page-item disabled" v-else>
+          <a class="page-link">Prev</a>
         </li>
         <li class="page-item" v-for="item in pageNumbers" :key="item">
           <a class="page-link" @click="onPageChange(item)">{{ item }}</a>
+        </li>
+        <li class="page-item disabled" v-if="this.endPage == this.nowPage">
+          <a class="page-link">Next</a>
         </li>
         <li class="page-item">
           <a class="page-link" @click="onPageChange(nowPage + 1)">Next</a>
@@ -97,6 +103,7 @@ export default {
   },
   mounted() {
     this.$store.commit("GET_BOARD_LIST");
+    this.$store.commit("GET_TOTAL_BOARD_COUNT");
   },
   methods: {
     // 엑셀 파일 다운로드
@@ -127,15 +134,6 @@ export default {
     },
 
     onPageChange(page) {
-      if (page < 0) {
-        alert("첫 페이지입니다.");
-        return;
-      }
-      if (page >= this.endPage) {
-        alert("마지막 페이지입니다.");
-        return;
-      }
-
       this.nowPage = page;
       this.$store.commit("SELECT_PAGE", page);
     },
@@ -149,7 +147,7 @@ export default {
 
     // 현재 화면에 보여질 페이지 블록의 마지막 번호
     endPage() {
-      return Math.min(this.nowPage + 2, this.$store.state.boardList.length / 5);
+      return Math.min(this.nowPage + 2, this.$store.state.totalRow / 5);
     },
 
     // 페이지 번호 배열에 담기

@@ -147,7 +147,9 @@ namespace BootCampus.CMM.Notice.BSL
             return result;
 
         }
+        #endregion
 
+        #region 게시글 수정
         public int UpdateBoard(BoardModel boardModel)
         {
             BoardDsl boardDsl = new BoardDsl();
@@ -162,6 +164,16 @@ namespace BootCampus.CMM.Notice.BSL
         {
             BoardDsl boardDsl = new BoardDsl();
             int result = boardDsl.UpdateState(boardSeq, state);
+
+            return result;
+        }
+        #endregion
+
+        #region 총 행 개수 반환
+        public int GetTotalRowCount()
+        {
+            BoardDsl boardDsl = new BoardDsl();
+            int result = boardDsl.GetTotalRowCount();
 
             return result;
         }

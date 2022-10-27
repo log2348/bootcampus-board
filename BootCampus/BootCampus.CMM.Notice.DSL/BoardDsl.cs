@@ -67,9 +67,6 @@ namespace BootCampus.CMM.Notice.DSL
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            //cmd.Parameters.AddWithValue("@ROW_COUNT", 5);
-            //cmd.Parameters.AddWithValue("@PAGE", 1);
-
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
 
@@ -135,7 +132,6 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@PAGE", pageNumber); // 페이지 번호
-            cmd.Parameters.AddWithValue("@ROW_COUNT", 5); // 출력할 행의 수
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -159,7 +155,7 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.Parameters.AddWithValue("@STATE", "접수됨");
             cmd.Parameters.AddWithValue("@TITLE", newBoard.TITLE);
             cmd.Parameters.AddWithValue("@CONTENTS", newBoard.CONTENTS);
-            cmd.Parameters.AddWithValue("@USER_ID", "user1"); // 수정할 것
+            cmd.Parameters.AddWithValue("@USER_ID", newBoard.USER_ID);
 
             // 삽입 쿼리 사용시
             // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
@@ -219,6 +215,21 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.Parameters.AddWithValue("@STATE", state);
 
             int result = cmd.ExecuteNonQuery();
+
+            return result;
+        }
+        #endregion
+
+        #region 테이블의 총 행 개수 반환
+        public int GetTotalRowCount()
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[TB_BOARD]", conn);
+
+            cmd.CommandType = CommandType.Text;
+
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
 
             return result;
         }
