@@ -16,6 +16,12 @@ namespace BootCampus.CMM.Notice.DSL
 
         private SqlConnection conn = new SqlConnection(_connectionString);
 
+        FileStream fs;
+        BinaryReader br;
+        BinaryWriter bw;
+
+        string directory = @"D:\\test\\";
+
         #region DataBase Connection
         public SqlConnection DbConn()
         {
@@ -26,25 +32,44 @@ namespace BootCampus.CMM.Notice.DSL
         #endregion
 
         #region 이미지 등록
-        public int CreateImage(ImageModel imageModel)
+        public int CreateImage(string fileName)
         {
+            conn = DbConn();
+            /*
             FileStream fs = new FileStream(@"D:\test\data.bin", FileMode.Open, FileAccess.Read);
             byte[] bImage = new byte[fs.Length];
             fs.Read(bImage, 0, (int)fs.Length);
+            */
+            byte[] imageData = this.GetImageByte(fileName);
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO IMAGE (IMAGE_SEQ, FILE_NAME) VALUES(@IMAGE_SEQ, @FILE_NAME)", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[TB_IMAGE] (IMAGE_SEQ, FILE_NAME) VALUES(@IMAGE_SEQ, @FILE_NAME)", conn);
             cmd.Parameters.AddWithValue("@IMAGE_SEQ", 1);
-            cmd.Parameters.AddWithValue("@FILE_NAME", bImage);
+            cmd.Parameters.AddWithValue("@FILE_NAME", imageData);
 
-            fs.Close();
+            //fs.Close();
 
             return 0;
         }
         #endregion
 
+        private byte[] GetImageByte(string filePath)
+        {
+            fs = new FileStream(directory + filePath, FileMode.Open, FileAccess.Read);
+            br = new BinaryReader(fs);
+
+            byte[] imageBytes = br.ReadBytes((int)fs.Length);
+
+            br.Close();
+            fs.Close();
+
+            return imageBytes;
+        }
+
         #region 게시글별 이미지 조회
         public ImageModel SelectImage(int boardSeq)
         {
+            conn = DbConn();
+
             SqlCommand cmd = new SqlCommand("SELECT Image FROM IMAGE WHERE ImageNo=@ImageNo", conn);
             cmd.Parameters.AddWithValue("@ImageNo", 1);
             conn.Open();
@@ -57,12 +82,12 @@ namespace BootCampus.CMM.Notice.DSL
                 bImage = (byte[])reader[0];
             }
 
-            ImageModel imageModel = new ImageModel();   
+            ImageModel imageModel = new ImageModel();
 
             if (bImage != null)
                 // imageModel.FILE_NAME = new Bitmap(new MemoryStream(bImage));
 
-            reader.Close();
+                reader.Close();
             conn.Close();
 
             return imageModel;

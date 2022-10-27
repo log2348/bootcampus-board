@@ -194,8 +194,11 @@ const service = {
    * 댓글 삭제
    */
   deleteReply(replySeq) {
+    const params = {
+      replySeq: replySeq,
+    };
     const data = axios
-      .get("/Reply/Delete", replySeq)
+      .get("/Reply/Delete", { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 
@@ -223,10 +226,10 @@ const service = {
    */
   saveImageFile(image) {
     const params = {
-      FILE_NAME: image,
+      fileName: image,
     };
     const data = axios
-      .post("/Image/Create", { params })
+      .post("/Image/Create", null, { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 

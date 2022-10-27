@@ -207,6 +207,8 @@ export default new Vuex.Store({
         } else {
           alert("댓글이 삭제되지 않았습니다.");
         }
+      }).catch((error) => {
+        console.log(error);
       });
     },
 

@@ -45,8 +45,12 @@
         </tr>
       </tbody>
     </table>
-    <div class="container p-5 my-5 border">{{ board.CONTENTS }}</div>
+    <div class="row">
+      <img class="col" :src="preview" title="게시글 이미지" />
+      <div class="col border">{{ board.CONTENTS }}</div>
+    </div>
     <div style="text-align: right">
+      <br />
       <router-link to="/List"
         ><button class="btn btn-light">목록</button></router-link
       >

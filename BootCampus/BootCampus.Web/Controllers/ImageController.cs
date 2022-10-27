@@ -16,12 +16,13 @@ namespace BootCampus.Web.Controllers
         /// <summary>
         /// 이미지 파일 저장
         /// </summary>
-        public int Create(ImageModel imageModel)
+        public int Create(string fileName)
         {
             ImageBsl imageBsl = new ImageBsl();
-            int result = imageBsl.CreateImage(imageModel);
+            int result = imageBsl.CreateImage(fileName);
 
             return result;
         }
+
     }
 }

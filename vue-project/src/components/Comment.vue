@@ -17,6 +17,7 @@
       >
         <div class="container">
           <span>
+            {{ parent.REPLY_SEQ }}
             <b>{{ parent.USER_ID }}</b
             >&nbsp;&nbsp;<span>({{ parent.WRITE_DATE }})</span>
             &nbsp;&nbsp;&nbsp;<span
@@ -26,9 +27,8 @@
               >수정</span
             >&nbsp;<span
               type="button"
-              @click="deleteReply(parent.REPLY_SEQ)"
+              @click="$store.commit('DELETE_REPLY', parent.REPLY_SEQ)"
               style="color: red; text-align: end"
-              v-show="$store.state.userId == parent.USER_ID"
               >삭제</span
             >
           </span>
@@ -53,7 +53,8 @@
             rows="3"
             v-model="reContents"
           ></textarea>
-          <button class="btn btn-primary" @click="addReply(parentSeq)">
+          <br />
+          <button class="btn btn-primary" @click="addReply(parent.REPLY_SEQ)">
             등록
           </button>
           <br />
@@ -89,11 +90,7 @@
               </div>
               <div style="text-align: right">
                 답변 달기
-                <i
-                  type="button"
-                  class="bi bi-arrow-return-left"
-                  @click="clickComment()"
-                ></i>
+                <i type="button" class="bi bi-arrow-return-left"></i>
               </div>
             </li>
           </ul>
@@ -130,19 +127,13 @@ export default {
       this.contents = "";
     },
 
-    deleteReply(replySeq) {
-      this.$store.commit("DELETE_REPLY", replySeq);
-    },
-
     // 대댓글 등록 버튼 클릭
     clickComment() {
       this.isShow = !this.isShow;
     },
 
     // 수정 버튼 클릭
-    clickUpdateBtn() {
-
-    },
+    clickUpdateBtn() {},
 
     // 대댓글 등록
     addReply(parentSeq) {
