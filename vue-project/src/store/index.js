@@ -30,7 +30,7 @@ export default new Vuex.Store({
      * 게시글 전체 목록 조회
      */
     GET_BOARD_LIST(state) {
-      service.getBoardList().then((response) => {
+      service.GetBoardList().then((response) => {
         state.boardList = response;
         // 상태 정보 배열에 담기
         state.stateList = Array.from(new Set(response.map((a) => a.STATE)));
@@ -41,7 +41,7 @@ export default new Vuex.Store({
      * 상태별 게시글 목록 조회
      */
     GET_LIST_BY_STATE(state, data) {
-      service.getListByState(data).then((response) => {
+      service.GetListByState(data).then((response) => {
         if (data != "전체") {
           state.isFiltered = true;
           state.filteredList = response;
@@ -66,7 +66,7 @@ export default new Vuex.Store({
       }
 
       service
-        .createBoard(data)
+        .CreateBoard(data)
         .then((response) => {
           if (response == 1) {
             state.boardList.push();
@@ -89,7 +89,7 @@ export default new Vuex.Store({
      */
     SEARCH_BOARD(state, data) {
       service
-        .searchBoard(data)
+        .SearchBoard(data)
         .then((response) => {
           console.log(response);
           if (data.searchWord == "") {
@@ -109,7 +109,7 @@ export default new Vuex.Store({
      */
     DELETE_BOARD(state, boardSeq) {
       service
-        .deleteBoard(boardSeq)
+        .DeleteBoard(boardSeq)
         .then((response) => {
           if (response == 1) {
             alert("게시글이 삭제되었습니다.");
@@ -128,7 +128,7 @@ export default new Vuex.Store({
      */
     SELECT_PAGE(state, pageNumber) {
       service
-        .selectPage(pageNumber)
+        .SelectPage(pageNumber)
         .then((response) => {
           state.boardList = response;
         })
@@ -142,7 +142,7 @@ export default new Vuex.Store({
      */
     UPDATE_BOARD(state, boardData) {
       service
-        .updateBoard(boardData)
+        .UpdateBoard(boardData)
         .then((response) => {
           if (response == 1) {
             alert("수정이 완료되었습니다.");
@@ -161,7 +161,7 @@ export default new Vuex.Store({
      */
     GET_REPLY_LIST(state, boardSeq) {
       service
-        .getReplyList(boardSeq)
+        .GetReplyList(boardSeq)
         .then((response) => {
           console.log(response);
           // 댓글, 대댓글 구분해서 넣기
@@ -185,7 +185,7 @@ export default new Vuex.Store({
      */
     CREATE_REPLY(state, replyData) {
       service
-        .createReply(replyData)
+        .CreateReply(replyData)
         .then((response) => {
           if (response == 1) {
             state.replyP.push(replyData);
@@ -203,7 +203,7 @@ export default new Vuex.Store({
      */
     DELETE_REPLY(state, replySeq) {
       service
-        .deleteReply(replySeq)
+        .DeleteReply(replySeq)
         .then((response) => {
           if (response == 1) {
             state.replyP.fillter((a) => a.REPLY_SEQ != replySeq);
@@ -222,7 +222,7 @@ export default new Vuex.Store({
      */
     UPDATE_REPLY(state, replayData) {
       service
-        .updateReply(replayData)
+        .UpdateReply(replayData)
         .then((response) => {
           console.log(response);
         })
@@ -235,7 +235,7 @@ export default new Vuex.Store({
      * 상태 업데이트
      */
     UPDATE_STATUS(state, data) {
-      service.updateStatus(data).then((response) => {
+      service.UpdateStatus(data).then((response) => {
         if (response == 1) {
           alert("게시글의 상태가 변경되었습니다.");
           router.push("/List");
@@ -250,7 +250,7 @@ export default new Vuex.Store({
      */
     GET_TOTAL_BOARD_COUNT(state) {
       service
-        .getTotalBoardCount()
+        .GetTotalBoardCount()
         .then((response) => {
           state.totalRow = response;
         })

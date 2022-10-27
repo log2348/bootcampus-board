@@ -5,7 +5,7 @@
     <textarea class="form-control" rows="3" v-model="contents"></textarea>
     <br />
     <div style="text-align: right">
-      <button class="btn btn-secondary" @click="saveReply">등록</button>
+      <button class="btn btn-secondary" @click="SaveReply()">등록</button>
     </div>
     <br />
 
@@ -23,7 +23,7 @@
               type="button"
               style="color: blue; text-align: end"
               v-show="$store.state.userId == parent.USER_ID"
-              @click="clickUpdateBtn()"
+              @click="ClickUpdateBtn()"
               >수정</span
             >&nbsp;<span
               type="button"
@@ -42,7 +42,7 @@
           <i
             type="button"
             class="bi bi-arrow-return-left"
-            @click="clickComment()"
+            @click="ClickComment()"
           ></i>
         </div>
         <br />
@@ -55,7 +55,7 @@
           ></textarea>
           <button
             class="btn btn-primary"
-            @click="updateReply(parent.REPLY_SEQ)"
+            @click="UpdateReply(parent.REPLY_SEQ)"
           >
             등록
           </button>
@@ -75,11 +75,11 @@
                   type="button"
                   style="color: blue; text-align: end"
                   v-show="$store.state.userId == item.USER_ID"
-                  @click="clickUpdateBtn()"
+                  @click="ClickUpdateBtn()"
                   >수정</span
                 >&nbsp;<span
                   type="button"
-                  @click="deleteReply(item.REPLY_SEQ)"
+                  @click="DeleteReply(item.REPLY_SEQ)"
                   style="color: red; text-align: end"
                   v-show="$store.state.userId == item.USER_ID"
                   >삭제</span
@@ -116,7 +116,7 @@ export default {
     this.$store.commit("GET_REPLY_LIST", this.boardSeq);
   },
   methods: {
-    saveReply() {
+    SaveReply() {
       let replyData = {
         REPLY_CONTENTS: this.contents,
         USER_ID: this.$store.state.userId,
@@ -127,16 +127,18 @@ export default {
     },
 
     // 수정 버튼 클릭
-    clickUpdateBtn() {
+    ClickUpdateBtn() {
       this.isShow = !this.isShow;
     },
 
     // 대댓글 등록 버튼 클릭
-    clickComment() {
-      this.isShow = !this.isShow;
+    ClickComment() {
+      if (this.parentSeq == this.childSeq) {
+        this.isShow = !this.isShow;
+      }
     },
 
-    updateReply(replySeq) {
+    UpdateReply(replySeq) {
       let replyData = {
         REPLY_SEQ: replySeq,
         CONTENTS: this.updateContents,
@@ -145,7 +147,7 @@ export default {
     },
 
     // 대댓글 등록
-    addReply(parentSeq) {
+    AddReply(parentSeq) {
       let replyData = {
         USER_ID: this.$store.state.userId,
         BOARD_SEQ: this.boardSeq,

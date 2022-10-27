@@ -21,7 +21,7 @@
       <button
         v-show="$store.state.userId == board.USER_ID"
         class="btn btn-danger"
-        @click="clickDeleteBtn"
+        @click="ClickDeleteBtn()"
       >
         삭제
       </button>
@@ -80,14 +80,14 @@ export default {
     };
   },
   methods: {
-    clickDeleteBtn() {
+    ClickDeleteBtn() {
       this.$store.state.mode = "DELETE";
       this.$bvModal.show("modal-scoped");
     },
   },
   mounted() {
     // 게시글 정보 세팅
-    service.getBoard(this.$route.params.seq).then((response) => {
+    service.GetBoard(this.$route.params.seq).then((response) => {
       console.log(response);
       this.board = response;
     });

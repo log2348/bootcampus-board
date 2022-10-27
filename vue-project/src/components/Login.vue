@@ -30,11 +30,11 @@
       </div>
       <br />
       <div class="container" style="text-align: center; width: 20%">
-        <button class="btn btn-primary" @click="login(userId, password)">
+        <button class="btn btn-primary" @click="Login(userId, password)">
           로그인</button
         >&nbsp;&nbsp;&nbsp;
         <router-link to="/List">
-          <button class="btn btn-secondary" @click="login(userId, password)">
+          <button class="btn btn-secondary" >
             목록
           </button></router-link
         >
@@ -54,13 +54,13 @@ export default {
     };
   },
   methods: {
-    login(userId, password) {
+    Login(userId, password) {
       let objUser = {
         USER_ID: userId,
         PASSWORD: password,
       };
 
-      service.login(objUser).then((response) => {
+      service.Login(objUser).then((response) => {
         console.log(response);
       });
     },

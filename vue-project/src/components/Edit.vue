@@ -79,9 +79,9 @@
         type="file"
         accept="image/*"
         name="imageModel"
-        @change="onFileSelected()"
+        @change="OnFileSelected()"
       />
-      <input class="btn btn-primary" type="submit" v-model="imageSubmit" @click="isClicked"/>
+      <input class="btn btn-primary" type="submit" v-model="imageSubmit" />
     </form>
   </div>
 </template>
@@ -98,20 +98,19 @@ export default {
       board: "",
       preview: "",
       imageFile: "",
-      imageSubmit: "",
-      isClicked: false
+      imageSubmit: ""
     };
   },
   mounted() {
     if (this.$store.state.mode == "UPDATE") {
-      service.getBoard(this.$route.params.seq).then((response) => {
+      service.GetBoard(this.$route.params.seq).then((response) => {
         console.log(response);
         this.board = response;
       });
     }
   },
   methods: {
-    onFileSelected() {
+    OnFileSelected() {
       let input = event.target;
       if (input.files && input.files[0]) {
         let reader = new FileReader();

@@ -12,7 +12,7 @@
           v-if="$store.state.mode == 'UPDATE'"
           size="m"
           variant="success"
-          @click="update()"
+          @click="Update()"
         >
           확인
         </b-button>
@@ -20,11 +20,11 @@
           v-else-if="$store.state.mode == 'CREATE'"
           size="m"
           variant="success"
-          @click="save()"
+          @click="Save()"
         >
           확인
         </b-button>
-        <b-button v-else size="m" variant="success" @click="deleteBoard()">
+        <b-button v-else size="m" variant="success" @click="DeleteBoard()">
           확인
         </b-button>
         <b-button size="m" variant="danger"> 취소 </b-button>
@@ -37,7 +37,7 @@
 export default {
   props: ["title", "contents", "boardSeq", "board", "imageSubmit", "isClicked"],
   methods: {
-    save() {
+    Save() {
       let data = {
         TITLE: this.title,
         CONTENTS: this.contents,
@@ -56,7 +56,7 @@ export default {
       this.$store.commit("CREATE_BOARD", data);
     },
 
-    update() {
+    Update() {
       let data = {
         TITLE: this.board.TITLE,
         CONTENTS: this.board.CONTENTS,
@@ -68,7 +68,7 @@ export default {
       this.$router.push("/Board/Detail/" + this.board.BOARD_SEQ);
     },
 
-    deleteBoard() {
+    DeleteBoard() {
       this.$store.commit("DELETE_BOARD", this.boardSeq);
     },
   },

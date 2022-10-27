@@ -5,10 +5,9 @@ import store from "../store/index.js";
 const service = {
   /**
    *
-   * @param {*} params
-   * @returns
+   * 로그인
    */
-  login(userData) {
+  Login(userData) {
     const data = axios
       .post("/User/Login", {
         USER_ID: userData.USER_ID,
@@ -46,7 +45,7 @@ const service = {
    *
    * 게시글 상세 조회
    */
-  getBoard(seq) {
+  GetBoard(seq) {
     const params = {
       seq: seq,
     };
@@ -59,7 +58,7 @@ const service = {
   /**
    * 게시글 전체 목록 조회
    */
-  getBoardList() {
+  GetBoardList() {
     const data = axios
       .get("/Board/BoardList")
       .then((response) => response.data);
@@ -69,7 +68,7 @@ const service = {
   /**
    * 상태별 게시글 목록 조회
    */
-  getListByState(state) {
+  GetListByState(state) {
     const params = {
       state: state,
     };
@@ -82,7 +81,7 @@ const service = {
   /**
    * 게시글 검색
    */
-  searchBoard(searchData) {
+  SearchBoard(searchData) {
     const params = {
       searchType: searchData.searchType,
       searchWord: searchData.searchWord,
@@ -98,7 +97,7 @@ const service = {
   /**
    * 게시글 등록
    */
-  createBoard(boardData) {
+  CreateBoard(boardData) {
     const params = {
       STATE: boardData.STATE,
       TITLE: boardData.TITLE,
@@ -116,7 +115,7 @@ const service = {
   /**
    * 게시글 삭제
    */
-  deleteBoard(boardSeq) {
+  DeleteBoard(boardSeq) {
     const params = {
       boardSeq: boardSeq,
     };
@@ -131,7 +130,7 @@ const service = {
   /**
    * 게시글 페이징
    */
-  selectPage(pageNumber) {
+  SelectPage(pageNumber) {
     const params = {
       pageNumber: pageNumber,
     };
@@ -146,7 +145,7 @@ const service = {
   /**
    * 게시글 수정
    */
-  updateBoard(boardData) {
+  UpdateBoard(boardData) {
     const params = {
       BOARD_SEQ: boardData.BOARD_SEQ,
       STATE: boardData.STATE,
@@ -166,7 +165,7 @@ const service = {
   /**
    * 댓글 목록 조회
    */
-  getReplyList(boardSeq) {
+  GetReplyList(boardSeq) {
     const params = {
       boardSeq: boardSeq,
     };
@@ -181,7 +180,7 @@ const service = {
   /**
    * 댓글 등록
    */
-  createReply(replyData) {
+  CreateReply(replyData) {
     const data = axios
       .post("/Reply/Create", replyData)
       .then((response) => response.data)
@@ -193,7 +192,7 @@ const service = {
   /**
    * 댓글 삭제
    */
-  deleteReply(replySeq) {
+  DeleteReply(replySeq) {
     const params = {
       replySeq: replySeq,
     };
@@ -208,7 +207,7 @@ const service = {
   /**
    * 댓글 수정
    */
-  updateReply(replyData) {
+  UpdateReply(replyData) {
     const params = {
       REPLY_SEQ: replyData.REPLY_SEQ,
       CONTENTS: replyData.CONTENTS,
@@ -223,7 +222,7 @@ const service = {
   /**
    * 상태 업데이트
    */
-  updateStatus(boardData) {
+  UpdateStatus(boardData) {
     const params = {
       boardSeq: boardData.boardSeq,
       state: boardData.state,
@@ -239,7 +238,7 @@ const service = {
   /**
    * 총 게시물 개수 가져오기
    */
-  getTotalBoardCount() {
+  GetTotalBoardCount() {
     const data = axios
       .get("/Board/TotalRowCount")
       .then((response) => response.data)

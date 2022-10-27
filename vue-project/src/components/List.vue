@@ -52,31 +52,31 @@
     <div class="container">
       <ul class="pagination" style="justify-content: center; cursor: pointer">
         <li class="page-item" v-if="this.nowPage != 1">
-          <a class="page-link" @click="onPageChange(nowPage - 1)">Prev</a>
+          <a class="page-link" @click="OnPageChange(nowPage - 1)">Prev</a>
         </li>
         <li class="page-item disabled" v-else>
           <a class="page-link">Prev</a>
         </li>
         <li class="page-item" v-for="item in pageNumbers" :key="item">
-          <a class="page-link" @click="onPageChange(item)">{{ item }}</a>
+          <a class="page-link" @click="OnPageChange(item)">{{ item }}</a>
         </li>
         <li class="page-item disabled" v-if="this.endPage == this.nowPage">
           <a class="page-link">Next</a>
         </li>
         <li class="page-item" v-else>
-          <a class="page-link" @click="onPageChange(nowPage + 1)">Next</a>
+          <a class="page-link" @click="OnPageChange(nowPage + 1)">Next</a>
         </li>
       </ul>
     </div>
 
     <div class="row">
       <div class="col">
-        <button class="btn btn-light" @click="getExcelFile()">
+        <button class="btn btn-light" @click="GetExcelFile()">
           엑셀 다운로드</button
         >&nbsp;&nbsp;
         <input
           type="file"
-          @change="readExcelFile()"
+          @change="ReadExcelFile()"
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         />
       </div>
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     // 엑셀 파일 다운로드
-    getExcelFile() {
+    GetExcelFile() {
       const workBook = Xlsx.utils.book_new();
       const workSheet = Xlsx.utils.json_to_sheet(
         this.$store.state.filteredList
@@ -117,7 +117,7 @@ export default {
     },
 
     // 엑셀 파일 업로드
-    readExcelFile() {
+    ReadExcelFile() {
       const file = event.target.files[0];
       console.log(this.$store.state.boardList);
       let reader = new FileReader();
@@ -133,7 +133,7 @@ export default {
       reader.readAsBinaryString(file);
     },
 
-    onPageChange(page) {
+    OnPageChange(page) {
       this.nowPage = page;
       this.$store.commit("SELECT_PAGE", page);
     },
