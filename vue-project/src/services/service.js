@@ -206,6 +206,21 @@ const service = {
   },
 
   /**
+   * 댓글 수정
+   */
+  updateReply(replyData) {
+    const params = {
+      REPLY_SEQ: replyData.REPLY_SEQ,
+      CONTENTS: replyData.CONTENTS,
+    };
+    const data = axios
+      .post("/Reply/Update", null, { params })
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+    return data;
+  },
+
+  /**
    * 상태 업데이트
    */
   updateStatus(boardData) {
@@ -215,21 +230,6 @@ const service = {
     };
     const data = axios
       .post("/Board/UpdateState", null, { params })
-      .then((response) => response.data)
-      .catch((error) => console.log(error));
-
-    return data;
-  },
-
-  /**
-   * 이미지 파일 저장
-   */
-  saveImageFile(image) {
-    const params = {
-      fileName: image,
-    };
-    const data = axios
-      .post("/Image/Create", null, { params })
       .then((response) => response.data)
       .catch((error) => console.log(error));
 

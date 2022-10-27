@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state() {
     return {
-      mode: "UPDATE", // delete, create
+      mode: "UPDATE",
       // 로그인된 유저 정보
       userId: "",
       password: "",
@@ -70,7 +70,9 @@ export default new Vuex.Store({
         .then((response) => {
           if (response == 1) {
             state.boardList.push();
+
             alert("게시글이 등록되었습니다.");
+
             // 등록 성공시 목록 화면으로 이동
             router.push("/List");
           } else {
@@ -200,16 +202,33 @@ export default new Vuex.Store({
      * 댓글 삭제
      */
     DELETE_REPLY(state, replySeq) {
-      service.deleteReply(replySeq).then((response) => {
-        if (response == 1) {
-          state.replyP.fillter((a) => a.REPLY_SEQ != replySeq);
-          alert("댓글이 삭제되었습니다.");
-        } else {
-          alert("댓글이 삭제되지 않았습니다.");
-        }
-      }).catch((error) => {
-        console.log(error);
-      });
+      service
+        .deleteReply(replySeq)
+        .then((response) => {
+          if (response == 1) {
+            state.replyP.fillter((a) => a.REPLY_SEQ != replySeq);
+            alert("댓글이 삭제되었습니다.");
+          } else {
+            alert("댓글이 삭제되지 않았습니다.");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    /**
+     * 댓글 수정
+     */
+    UPDATE_REPLY(state, replayData) {
+      service
+        .updateReply(replayData)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     /**
@@ -224,24 +243,6 @@ export default new Vuex.Store({
           alert("게시글의 상태가 변경되지 않았습니다.");
         }
       });
-    },
-
-    /**
-     * 이미지 저장
-     */
-    SAVE_IMAGE(state, image) {
-      service
-        .saveImageFile(image)
-        .then((response) => {
-          if (response == 1) {
-            alert("이미지 저장.");
-          } else {
-            alert("이미지 저장 실패.");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
 
     /**

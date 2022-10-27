@@ -157,11 +157,14 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.Parameters.AddWithValue("@CONTENTS", newBoard.CONTENTS);
             cmd.Parameters.AddWithValue("@USER_ID", newBoard.USER_ID);
 
-            // 삽입 쿼리 사용시
-            // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
-            int result = cmd.ExecuteNonQuery();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
 
-            return result;
+            dataAdapter.Fill(ds, "Board");
+
+            conn.Close();
+
+            return Convert.ToInt32( ds.Tables[0].Rows[0][0]);
         }
         #endregion
 

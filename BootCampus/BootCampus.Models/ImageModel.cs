@@ -12,6 +12,8 @@ namespace BootCampus.Models
 
         public string FILE_NAME { get; set; }
 
+        public byte[] IMAGE_DATA { get; set; }
+
         public int BOARD_SEQ { get; set; }
     }
 }

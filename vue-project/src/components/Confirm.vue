@@ -27,7 +27,7 @@
         <b-button v-else size="m" variant="success" @click="deleteBoard()">
           확인
         </b-button>
-        <b-button size="m" variant="danger" @click="cancel()"> 취소 </b-button>
+        <b-button size="m" variant="danger"> 취소 </b-button>
       </template>
     </b-modal>
   </div>
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  props: ["title", "contents", "boardSeq", "board"],
+  props: ["title", "contents", "boardSeq", "board", "imageSubmit", "isClicked"],
   methods: {
     save() {
       let data = {
@@ -43,6 +43,16 @@ export default {
         CONTENTS: this.contents,
         USER_ID: this.$store.state.userId,
       };
+
+      if (data.TITLE == "") {
+        alert("제목을 입력하세요.");
+        return;
+      }
+
+      if (data.CONTENTS == "") {
+        alert("내용을 입력하세요.");
+        return;
+      }
       this.$store.commit("CREATE_BOARD", data);
     },
 
@@ -55,10 +65,11 @@ export default {
         USER_ID: this.$store.state.userId,
       };
       this.$store.commit("UPDATE_BOARD", data);
-      this.$router.push('/List');
+      this.$router.push("/Board/Detail/" + this.board.BOARD_SEQ);
     },
+
     deleteBoard() {
-      this.$store.commit('DELETE_BOARD', this.boardSeq);
+      this.$store.commit("DELETE_BOARD", this.boardSeq);
     },
   },
 };
@@ -67,6 +78,6 @@ export default {
 <style>
 /* TODO */
 .close {
-  display: "none";
+  display: none;
 }
 </style>

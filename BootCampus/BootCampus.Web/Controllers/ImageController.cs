@@ -16,12 +16,65 @@ namespace BootCampus.Web.Controllers
         /// <summary>
         /// 이미지 파일 저장
         /// </summary>
-        public int Create(ImageModel imageModel)
+        public JavaScriptResult Create()
         {
             ImageBsl imageBsl = new ImageBsl();
-            int result = imageBsl.CreateImage(imageModel);
+            ImageModel imageModel = new ImageModel();
+            int result = 0;
 
-            return result;
+
+            if (HttpContext.Request.Files.Count > 0)
+            {
+                HttpContext.Request.Files["imageModel"].InputStream.Position = 0;
+                byte[] bImage = this.ReadFully(HttpContext.Request.Files["imageModel"].InputStream);
+
+                imageModel.FILE_NAME = HttpContext.Request.Files["imageModel"].FileName ?? "이미지";
+                imageModel.IMAGE_DATA = bImage;
+                result = imageBsl.CreateImage(imageModel);
+
+            }
+
+            JavaScriptResult jsr = new JavaScriptResult();
+            if (result == 1)
+            {
+                jsr.Script = "<script>alert('이미지가 저장되었습니다.')</script>";
+
+                return jsr;
+
+            }
+            else
+            {
+                jsr.Script = "<script>alert('이미지가 저장지 않았습니다.')</script>";
+
+                return jsr;
+            }
+
+        }
+
+        /// <summary>
+        /// 이미지 파일 byte 변환
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        public ImageModel Select(int imageSeq)
+        {
+            ImageBsl imageBsl = new ImageBsl();
+            return imageBsl.SelectImage(imageSeq);
+
         }
 
     }

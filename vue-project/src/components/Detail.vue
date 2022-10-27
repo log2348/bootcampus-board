@@ -47,7 +47,9 @@
     </table>
     <div class="row">
       <img class="col" :src="preview" title="게시글 이미지" />
-      <div class="col border">{{ board.CONTENTS }}</div>
+      <div class="col border" style="height: 250px">
+        {{ board.CONTENTS }}
+      </div>
     </div>
     <div style="text-align: right">
       <br />

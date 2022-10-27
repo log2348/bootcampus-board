@@ -21,7 +21,12 @@
       :contents="board.CONTENTS"
       :board="board"
     ></Confirm>
-    <Confirm v-else :title="title" :contents="contents"></Confirm>
+    <Confirm
+      v-else
+      :title="title"
+      :contents="contents"
+      :imageSubmit="imageSubmit"
+    ></Confirm>
 
     <br />
     <table class="table table-bordered">
@@ -70,8 +75,13 @@
       style="width: 250px; height: 250px; margin: 10px"
     />
     <form method="post" enctype="multipart/form-data" action="/Image/Create">
-      <input type="file" accept="image/*" @change="onFileSelected()" />
-      <button type="submit">클릭</button>
+      <input
+        type="file"
+        accept="image/*"
+        name="imageModel"
+        @change="onFileSelected()"
+      />
+      <input class="btn btn-primary" type="submit" v-model="imageSubmit" @click="isClicked"/>
     </form>
   </div>
 </template>
@@ -88,6 +98,8 @@ export default {
       board: "",
       preview: "",
       imageFile: "",
+      imageSubmit: "",
+      isClicked: false
     };
   },
   mounted() {
@@ -100,15 +112,6 @@ export default {
   },
   methods: {
     onFileSelected() {
-      // let image = event.target;
-
-      // if (image.files[0]) {
-      //   let itemImage = this.$refs.preview;
-      //   itemImage.src = window.URL.createObjectURL(image.files[0]); //img src에 blob주소 변환
-      //   this.imageFile = itemImage.src; //이미지 주소 data 변수에 바인딩해서 나타내게 처리
-      //   itemImage.width = "200";
-      //   itemImage.onload = () => {
-      //     window.URL.revokeObjectURL(this.src);
       let input = event.target;
       if (input.files && input.files[0]) {
         let reader = new FileReader();
@@ -117,7 +120,6 @@ export default {
         };
         reader.readAsDataURL(input.files[0]);
       }
-      //this.$store.commit("SAVE_IMAGE", input.files[0].name);
     },
   },
   components: {

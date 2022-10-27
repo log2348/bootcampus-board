@@ -31,10 +31,14 @@
       <br />
       <div class="container" style="text-align: center; width: 20%">
         <button class="btn btn-primary" @click="login(userId, password)">
-          로그인
-        </button>
+          로그인</button
+        >&nbsp;&nbsp;&nbsp;
+        <router-link to="/List">
+          <button class="btn btn-secondary" @click="login(userId, password)">
+            목록
+          </button></router-link
+        >
       </div>
-      <router-link to="/List"> 리스트 </router-link>
     </div>
   </div>
 </template>

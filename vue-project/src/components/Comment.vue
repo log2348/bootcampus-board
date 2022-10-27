@@ -17,16 +17,17 @@
       >
         <div class="container">
           <span>
-            {{ parent.REPLY_SEQ }}
             <b>{{ parent.USER_ID }}</b
             >&nbsp;&nbsp;<span>({{ parent.WRITE_DATE }})</span>
             &nbsp;&nbsp;&nbsp;<span
               type="button"
               style="color: blue; text-align: end"
               v-show="$store.state.userId == parent.USER_ID"
+              @click="clickUpdateBtn()"
               >수정</span
             >&nbsp;<span
               type="button"
+              v-show="$store.state.userId == parent.USER_ID"
               @click="$store.commit('DELETE_REPLY', parent.REPLY_SEQ)"
               style="color: red; text-align: end"
               >삭제</span
@@ -45,56 +46,52 @@
           ></i>
         </div>
         <br />
-
-        <!-- Re-reply Container -->
-        <div class="container" v-if="isShow">
+        <!-- 댓글 수정/대댓글 폼 -->
+        <div class="container" v-show="isShow">
           <textarea
             class="form-control"
             rows="3"
-            v-model="reContents"
+            v-model="updateContents"
           ></textarea>
-          <br />
-          <button class="btn btn-primary" @click="addReply(parent.REPLY_SEQ)">
+          <button
+            class="btn btn-primary"
+            @click="updateReply(parent.REPLY_SEQ)"
+          >
             등록
           </button>
-          <br />
-          <br />
-
-          <!-- Re-reply 목록 -->
-          <ul v-for="item in $store.state.replyC" :key="item.REPLY_SEQ">
-            <li
-              class="list-group-item"
-              v-if="item.PARENT_SEQ == parent.REPLY_SEQ"
-            >
-              <div class="container">
-                <span>
-                  <b>{{ item.USER_ID }}</b
-                  >&nbsp;&nbsp;<span>{{ item.WRITE_DATE }}</span>
-                  &nbsp;&nbsp;&nbsp;<span
-                    type="button"
-                    style="color: blue; text-align: end"
-                    v-show="$store.state.userId == item.USER_ID"
-                    @click="clickUpdateBtn()"
-                    >수정</span
-                  >&nbsp;<span
-                    type="button"
-                    @click="deleteReply(item.REPLY_SEQ)"
-                    style="color: red; text-align: end"
-                    v-show="$store.state.userId == item.USER_ID"
-                    >삭제</span
-                  >
-                </span>
-              </div>
-              <div class="container">
-                {{ item.REPLY_CONTENTS }}
-              </div>
-              <div style="text-align: right">
-                답변 달기
-                <i type="button" class="bi bi-arrow-return-left"></i>
-              </div>
-            </li>
-          </ul>
         </div>
+        <br />
+        <!-- Re-reply 목록 -->
+        <ul v-for="item in $store.state.replyC" :key="item.REPLY_SEQ">
+          <li
+            class="list-group-item"
+            v-if="item.PARENT_SEQ == parent.REPLY_SEQ"
+          >
+            <div class="container">
+              <span>
+                <b>{{ item.USER_ID }}</b
+                >&nbsp;&nbsp;<span>{{ item.WRITE_DATE }}</span>
+                &nbsp;&nbsp;&nbsp;<span
+                  type="button"
+                  style="color: blue; text-align: end"
+                  v-show="$store.state.userId == item.USER_ID"
+                  @click="clickUpdateBtn()"
+                  >수정</span
+                >&nbsp;<span
+                  type="button"
+                  @click="deleteReply(item.REPLY_SEQ)"
+                  style="color: red; text-align: end"
+                  v-show="$store.state.userId == item.USER_ID"
+                  >삭제</span
+                >
+              </span>
+            </div>
+            <div class="container">
+              {{ item.REPLY_CONTENTS }}
+            </div>
+            <div style="text-align: right"></div>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
@@ -107,9 +104,11 @@ export default {
       contents: "",
       replySeq: "",
       reContents: "",
+      updateContents: "",
       parentSeq: "",
       childSeq: "",
       isShow: false,
+      isUpdated: false,
     };
   },
   props: ["boardSeq"],
@@ -127,13 +126,23 @@ export default {
       this.contents = "";
     },
 
+    // 수정 버튼 클릭
+    clickUpdateBtn() {
+      this.isShow = !this.isShow;
+    },
+
     // 대댓글 등록 버튼 클릭
     clickComment() {
       this.isShow = !this.isShow;
     },
 
-    // 수정 버튼 클릭
-    clickUpdateBtn() {},
+    updateReply(replySeq) {
+      let replyData = {
+        REPLY_SEQ: replySeq,
+        CONTENTS: this.updateContents,
+      };
+      this.$store.commit("UPDATE_REPLY", replyData);
+    },
 
     // 대댓글 등록
     addReply(parentSeq) {
