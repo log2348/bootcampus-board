@@ -48,7 +48,7 @@ const service = {
   /**
    * 상태별 게시글 목록 조회
    */
-  GetListByState(state) {
+  getListByState(state) {
     const params = {
       state: state,
     };

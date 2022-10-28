@@ -52,19 +52,19 @@
     <div class="container">
       <ul class="pagination" style="justify-content: center; cursor: pointer">
         <li class="page-item" v-for="item in pageNumbers" :key="item">
-          <a class="page-link" @click="OnPageChange(item)">{{ item }}</a>
+          <a class="page-link" @click="changePage(item)">{{ item }}</a>
         </li>
       </ul>
     </div>
 
     <div class="row">
       <div class="col">
-        <button class="btn btn-light" @click="GetExcelFile()">
+        <button class="btn btn-light" @click="getExcelFile()">
           엑셀 다운로드</button
         >&nbsp;&nbsp;
         <input
           type="file"
-          @change="ReadExcelFile()"
+          @change="readExcelFile()"
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         />
       </div>
@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     // 엑셀 파일 다운로드
-    GetExcelFile() {
+    getExcelFile() {
       const workBook = Xlsx.utils.book_new();
       const workSheet = Xlsx.utils.json_to_sheet(
         this.$store.state.filteredList
@@ -105,7 +105,7 @@ export default {
     },
 
     // 엑셀 파일 업로드
-    ReadExcelFile() {
+    readExcelFile() {
       const file = event.target.files[0];
       console.log(this.$store.state.boardList);
       let reader = new FileReader();
@@ -121,7 +121,7 @@ export default {
       reader.readAsBinaryString(file);
     },
 
-    OnPageChange(page) {
+    changePage(page) {
       this.nowPage = page;
       this.$store.commit("SELECT_PAGE", page);
     },
@@ -131,7 +131,7 @@ export default {
     // 페이지 번호 배열에 담기
     pageNumbers: function () {
       const list = [];
-      for (let i = 1; i < Math.ceil(this.$store.state.boardList / 5); i++) {
+      for (let i = 1; i < Math.ceil(this.$store.state.boardList.length / 5); i++) {
         list.push(i);
       }
       return list;

@@ -18,8 +18,8 @@ export default new Vuex.Store({
       boardList: [],
       filteredList: [],
       stateList: [],
-      replyP: [], // 부모 댓글
-      replyC: [], // 자식 댓글
+      replyP: [], // 상위 댓글
+      replyC: [], // 하위 댓글
       isFiltered: false,
       isAuthenticated: false,
     };
@@ -27,34 +27,37 @@ export default new Vuex.Store({
   actions: {},
   mutations: {
     /**
-     * 
-     * 로그인 
+     *
+     * 로그인
      */
     LOGIN(state, userData) {
-      service.Login(userData).then((response) => {
-        if (response != 1) {
-          if (response == 0) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return;
+      service
+        .Login(userData)
+        .then((response) => {
+          if (response != 1) {
+            if (response == 0) {
+              alert("비밀번호가 일치하지 않습니다.");
+              return;
+            }
+
+            if (response == -1) {
+              alert("아이디가 존재하지 않습니다.");
+              return;
+            }
           }
 
-          if (response == -1) {
-            alert("아이디가 존재하지 않습니다.");
-            return;
+          if (response == 1) {
+            state.userId = userData.USER_ID;
+            state.password = userData.PASSWORD;
+            state.isAuthenticated = true;
+            router.push("/List");
           }
-        }
 
-        if (response == 1) {
-          state.userId = userData.USER_ID;
-          state.password = userData.PASSWORD;
-          state.isAuthenticated = true;
-          router.push("/List");
-        }
-
-        return response.data;
-      }).catch((error) => {
-        console.log(error);
-      });
+          return response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     /**
      * 게시글 전체 목록 조회
@@ -71,7 +74,7 @@ export default new Vuex.Store({
      * 상태별 게시글 목록 조회
      */
     GET_LIST_BY_STATE(state, data) {
-      service.GetListByState(data).then((response) => {
+      service.getListByState(data).then((response) => {
         if (data != "전체") {
           state.isFiltered = true;
           state.filteredList = response;
@@ -289,5 +292,15 @@ export default new Vuex.Store({
         });
     },
   },
-  getters: {},
+  getters: {
+    formatDate(date) {
+      let year = date.getFullYear();
+      let month = ("0" + (date.getMonth() + 1)).slice(-2);
+      let day = ("0" + date.getDate()).slice(-2);
+
+      let dateString = year + "-" + month + "-" + day;
+
+      console.log(dateString);
+    },
+  },
 });

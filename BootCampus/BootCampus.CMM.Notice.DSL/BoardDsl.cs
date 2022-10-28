@@ -43,7 +43,7 @@ namespace BootCampus.CMM.Notice.DSL
             if (sqlDataReader.Read())
             {
                 model.BOARD_SEQ = Convert.ToInt32(sqlDataReader["BOARD_SEQ"]);
-                //model.STATE = Convert.ToString(sqlDataReader["STATE"]);
+                model.STATE = Convert.ToString(sqlDataReader["STATE"]);
                 model.TITLE = Convert.ToString(sqlDataReader["TITLE"]);
                 model.CONTENTS = Convert.ToString(sqlDataReader["CONTENTS"]);
                 model.WRITE_DATE = Convert.ToString(sqlDataReader["WRITE_DATE"]);
