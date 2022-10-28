@@ -16,12 +16,6 @@ namespace BootCampus.CMM.Notice.DSL
 
         private SqlConnection conn = new SqlConnection(_connectionString);
 
-        FileStream fs;
-        BinaryReader br;
-        BinaryWriter bw;
-
-        string directory = @"D:\\test\\";
-
         #region DataBase Connection
         public SqlConnection DbConn()
         {
@@ -41,8 +35,6 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.Parameters.AddWithValue("@FILE_NAME", imageModel.FILE_NAME);
 
             int result = cmd.ExecuteNonQuery();
-
-            //fs.Close();
 
             return result;
         }
@@ -70,7 +62,7 @@ namespace BootCampus.CMM.Notice.DSL
             if (bImage != null)
                 //imageModel.IMAGE_DATA = new Bitmap(new MemoryStream(bImage));
 
-            reader.Close();
+                reader.Close();
 
             conn.Close();
 

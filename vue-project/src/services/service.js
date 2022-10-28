@@ -1,6 +1,4 @@
 import axios from "axios";
-import router from "../router/index.js";
-import store from "../store/index.js";
 
 const service = {
   /**
@@ -13,28 +11,7 @@ const service = {
         USER_ID: userData.USER_ID,
         PASSWORD: userData.PASSWORD,
       })
-      .then(function (response) {
-        if (response.data != 1) {
-          if (response.data == 0) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return;
-          }
-
-          if (response.data == -1) {
-            alert("아이디가 존재하지 않습니다.");
-            return;
-          }
-        }
-
-        if (response.data == 1) {
-          store.state.userId = userData.USER_ID;
-          store.state.password = userData.PASSWORD;
-          store.state.isAuthenticated = true;
-          router.push("/List");
-        }
-
-        return response.data;
-      })
+      .then((response) => response.data)
       .catch(function (error) {
         console.log(error);
       });

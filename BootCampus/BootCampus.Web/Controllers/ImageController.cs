@@ -38,16 +38,12 @@ namespace BootCampus.Web.Controllers
             if (result == 1)
             {
                 jsr.Script = "<script>alert('이미지가 저장되었습니다.')</script>";
-
-                return jsr;
-
             }
             else
             {
                 jsr.Script = "<script>alert('이미지가 저장지 않았습니다.')</script>";
-
-                return jsr;
             }
+            return jsr;
 
         }
 

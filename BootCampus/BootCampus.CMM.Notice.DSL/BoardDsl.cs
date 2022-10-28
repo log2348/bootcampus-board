@@ -131,7 +131,7 @@ namespace BootCampus.CMM.Notice.DSL
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@PAGE", pageNumber); // 페이지 번호
+            cmd.Parameters.AddWithValue("@PAGE", pageNumber);
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -164,7 +164,7 @@ namespace BootCampus.CMM.Notice.DSL
 
             conn.Close();
 
-            return Convert.ToInt32( ds.Tables[0].Rows[0][0]);
+            return Convert.ToInt32(ds.Tables[0].Rows[0][0]);
         }
         #endregion
 

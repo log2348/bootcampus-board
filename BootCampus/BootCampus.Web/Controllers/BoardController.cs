@@ -124,14 +124,14 @@ namespace BootCampus.Web.Controllers
             return result;
         }
 
-        
+
         /// <summary>
         /// 페이징 처리를 위한 총 행의 개수 출력
         /// </summary>
         /// <returns></returns>
         public int TotalRowCount()
         {
-            BoardBsl boardBsl= new BoardBsl();
+            BoardBsl boardBsl = new BoardBsl();
             int result = boardBsl.GetTotalRowCount();
 
             return result;

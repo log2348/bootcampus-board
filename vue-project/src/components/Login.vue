@@ -34,9 +34,7 @@
           로그인</button
         >&nbsp;&nbsp;&nbsp;
         <router-link to="/List">
-          <button class="btn btn-secondary" >
-            목록
-          </button></router-link
+          <button class="btn btn-secondary">목록</button></router-link
         >
       </div>
     </div>
@@ -44,8 +42,6 @@
 </template>
 
 <script>
-import service from "../services/service.js";
-
 export default {
   data() {
     return {
@@ -60,9 +56,7 @@ export default {
         PASSWORD: password,
       };
 
-      service.Login(objUser).then((response) => {
-        console.log(response);
-      });
+      this.$store.commit("LOGIN", objUser);
     },
   },
 };

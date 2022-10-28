@@ -27,6 +27,36 @@ export default new Vuex.Store({
   actions: {},
   mutations: {
     /**
+     * 
+     * 로그인 
+     */
+    LOGIN(state, userData) {
+      service.Login(userData).then((response) => {
+        if (response != 1) {
+          if (response == 0) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+          }
+
+          if (response == -1) {
+            alert("아이디가 존재하지 않습니다.");
+            return;
+          }
+        }
+
+        if (response == 1) {
+          state.userId = userData.USER_ID;
+          state.password = userData.PASSWORD;
+          state.isAuthenticated = true;
+          router.push("/List");
+        }
+
+        return response.data;
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+    /**
      * 게시글 전체 목록 조회
      */
     GET_BOARD_LIST(state) {

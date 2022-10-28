@@ -11,7 +11,7 @@ namespace BootCampus.CMM.Notice.BSL
 {
     public class ReplyBsl
     {
-       
+
         #region 게시글별 댓글 목록 조회
         public List<ReplyModel> SelectReplyList(int boardSeq)
         {

@@ -23,6 +23,7 @@ namespace BootCampus.Web.Controllers
 
             if (result == 1)
             {
+                // 로그인 성공시 인증권한 부여
                 FormsAuthentication.SetAuthCookie(userModel.USER_ID, false);
             }
 
