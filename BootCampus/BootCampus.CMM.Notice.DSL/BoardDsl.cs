@@ -26,15 +26,14 @@ namespace BootCampus.CMM.Notice.DSL
         #endregion
 
         #region 게시글 상세 조회
-        public BoardModel SelectBoard(int seq)
+        public BoardModel SelectBoard(int boardSeq)
         {
             conn = DbConn();
 
-            string sql = "SELECT * FROM [dbo].[TB_BOARD] WHERE BOARD_SEQ = @BOARD_SEQ";
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_R]", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
 
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@BOARD_SEQ", seq);
-            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@BOARD_SEQ", boardSeq);
 
             BoardModel model = new BoardModel();
 
@@ -44,7 +43,7 @@ namespace BootCampus.CMM.Notice.DSL
             if (sqlDataReader.Read())
             {
                 model.BOARD_SEQ = Convert.ToInt32(sqlDataReader["BOARD_SEQ"]);
-                model.STATE = Convert.ToString(sqlDataReader["STATE"]);
+                //model.STATE = Convert.ToString(sqlDataReader["STATE"]);
                 model.TITLE = Convert.ToString(sqlDataReader["TITLE"]);
                 model.CONTENTS = Convert.ToString(sqlDataReader["CONTENTS"]);
                 model.WRITE_DATE = Convert.ToString(sqlDataReader["WRITE_DATE"]);
@@ -64,7 +63,7 @@ namespace BootCampus.CMM.Notice.DSL
         {
             conn = DbConn();
 
-            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L2]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
@@ -102,13 +101,14 @@ namespace BootCampus.CMM.Notice.DSL
         #endregion
 
         #region 게시글 검색
-        public DataSet SearchList(string searchType, string searchWord)
+        public DataSet SearchList(string state, string searchType, string searchWord)
         {
             conn = DbConn();
 
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_L]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
+            cmd.Parameters.AddWithValue("@STATE", state);
             cmd.Parameters.AddWithValue("@SEARCH_TYPE", searchType);
             cmd.Parameters.AddWithValue("@SEARCH_WORD", searchWord);
 

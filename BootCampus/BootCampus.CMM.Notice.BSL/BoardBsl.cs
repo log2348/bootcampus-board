@@ -12,10 +12,10 @@ namespace BootCampus.CMM.Notice.BSL
     public class BoardBsl
     {
         #region Board 단건 조회
-        public BoardModel SelectBoard(int seq)
+        public BoardModel SelectBoard(int boardSeq)
         {
             BoardDsl boardDsl = new BoardDsl();
-            BoardModel boardModel = boardDsl.SelectBoard(seq);
+            BoardModel boardModel = boardDsl.SelectBoard(boardSeq);
 
             return boardModel;
         }
@@ -36,6 +36,7 @@ namespace BootCampus.CMM.Notice.BSL
                 boardModel.BOARD_SEQ = Convert.ToInt32(dr["BOARD_SEQ"]);
                 boardModel.STATE = Convert.ToString(dr["STATE"]);
                 boardModel.TITLE = Convert.ToString(dr["TITLE"]);
+                boardModel.CONTENTS = Convert.ToString(dr["CONTENTS"]);
                 boardModel.USER_ID = Convert.ToString(dr["USER_ID"]);
                 boardModel.WRITE_DATE = Convert.ToString(dr["WRITE_DATE"]);
                 boardModel.VIEW_COUNT = Convert.ToInt32(dr["VIEW_COUNT"]);
@@ -86,10 +87,10 @@ namespace BootCampus.CMM.Notice.BSL
         #endregion
 
         #region 게시글 검색
-        public List<BoardModel> SearchList(string searchType, string searchWord)
+        public List<BoardModel> SearchList(string state, string searchType, string searchWord)
         {
             BoardDsl boardDsl = new BoardDsl();
-            DataSet ds = boardDsl.SearchList(searchType, searchWord);
+            DataSet ds = boardDsl.SearchList(state, searchType, searchWord);
 
             DataTable dataTable = ds.Tables["Board"];
 

@@ -103,7 +103,7 @@ export default {
   },
   mounted() {
     if (this.$store.state.mode == "UPDATE") {
-      service.GetBoard(this.$route.params.seq).then((response) => {
+      service.getBoard(this.$route.params.seq).then((response) => {
         console.log(response);
         this.board = response;
       });

@@ -15,10 +15,10 @@ namespace BootCampus.Web.Controllers
         /// 게시글 상세 조회
         /// </summary>
         /// <returns></returns>
-        public ActionResult Detail(int seq)
+        public ActionResult Detail(int boardSeq)
         {
             BoardBsl boardBsl = new BoardBsl();
-            BoardModel target = boardBsl.SelectBoard(seq);
+            BoardModel target = boardBsl.SelectBoard(boardSeq);
 
             return Json(target, JsonRequestBehavior.AllowGet);
         }
@@ -61,13 +61,14 @@ namespace BootCampus.Web.Controllers
         /// <summary>
         /// 게시글 검색
         /// </summary>
+        /// <param name="state"></param>
         /// <param name="searchType"></param>
         /// <param name="searchWord"></param>
         /// <returns></returns>
-        public ActionResult Search(string searchType, string searchWord)
+        public ActionResult Search(string state, string searchType, string searchWord)
         {
             BoardBsl boardBsl = new BoardBsl();
-            List<BoardModel> boardList = boardBsl.SearchList(searchType, searchWord);
+            List<BoardModel> boardList = boardBsl.SearchList(state, searchType, searchWord);
             return Json(boardList, JsonRequestBehavior.AllowGet);
 
         }

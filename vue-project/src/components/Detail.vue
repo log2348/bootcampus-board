@@ -87,7 +87,7 @@ export default {
   },
   mounted() {
     // 게시글 정보 세팅
-    service.GetBoard(this.$route.params.seq).then((response) => {
+    service.getBoard(this.$route.params.seq).then((response) => {
       console.log(response);
       this.board = response;
     });

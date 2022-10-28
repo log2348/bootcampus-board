@@ -14,8 +14,7 @@ namespace BootCampus.CMM.Notice.BSL
         public ImageModel SelectImage(int imageSeq)
         {
             ImageDsl imageDsl = new ImageDsl();
-            imageDsl.SelectImage(imageSeq);
-
+            return imageDsl.SelectImage(imageSeq);
         }
         #endregion
 

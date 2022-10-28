@@ -51,20 +51,8 @@
 
     <div class="container">
       <ul class="pagination" style="justify-content: center; cursor: pointer">
-        <li class="page-item" v-if="this.nowPage != 1">
-          <a class="page-link" @click="OnPageChange(nowPage - 1)">Prev</a>
-        </li>
-        <li class="page-item disabled" v-else>
-          <a class="page-link">Prev</a>
-        </li>
         <li class="page-item" v-for="item in pageNumbers" :key="item">
           <a class="page-link" @click="OnPageChange(item)">{{ item }}</a>
-        </li>
-        <li class="page-item disabled" v-if="this.endPage == this.nowPage">
-          <a class="page-link">Next</a>
-        </li>
-        <li class="page-item" v-else>
-          <a class="page-link" @click="OnPageChange(nowPage + 1)">Next</a>
         </li>
       </ul>
     </div>
@@ -140,23 +128,10 @@ export default {
   },
 
   computed: {
-    // 현재 화면에 보여질 페이지 블록의 시작 번호
-    startPage() {
-      return Math.max(this.nowPage - 2, 1);
-    },
-
-    // 현재 화면에 보여질 페이지 블록의 마지막 번호
-    endPage() {
-      return Math.min(
-        this.nowPage + 2,
-        Math.floor(this.$store.state.totalRow / 5)
-      );
-    },
-
     // 페이지 번호 배열에 담기
     pageNumbers: function () {
       const list = [];
-      for (let i = this.startPage; i < this.endPage + 1; i++) {
+      for (let i = 1; i < Math.ceil(this.$store.state.boardList / 5); i++) {
         list.push(i);
       }
       return list;

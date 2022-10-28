@@ -22,13 +22,16 @@ const service = {
    *
    * 게시글 상세 조회
    */
-  GetBoard(seq) {
-    const params = {
-      seq: seq,
-    };
+  getBoard(boardSeq) {
     const data = axios
-      .get("/Board/Detail", { params })
-      .then((response) => response.data);
+      .get("/Board/Detail", {
+        params: {
+          boardSeq: boardSeq,
+        },
+      })
+      .then((response) => response.data)
+      .catch((error) => error.data);
+
     return data;
   },
 
@@ -58,8 +61,9 @@ const service = {
   /**
    * 게시글 검색
    */
-  SearchBoard(searchData) {
+  searchBoard(searchData) {
     const params = {
+      state: searchData.state,
       searchType: searchData.searchType,
       searchWord: searchData.searchWord,
     };

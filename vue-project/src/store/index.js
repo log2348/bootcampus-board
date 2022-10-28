@@ -119,7 +119,7 @@ export default new Vuex.Store({
      */
     SEARCH_BOARD(state, data) {
       service
-        .SearchBoard(data)
+        .searchBoard(data)
         .then((response) => {
           console.log(response);
           if (data.searchWord == "") {
