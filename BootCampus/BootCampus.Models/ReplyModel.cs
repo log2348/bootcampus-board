@@ -18,6 +18,8 @@ namespace BootCampus.Models
 
         public string USER_ID { get; set; }
 
+        public int LEVEL { get; set; }
+
         public String WRITE_DATE { get; set; }
 
     }

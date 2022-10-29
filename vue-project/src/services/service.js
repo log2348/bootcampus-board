@@ -5,7 +5,7 @@ const service = {
    *
    * 로그인
    */
-  Login(userData) {
+  login(userData) {
     const data = axios
       .post("/User/Login", {
         USER_ID: userData.USER_ID,
@@ -111,7 +111,7 @@ const service = {
   /**
    * 게시글 페이징
    */
-  SelectPage(pageNumber) {
+  selectPage(pageNumber) {
     const params = {
       pageNumber: pageNumber,
     };
@@ -146,7 +146,7 @@ const service = {
   /**
    * 댓글 목록 조회
    */
-  GetReplyList(boardSeq) {
+  getReplyList(boardSeq) {
     const params = {
       boardSeq: boardSeq,
     };
@@ -173,9 +173,9 @@ const service = {
   /**
    * 댓글 삭제
    */
-  DeleteReply(replySeq) {
+  deleteReply(replySeq) {
     const params = {
-      replySeq: replySeq,
+      REPLY_SEQ: replySeq,
     };
     const data = axios
       .get("/Reply/Delete", { params })

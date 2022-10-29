@@ -16,10 +16,9 @@ export default new Vuex.Store({
       totalRow: "",
 
       boardList: [],
-      filteredList: [],
+      replyList: [],
+      filteredList: [], // 검색된 리스트 목록
       stateList: [],
-      replyP: [], // 상위 댓글
-      replyC: [], // 하위 댓글
       isFiltered: false,
       isAuthenticated: false,
     };
@@ -32,7 +31,7 @@ export default new Vuex.Store({
      */
     LOGIN(state, userData) {
       service
-        .Login(userData)
+        .login(userData)
         .then((response) => {
           if (response != 1) {
             if (response == 0) {
@@ -161,7 +160,7 @@ export default new Vuex.Store({
      */
     SELECT_PAGE(state, pageNumber) {
       service
-        .SelectPage(pageNumber)
+        .selectPage(pageNumber)
         .then((response) => {
           state.boardList = response;
         })
@@ -194,19 +193,9 @@ export default new Vuex.Store({
      */
     GET_REPLY_LIST(state, boardSeq) {
       service
-        .GetReplyList(boardSeq)
+        .getReplyList(boardSeq)
         .then((response) => {
-          console.log(response);
-          // 댓글, 대댓글 구분해서 넣기
-          response.forEach((element) => {
-            if (element.PARENT_SEQ != 0) {
-              state.replyC.push(element);
-            } else {
-              state.replyP.push(element);
-            }
-            console.log(state.replyP);
-            console.log(state.replyC);
-          });
+          state.replyList = response;
         })
         .catch((error) => {
           console.log(error);
@@ -221,7 +210,7 @@ export default new Vuex.Store({
         .CreateReply(replyData)
         .then((response) => {
           if (response == 1) {
-            state.replyP.push(replyData);
+            alert("댓글 등록 완료")
           } else {
             alert("댓글이 등록되지 않았습니다.");
           }
@@ -236,7 +225,7 @@ export default new Vuex.Store({
      */
     DELETE_REPLY(state, replySeq) {
       service
-        .DeleteReply(replySeq)
+        .deleteReply(replySeq)
         .then((response) => {
           if (response == 1) {
             state.replyP.fillter((a) => a.REPLY_SEQ != replySeq);
@@ -292,15 +281,5 @@ export default new Vuex.Store({
         });
     },
   },
-  getters: {
-    formatDate(date) {
-      let year = date.getFullYear();
-      let month = ("0" + (date.getMonth() + 1)).slice(-2);
-      let day = ("0" + date.getDate()).slice(-2);
-
-      let dateString = year + "-" + month + "-" + day;
-
-      console.log(dateString);
-    },
-  },
+  getters: {},
 });

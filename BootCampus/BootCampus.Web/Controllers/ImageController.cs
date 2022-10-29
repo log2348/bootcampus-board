@@ -52,7 +52,7 @@ namespace BootCampus.Web.Controllers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public byte[] ReadFully(Stream input)
+        private byte[] ReadFully(Stream input)
         {
             byte[] buffer = new byte[16 * 1024];
             using (MemoryStream ms = new MemoryStream())

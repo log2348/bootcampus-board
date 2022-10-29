@@ -30,7 +30,7 @@
       </div>
       <br />
       <div class="container" style="text-align: center; width: 20%">
-        <button class="btn btn-primary" @click="Login(userId, password)">
+        <button class="btn btn-primary" @click="login()">
           로그인</button
         >&nbsp;&nbsp;&nbsp;
         <router-link to="/List">
@@ -50,10 +50,10 @@ export default {
     };
   },
   methods: {
-    Login(userId, password) {
+    login() {
       let objUser = {
-        USER_ID: userId,
-        PASSWORD: password,
+        USER_ID: this.userId,
+        PASSWORD: this.password,
       };
 
       this.$store.commit("LOGIN", objUser);

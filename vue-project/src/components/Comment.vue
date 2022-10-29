@@ -5,14 +5,14 @@
     <textarea class="form-control" rows="3" v-model="contents"></textarea>
     <br />
     <div style="text-align: right">
-      <button class="btn btn-secondary" @click="SaveReply()">등록</button>
+      <button class="btn btn-secondary" @click="setReply()">등록</button>
     </div>
     <br />
 
     <ul class="list-group">
       <li
         class="list-group-item"
-        v-for="parent in $store.state.replyP"
+        v-for="parent in parentReplies"
         :key="parent.REPLY_SEQ"
       >
         <div class="container">
@@ -62,7 +62,7 @@
         </div>
         <br />
         <!-- Re-reply 목록 -->
-        <ul v-for="item in $store.state.replyC" :key="item.REPLY_SEQ">
+        <ul v-for="item in childReplies" :key="item.REPLY_SEQ">
           <li
             class="list-group-item"
             v-if="item.PARENT_SEQ == parent.REPLY_SEQ"
@@ -79,7 +79,7 @@
                   >수정</span
                 >&nbsp;<span
                   type="button"
-                  @click="DeleteReply(item.REPLY_SEQ)"
+                  @click="$store.commit('DELETE_REPLY', parent.REPLY_SEQ)"
                   style="color: red; text-align: end"
                   v-show="$store.state.userId == item.USER_ID"
                   >삭제</span
@@ -115,8 +115,17 @@ export default {
   mounted() {
     this.$store.commit("GET_REPLY_LIST", this.boardSeq);
   },
+  computed: {
+    parentReplies() {
+      return this.$store.state.replyList.filter((a) => a.LEVEL == 0);
+    },
+
+    childReplies() {
+      return this.$store.state.replyList.filter((a) => a.LEVEL != 0);
+    }
+  },
   methods: {
-    SaveReply() {
+    setReply() {
       let replyData = {
         REPLY_CONTENTS: this.contents,
         USER_ID: this.$store.state.userId,

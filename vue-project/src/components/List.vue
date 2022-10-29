@@ -131,10 +131,24 @@ export default {
     // 페이지 번호 배열에 담기
     pageNumbers: function () {
       const list = [];
-      for (let i = 1; i < Math.ceil(this.$store.state.boardList.length / 5); i++) {
+      for (
+        let i = 1;
+        i < Math.ceil(this.$store.state.boardList.length / 5);
+        i++
+      ) {
         list.push(i);
       }
       return list;
+    },
+
+    formatDate: function (date) {
+      let year = date.getFullYear();
+      let month = ("0" + (date.getMonth() + 1)).slice(-2);
+      let day = ("0" + date.getDate()).slice(-2);
+
+      let dateString = year + "-" + month + "-" + day;
+
+      return dateString;
     },
   },
 

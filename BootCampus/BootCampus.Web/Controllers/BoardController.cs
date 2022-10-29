@@ -79,7 +79,7 @@ namespace BootCampus.Web.Controllers
         /// <param name="pageNumber"></param>
         /// <returns></returns>
         public ActionResult BoardPage(int pageNumber)
-        {
+            {
             BoardBsl boardBsl = new BoardBsl();
             List<BoardModel> boardList = boardBsl.SelectPage(pageNumber);
 
