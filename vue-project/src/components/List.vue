@@ -5,7 +5,7 @@
     <Search></Search>
     <br />
     <table class="table table-bordered">
-      <thead>
+      <thead style="text-align: center">
         <tr>
           <th>번호</th>
           <th>상태</th>
@@ -18,22 +18,22 @@
 
       <!-- 필터링 되지 않은 리스트 -->
       <tbody v-if="!$store.state.isFiltered">
-        <tr v-for="item in $store.state.boardList" :key="item.BOARD_SEQ">
-          <td>{{ item.BOARD_SEQ }}</td>
+        <tr v-for="item in $store.state.nowPage" :key="item.BOARD_SEQ">
+          <td style="text-align: center">{{ item.BOARD_SEQ }}</td>
           <td>{{ item.STATE }}</td>
           <router-link
             :to="{ name: 'detail', params: { seq: item.BOARD_SEQ } }"
           >
             <td>{{ item.TITLE }}</td>
           </router-link>
-          <td>{{ item.USER_ID }}</td>
-          <td>{{ item.WRITE_DATE }}</td>
-          <td>{{ item.VIEW_COUNT }}</td>
+          <td style="text-align: center">{{ item.USER_ID }}</td>
+          <td style="text-align: center">{{ $moment(item.WRITE_DATE).format('YYYY-MM-DD') }}</td>
+          <td style="text-align: center">{{ item.VIEW_COUNT }}</td>
         </tr>
       </tbody>
 
       <!-- 필터링된 리스트 -->
-      <tbody v-if="$store.state.isFiltered">
+      <tbody v-else>
         <tr v-for="item in $store.state.filteredList" :key="item.BOARD_SEQ">
           <td>{{ item.BOARD_SEQ }}</td>
           <td>{{ item.STATE }}</td>
@@ -43,7 +43,7 @@
             <td>{{ item.TITLE }}</td>
           </router-link>
           <td>{{ item.USER_ID }}</td>
-          <td>{{ item.WRITE_DATE }}</td>
+          <td>{{ $moment(item.WRITE_DATE).format('YYYY-MM-DD') }}</td>
           <td>{{ item.VIEW_COUNT }}</td>
         </tr>
       </tbody>
@@ -51,7 +51,7 @@
 
     <div class="container">
       <ul class="pagination" style="justify-content: center; cursor: pointer">
-        <li class="page-item" v-for="item in pageNumbers" :key="item">
+        <li class="page-item" v-for="item in $store.state.pageNumbers" :key="item">
           <a class="page-link" @click="changePage(item)">{{ item }}</a>
         </li>
       </ul>
@@ -86,12 +86,14 @@ import Search from "../components/Search.vue";
 export default {
   data() {
     return {
-      nowPage: 1,
+      nowPageNumber: 1,
     };
   },
   mounted() {
     this.$store.commit("GET_BOARD_LIST");
     this.$store.commit("GET_TOTAL_BOARD_COUNT");
+    this.$store.commit("GET_PAGE", this.nowPageNumber);
+
   },
   methods: {
     // 엑셀 파일 다운로드
@@ -114,7 +116,7 @@ export default {
         let workbook = Xlsx.read(data, { type: "binary" });
         workbook.SheetNames.forEach((sheetName) => {
           const file = Xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-          this.$store.state.boardList.push(...file);
+          this.$store.state.nowPage.push(...file);
           console.log(this.$store.state.boardList);
         });
       };
@@ -122,25 +124,12 @@ export default {
     },
 
     changePage(page) {
-      this.nowPage = page;
-      this.$store.commit("SELECT_PAGE", page);
+      this.nowPageNumber = page;
+      this.$store.commit("GET_PAGE", page);
     },
   },
 
   computed: {
-    // 페이지 번호 배열에 담기
-    pageNumbers: function () {
-      const list = [];
-      for (
-        let i = 1;
-        i < Math.ceil(this.$store.state.boardList.length / 5);
-        i++
-      ) {
-        list.push(i);
-      }
-      return list;
-    },
-
     formatDate: function (date) {
       let year = date.getFullYear();
       let month = ("0" + (date.getMonth() + 1)).slice(-2);

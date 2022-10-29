@@ -44,7 +44,8 @@
           <th>작성자</th>
           <td>{{ $store.state.userId }}</td>
           <th>작성일</th>
-          <td>{{ Date() }}</td>
+          <td v-if="$store.state.mode == 'UPDATE'">{{ $moment(board.WRITE_DATE).format('YYYY-MM-DD') }}</td>
+          <td v-else>{{$moment().format('YYYY-MM-DD')}}</td>
         </tr>
       </tbody>
     </table>
@@ -79,7 +80,7 @@
         type="file"
         accept="image/*"
         name="imageModel"
-        @change="OnFileSelected()"
+        @change="onFileSelected()"
       />
       <input class="btn btn-primary" type="submit" v-model="imageSubmit" />
     </form>
@@ -110,7 +111,7 @@ export default {
     }
   },
   methods: {
-    OnFileSelected() {
+    onFileSelected() {
       let input = event.target;
       if (input.files && input.files[0]) {
         let reader = new FileReader();

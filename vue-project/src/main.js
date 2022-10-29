@@ -8,7 +8,9 @@ import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import VueMoment from "vue-moment"; // 날짜 포맷 라이브러리
 
+Vue.use(VueMoment);
 Vue.use(BootstrapVue);
 Vue.prototype.$axios = axios;
 

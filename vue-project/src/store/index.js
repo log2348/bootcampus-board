@@ -18,6 +18,8 @@ export default new Vuex.Store({
       boardList: [],
       replyList: [],
       filteredList: [], // 검색된 리스트 목록
+      nowPage: [],
+      pageNumbers: [],
       stateList: [],
       isFiltered: false,
       isAuthenticated: false,
@@ -62,10 +64,16 @@ export default new Vuex.Store({
      * 게시글 전체 목록 조회
      */
     GET_BOARD_LIST(state) {
-      service.GetBoardList().then((response) => {
+      service.getBoardList().then((response) => {
         state.boardList = response;
         // 상태 정보 배열에 담기
         state.stateList = Array.from(new Set(response.map((a) => a.STATE)));
+        // 페이지 블록 배열에 담기
+        let list = [];
+        for (let i = 1; i < Math.ceil(state.boardList.length / 10) + 1; i++) {
+          list.push(i);
+        }
+        state.pageNumbers = list;
       });
     },
 
@@ -86,7 +94,7 @@ export default new Vuex.Store({
     /**
      * 게시글 등록
      */
-    CREATE_BOARD(state, data) {
+    SET_BOARD(state, data) {
       if (data.TITLE == "") {
         alert("제목을 입력하세요");
         return;
@@ -98,15 +106,14 @@ export default new Vuex.Store({
       }
 
       service
-        .CreateBoard(data)
+        .setBoard(data)
         .then((response) => {
-          if (response == 1) {
+          if (response > 0) {
             state.boardList.push();
-
             alert("게시글이 등록되었습니다.");
 
             // 등록 성공시 목록 화면으로 이동
-            router.push("/List");
+            router.push("/Board/Detail/" + response);
           } else {
             alert("게시글이 등록되지 않았습니다.");
           }
@@ -141,7 +148,7 @@ export default new Vuex.Store({
      */
     DELETE_BOARD(state, boardSeq) {
       service
-        .DeleteBoard(boardSeq)
+        .deleteBoard(boardSeq)
         .then((response) => {
           if (response == 1) {
             alert("게시글이 삭제되었습니다.");
@@ -158,11 +165,11 @@ export default new Vuex.Store({
     /**
      * 게시글 페이징
      */
-    SELECT_PAGE(state, pageNumber) {
+    GET_PAGE(state, pageNumber) {
       service
-        .selectPage(pageNumber)
+        .getPage(pageNumber)
         .then((response) => {
-          state.boardList = response;
+          state.nowPage = response;
         })
         .catch((error) => {
           console.log(error);
@@ -174,7 +181,7 @@ export default new Vuex.Store({
      */
     UPDATE_BOARD(state, boardData) {
       service
-        .UpdateBoard(boardData)
+        .updateBoard(boardData)
         .then((response) => {
           if (response == 1) {
             alert("수정이 완료되었습니다.");
@@ -205,12 +212,13 @@ export default new Vuex.Store({
     /**
      * 댓글 등록
      */
-    CREATE_REPLY(state, replyData) {
+    SET_REPLY(state, replyData) {
       service
-        .CreateReply(replyData)
+        .setReply(replyData)
         .then((response) => {
           if (response == 1) {
-            alert("댓글 등록 완료")
+            state.replyList.push(replyData);
+            return;
           } else {
             alert("댓글이 등록되지 않았습니다.");
           }
@@ -228,8 +236,7 @@ export default new Vuex.Store({
         .deleteReply(replySeq)
         .then((response) => {
           if (response == 1) {
-            state.replyP.fillter((a) => a.REPLY_SEQ != replySeq);
-            alert("댓글이 삭제되었습니다.");
+            console.log(response);
           } else {
             alert("댓글이 삭제되지 않았습니다.");
           }
@@ -244,7 +251,7 @@ export default new Vuex.Store({
      */
     UPDATE_REPLY(state, replayData) {
       service
-        .UpdateReply(replayData)
+        .updateReply(replayData)
         .then((response) => {
           console.log(response);
         })
@@ -257,7 +264,7 @@ export default new Vuex.Store({
      * 상태 업데이트
      */
     UPDATE_STATUS(state, data) {
-      service.UpdateStatus(data).then((response) => {
+      service.updateStatus(data).then((response) => {
         if (response == 1) {
           alert("게시글의 상태가 변경되었습니다.");
           router.push("/List");
@@ -272,7 +279,7 @@ export default new Vuex.Store({
      */
     GET_TOTAL_BOARD_COUNT(state) {
       service
-        .GetTotalBoardCount()
+        .getTotalBoardCount()
         .then((response) => {
           state.totalRow = response;
         })

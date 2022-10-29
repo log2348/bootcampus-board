@@ -89,13 +89,33 @@ namespace BootCampus.CMM.Notice.DSL
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_REPLY_C]", conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PARENT_SEQ", replyModel.PARENT_SEQ);
+            if (!replyModel.PARENT_SEQ.Equals(0))
+            {
+                cmd.Parameters.AddWithValue("@PARENT_SEQ", replyModel.PARENT_SEQ);
+
+            }
             cmd.Parameters.AddWithValue("@BOARD_SEQ", replyModel.BOARD_SEQ);
             cmd.Parameters.AddWithValue("@USER_ID", replyModel.USER_ID);
             cmd.Parameters.AddWithValue("@REPLY_CONTENTS", replyModel.REPLY_CONTENTS);
 
             // 삽입 쿼리 사용시
             // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
+            int result = cmd.ExecuteNonQuery();
+
+            return result;
+        }
+        #endregion
+
+        #region 게시글 삭제시 댓글 전체 삭제
+        public int DeleteAllReply(int boardSeq)
+        {
+            conn = DbConn();
+
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_REPLY_D2]", conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@BOARD_SEQ", boardSeq);
+
             int result = cmd.ExecuteNonQuery();
 
             return result;

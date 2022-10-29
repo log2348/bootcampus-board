@@ -6,21 +6,28 @@ using System.Threading.Tasks;
 
 namespace BootCampus.Models
 {
-    public class BoardModel
+    public class BoardAndImageModel
     {
         public int BOARD_SEQ { get; set; }
 
         public string STATE { get; set; }
 
         public string TITLE { get; set; }
-        
+
         public string CONTENTS { get; set; }
 
         public string USER_ID { get; set; }
 
-        public DateTime WRITE_DATE { get; set; }
+        public String WRITE_DATE { get; set; }
 
         public int VIEW_COUNT { get; set; }
+
+        public int IMAGE_SEQ { get; set; }
+
+        public string FILE_NAME { get; set; }
+
+        public byte[] IMAGE_DATA { get; set; }
+
 
     }
 }

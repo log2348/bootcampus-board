@@ -38,7 +38,7 @@ const service = {
   /**
    * 게시글 전체 목록 조회
    */
-  GetBoardList() {
+  getBoardList() {
     const data = axios
       .get("/Board/BoardList")
       .then((response) => response.data);
@@ -78,7 +78,7 @@ const service = {
   /**
    * 게시글 등록
    */
-  CreateBoard(boardData) {
+  setBoard(boardData) {
     const params = {
       STATE: boardData.STATE,
       TITLE: boardData.TITLE,
@@ -96,7 +96,7 @@ const service = {
   /**
    * 게시글 삭제
    */
-  DeleteBoard(boardSeq) {
+  deleteBoard(boardSeq) {
     const params = {
       boardSeq: boardSeq,
     };
@@ -111,7 +111,7 @@ const service = {
   /**
    * 게시글 페이징
    */
-  selectPage(pageNumber) {
+  getPage(pageNumber) {
     const params = {
       pageNumber: pageNumber,
     };
@@ -126,7 +126,7 @@ const service = {
   /**
    * 게시글 수정
    */
-  UpdateBoard(boardData) {
+  updateBoard(boardData) {
     const params = {
       BOARD_SEQ: boardData.BOARD_SEQ,
       STATE: boardData.STATE,
@@ -161,7 +161,7 @@ const service = {
   /**
    * 댓글 등록
    */
-  CreateReply(replyData) {
+  setReply(replyData) {
     const data = axios
       .post("/Reply/Create", replyData)
       .then((response) => response.data)
@@ -175,7 +175,7 @@ const service = {
    */
   deleteReply(replySeq) {
     const params = {
-      REPLY_SEQ: replySeq,
+      replySeq: replySeq,
     };
     const data = axios
       .get("/Reply/Delete", { params })
@@ -188,10 +188,10 @@ const service = {
   /**
    * 댓글 수정
    */
-  UpdateReply(replyData) {
+  updateReply(replyData) {
     const params = {
       REPLY_SEQ: replyData.REPLY_SEQ,
-      CONTENTS: replyData.CONTENTS,
+      REPLY_CONTENTS: replyData.REPLY_CONTENTS,
     };
     const data = axios
       .post("/Reply/Update", null, { params })
@@ -203,7 +203,7 @@ const service = {
   /**
    * 상태 업데이트
    */
-  UpdateStatus(boardData) {
+  updateStatus(boardData) {
     const params = {
       boardSeq: boardData.boardSeq,
       state: boardData.state,
@@ -219,7 +219,7 @@ const service = {
   /**
    * 총 게시물 개수 가져오기
    */
-  GetTotalBoardCount() {
+  getTotalBoardCount() {
     const data = axios
       .get("/Board/TotalRowCount")
       .then((response) => response.data)

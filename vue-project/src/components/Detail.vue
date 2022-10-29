@@ -21,7 +21,7 @@
       <button
         v-show="$store.state.userId == board.USER_ID"
         class="btn btn-danger"
-        @click="ClickDeleteBtn()"
+        @click="clickDeleteBtn()"
       >
         삭제
       </button>
@@ -39,7 +39,7 @@
           <th>작성자</th>
           <td>{{ board.USER_ID }}</td>
           <th>작성일</th>
-          <td>{{ board.WRITE_DATE }}</td>
+          <td>{{ $moment(board.WRITE_DATE).format('YYYY-MM-DD') }}</td>
           <th>조회수</th>
           <td>{{ board.VIEW_COUNT }}</td>
         </tr>
@@ -80,7 +80,7 @@ export default {
     };
   },
   methods: {
-    ClickDeleteBtn() {
+    clickDeleteBtn() {
       this.$store.state.mode = "DELETE";
       this.$bvModal.show("modal-scoped");
     },

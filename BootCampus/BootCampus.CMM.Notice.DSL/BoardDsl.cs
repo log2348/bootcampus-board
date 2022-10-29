@@ -46,7 +46,7 @@ namespace BootCampus.CMM.Notice.DSL
                 model.STATE = Convert.ToString(sqlDataReader["STATE"]);
                 model.TITLE = Convert.ToString(sqlDataReader["TITLE"]);
                 model.CONTENTS = Convert.ToString(sqlDataReader["CONTENTS"]);
-                model.WRITE_DATE = Convert.ToString(sqlDataReader["WRITE_DATE"]);
+                model.WRITE_DATE = Convert.ToDateTime(sqlDataReader["WRITE_DATE"]);
                 model.USER_ID = Convert.ToString(sqlDataReader["USER_ID"]);
                 model.VIEW_COUNT = Convert.ToInt32(sqlDataReader["VIEW_COUNT"]);
 
@@ -173,13 +173,20 @@ namespace BootCampus.CMM.Notice.DSL
         {
             conn = DbConn();
 
+            ReplyDsl replyDsl = new ReplyDsl();
+
             SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_D]", conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@BOARD_SEQ", boardSeq);
 
+            // 댓글 삭제 후 게시글 삭제
+            replyDsl.DeleteAllReply(boardSeq);
+
             // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
             int result = cmd.ExecuteNonQuery();
+
+
 
             return result;
         }

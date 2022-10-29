@@ -15,6 +15,7 @@
         v-for="parent in parentReplies"
         :key="parent.REPLY_SEQ"
       >
+        <!-- 상위 댓글 목록 -->
         <div class="container">
           <span>
             <b>{{ parent.USER_ID }}</b
@@ -23,12 +24,12 @@
               type="button"
               style="color: blue; text-align: end"
               v-show="$store.state.userId == parent.USER_ID"
-              @click="ClickUpdateBtn()"
+              @click="clickUpdateBtn()"
               >수정</span
             >&nbsp;<span
               type="button"
               v-show="$store.state.userId == parent.USER_ID"
-              @click="$store.commit('DELETE_REPLY', parent.REPLY_SEQ)"
+              @click="deleteReply(parent.REPLY_SEQ)"
               style="color: red; text-align: end"
               >삭제</span
             >
@@ -42,12 +43,13 @@
           <i
             type="button"
             class="bi bi-arrow-return-left"
-            @click="ClickComment()"
+            @click="clickComment(parent.REPLY_SEQ)"
           ></i>
         </div>
         <br />
-        <!-- 댓글 수정/대댓글 폼 -->
-        <div class="container" v-show="isShow">
+
+        <!-- 댓글 수정 폼 -->
+        <div class="container" v-show="isUpdated">
           <textarea
             class="form-control"
             rows="3"
@@ -55,41 +57,65 @@
           ></textarea>
           <button
             class="btn btn-primary"
-            @click="UpdateReply(parent.REPLY_SEQ)"
+            @click="updateReply(parent.REPLY_SEQ)"
           >
-            등록
+            수정
           </button>
         </div>
         <br />
-        <!-- Re-reply 목록 -->
-        <ul v-for="item in childReplies" :key="item.REPLY_SEQ">
+
+        <!-- 대댓글 작성 폼 -->
+        <div class="container" v-show="isReplied">
+          <input type="hidden" ref="reply" :value="parent.REPLY_SEQ" />
+          <textarea
+            class="form-control"
+            rows="3"
+            v-model="childContents"
+          ></textarea>
+
+          <button class="btn btn-primary" @click="setReReply(parent.REPLY_SEQ)">
+            등록
+          </button>
+        </div>
+
+        <!-- 하위 댓글 목록 -->
+        <ul v-for="child in childReplies" :key="child.REPLY_SEQ">
           <li
             class="list-group-item"
-            v-if="item.PARENT_SEQ == parent.REPLY_SEQ"
+            v-if="child.PARENT_SEQ == parent.REPLY_SEQ"
           >
             <div class="container">
               <span>
-                <b>{{ item.USER_ID }}</b
-                >&nbsp;&nbsp;<span>{{ item.WRITE_DATE }}</span>
+                <b>{{ child.USER_ID }}</b
+                >&nbsp;&nbsp;<span>{{ child.WRITE_DATE }}</span>
                 &nbsp;&nbsp;&nbsp;<span
                   type="button"
                   style="color: blue; text-align: end"
-                  v-show="$store.state.userId == item.USER_ID"
-                  @click="ClickUpdateBtn()"
+                  v-show="$store.state.userId == child.USER_ID"
+                  @click="clickUpdateBtn()"
                   >수정</span
                 >&nbsp;<span
                   type="button"
-                  @click="$store.commit('DELETE_REPLY', parent.REPLY_SEQ)"
+                  @click="deleteReply(child.REPLY_SEQ)"
                   style="color: red; text-align: end"
-                  v-show="$store.state.userId == item.USER_ID"
+                  v-show="$store.state.userId == child.USER_ID"
                   >삭제</span
                 >
               </span>
             </div>
             <div class="container">
-              {{ item.REPLY_CONTENTS }}
+              {{ child.REPLY_CONTENTS }}
             </div>
-            <div style="text-align: right"></div>
+            <div style="text-align: right">
+              답변 달기
+              <i
+                type="button"
+                class="bi bi-arrow-return-left"
+                @click="clickComment(parent.REPLY_SEQ)"
+              ></i>
+            </div>
+
+            <br />
           </li>
         </ul>
       </li>
@@ -103,11 +129,11 @@ export default {
     return {
       contents: "",
       replySeq: "",
-      reContents: "",
+      childContents: "",
       updateContents: "",
       parentSeq: "",
       childSeq: "",
-      isShow: false,
+      isReplied: false,
       isUpdated: false,
     };
   },
@@ -122,49 +148,60 @@ export default {
 
     childReplies() {
       return this.$store.state.replyList.filter((a) => a.LEVEL != 0);
-    }
+    },
   },
   methods: {
+    // 댓글 등록
     setReply() {
       let replyData = {
         REPLY_CONTENTS: this.contents,
         USER_ID: this.$store.state.userId,
         BOARD_SEQ: this.boardSeq,
       };
-      this.$store.commit("CREATE_REPLY", replyData);
+      this.$store.commit("SET_REPLY", replyData);
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
+
       this.contents = "";
     },
 
-    // 수정 버튼 클릭
-    ClickUpdateBtn() {
-      this.isShow = !this.isShow;
-    },
-
-    // 대댓글 등록 버튼 클릭
-    ClickComment() {
-      if (this.parentSeq == this.childSeq) {
-        this.isShow = !this.isShow;
-      }
-    },
-
-    UpdateReply(replySeq) {
-      let replyData = {
-        REPLY_SEQ: replySeq,
-        CONTENTS: this.updateContents,
-      };
-      this.$store.commit("UPDATE_REPLY", replyData);
-    },
-
-    // 대댓글 등록
-    AddReply(parentSeq) {
+    // 대댓글 등록)
+    setReReply(parentSeq) {
       let replyData = {
         USER_ID: this.$store.state.userId,
         BOARD_SEQ: this.boardSeq,
         PARENT_SEQ: parentSeq,
-        REPLY_CONTENTS: this.reContents,
+        REPLY_CONTENTS: this.childContents,
       };
-      this.$store.commit("CREATE_REPLY", replyData);
+      this.$store.commit("SET_REPLY", replyData);
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
+      this.isReplied = !this.isReplied;
       this.contents = "";
+    },
+
+    // 수정 버튼 클릭
+    clickUpdateBtn() {
+      this.isUpdated = !this.isUpdated;
+    },
+
+    // 답변 달기 버튼 클릭
+    clickComment() {
+      this.isReplied = !this.isReplied;
+    },
+
+    deleteReply(replySeq) {
+      this.$store.commit("DELETE_REPLY", replySeq);
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
+    },
+
+    updateReply(replySeq) {
+      let replyData = {
+        REPLY_SEQ: replySeq,
+        REPLY_CONTENTS: this.updateContents,
+      };
+      this.$store.commit("UPDATE_REPLY", replyData);
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
+      this.updateContents = "";
+      this.isUpdated = !this.isUpdated;
     },
   },
 };
