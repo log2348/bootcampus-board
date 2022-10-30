@@ -52,9 +52,7 @@ namespace BootCampus.CMM.Notice.BSL
         public int CreateBoard(BoardModel board)
         {
             BoardDsl boardDsl = new BoardDsl();
-            int result = boardDsl.CreateBoard(board);
-
-            return result;
+            return boardDsl.CreateBoard(board);
 
         }
         #endregion

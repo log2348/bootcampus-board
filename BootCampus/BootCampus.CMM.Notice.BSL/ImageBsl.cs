@@ -11,7 +11,7 @@ namespace BootCampus.CMM.Notice.BSL
     public class ImageBsl
     {
         #region 이미지 불러오기
-        public ImageModel SelectImage(int imageSeq)
+        public string SelectImage(int imageSeq)
         {
             ImageDsl imageDsl = new ImageDsl();
             return imageDsl.SelectImage(imageSeq);

@@ -226,6 +226,21 @@ const service = {
       .catch((error) => console.log(error));
     return data;
   },
+
+  /**
+   * 이미지 출력
+   */
+  getImage(imageSeq) {
+    const params = {
+      imageSeq: imageSeq,
+    };
+    const data = axios
+      .get("/Image/Select", { params })
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+    return data;
+  },
 };
 
 export default service;

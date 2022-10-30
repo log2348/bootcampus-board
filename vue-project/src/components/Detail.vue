@@ -39,15 +39,15 @@
           <th>작성자</th>
           <td>{{ board.USER_ID }}</td>
           <th>작성일</th>
-          <td>{{ $moment(board.WRITE_DATE).format('YYYY-MM-DD') }}</td>
+          <td>{{ $moment(board.WRITE_DATE).format("YYYY-MM-DD") }}</td>
           <th>조회수</th>
           <td>{{ board.VIEW_COUNT }}</td>
         </tr>
       </tbody>
     </table>
     <div class="row">
-      <img class="col" :src="preview" title="게시글 이미지" />
-      <div class="col border" style="height: 250px">
+      <img class="col" :src="imageSrc" style="width: 300px; height: 300px" />
+      <div class="col border" style="height: 300px">
         {{ board.CONTENTS }}
       </div>
     </div>
@@ -77,6 +77,8 @@ export default {
   data() {
     return {
       board: {},
+      imageSeq: "",
+      imageSrc: "data:image/jpg;base64,",
     };
   },
   methods: {
@@ -91,6 +93,9 @@ export default {
       console.log(response);
       this.board = response;
     });
+    service
+      .getImage(17)
+      .then((response) => (this.imageSrc += response));
   },
   components: {
     Comment,

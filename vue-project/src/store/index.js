@@ -112,7 +112,6 @@ export default new Vuex.Store({
             state.boardList.push();
             alert("게시글이 등록되었습니다.");
 
-            // 등록 성공시 목록 화면으로 이동
             router.push("/Board/Detail/" + response);
           } else {
             alert("게시글이 등록되지 않았습니다.");
@@ -283,6 +282,15 @@ export default new Vuex.Store({
         .then((response) => {
           state.totalRow = response;
         })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    GET_IMAGE(state, imageSeq) {
+      service
+        .getImage(imageSeq)
+        .then((response) => response.data)
         .catch((error) => {
           console.log(error);
         });

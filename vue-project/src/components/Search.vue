@@ -8,7 +8,7 @@
           v-model="state"
           @change="$store.commit('GET_LIST_BY_STATE', state)"
         >
-          <option>전체</option>
+          <option >전체</option>
           <option v-for="item in $store.state.stateList" :key="item">
             {{ item }}
           </option>

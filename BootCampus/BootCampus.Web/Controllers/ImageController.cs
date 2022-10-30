@@ -13,6 +13,7 @@ namespace BootCampus.Web.Controllers
 {
     public class ImageController : Controller
     {
+
         /// <summary>
         /// 이미지 파일 저장
         /// </summary>
@@ -25,10 +26,10 @@ namespace BootCampus.Web.Controllers
 
             if (HttpContext.Request.Files.Count > 0)
             {
-                HttpContext.Request.Files["imageModel"].InputStream.Position = 0;
-                byte[] bImage = this.ReadFully(HttpContext.Request.Files["imageModel"].InputStream);
+                HttpContext.Request.Files["imageFile"].InputStream.Position = 0;
+                byte[] bImage = this.ReadFully(HttpContext.Request.Files["imageFile"].InputStream);
 
-                imageModel.FILE_NAME = HttpContext.Request.Files["imageModel"].FileName ?? "이미지";
+                imageModel.FILE_NAME = @"D:\\test\\" + HttpContext.Request.Files["imageFile"].FileName ?? "이미지";
                 imageModel.IMAGE_DATA = bImage;
                 result = imageBsl.CreateImage(imageModel);
 
@@ -66,7 +67,7 @@ namespace BootCampus.Web.Controllers
             }
         }
 
-        public ImageModel Select(int imageSeq)
+        public string Select(int imageSeq)
         {
             ImageBsl imageBsl = new ImageBsl();
             return imageBsl.SelectImage(imageSeq);

@@ -25,10 +25,11 @@
       v-else
       :title="title"
       :contents="contents"
-      :imageSubmit="imageSubmit"
+      :imageData="imageData"
     ></Confirm>
 
     <br />
+
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -42,10 +43,12 @@
       <tbody>
         <tr>
           <th>작성자</th>
-          <td>{{ $store.state.userId }}</td>
+          <td name="USER_ID">{{ $store.state.userId }}</td>
           <th>작성일</th>
-          <td v-if="$store.state.mode == 'UPDATE'">{{ $moment(board.WRITE_DATE).format('YYYY-MM-DD') }}</td>
-          <td v-else>{{$moment().format('YYYY-MM-DD')}}</td>
+          <td v-if="$store.state.mode == 'UPDATE'">
+            {{ $moment(board.WRITE_DATE).format("YYYY-MM-DD") }}
+          </td>
+          <td v-else>{{ $moment().format("YYYY-MM-DD") }}</td>
         </tr>
       </tbody>
     </table>
@@ -72,14 +75,13 @@
       :src="preview"
       title="이미지 미리보기"
       ref="preview"
-      name="chooseFile"
       style="width: 250px; height: 250px; margin: 10px"
     />
     <form method="post" enctype="multipart/form-data" action="/Image/Create">
       <input
         type="file"
         accept="image/*"
-        name="imageModel"
+        name="imageFile"
         @change="onFileSelected()"
       />
       <input class="btn btn-primary" type="submit" v-model="imageSubmit" />
@@ -95,11 +97,10 @@ export default {
   data() {
     return {
       title: "",
-      contents: "",
       board: "",
+      contents: "",
       preview: "",
-      imageFile: "",
-      imageSubmit: ""
+      imageData: ""
     };
   },
   mounted() {
@@ -112,14 +113,20 @@ export default {
   },
   methods: {
     onFileSelected() {
-      let input = event.target;
-      if (input.files && input.files[0]) {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          this.preview = e.target.result;
+      let image = event.target;
+
+      // 첨부한 이미지 미리보기
+      if (image.files[0]) {
+        let itemImage = this.$refs.preview; //img dom 접근
+        itemImage.src = window.URL.createObjectURL(image.files[0]); //img src에 blob주소 변환
+        this.itemImageInfo.uploadImages = itemImage.src; //이미지 주소 data 변수에 바인딩해서 나타내게 처리
+        itemImage.onload = () => {
+          window.URL.revokeObjectURL(this.src);
         };
-        reader.readAsDataURL(input.files[0]);
       }
+
+      this.imageData = new FormData();
+      this.imageData.append("IMAGE", this.imageFile);
     },
   },
   components: {

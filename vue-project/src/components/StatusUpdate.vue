@@ -28,7 +28,7 @@
       </template>
 
       <template #modal-footer>
-        <b-button size="m" variant="primary" @click="UpdateStatus()">
+        <b-button size="m" variant="primary" @click="updateStatus()">
           확인
         </b-button>
       </template>
@@ -45,7 +45,7 @@ export default {
   },
   props: ["status", "boardSeq", "showModal"],
   methods: {
-    UpdateStatus() {
+    updateStatus() {
       let data = {
         boardSeq: this.boardSeq,
         state: this.newStatus,

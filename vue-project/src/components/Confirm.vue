@@ -35,13 +35,14 @@
 
 <script>
 export default {
-  props: ["title", "contents", "boardSeq", "board", "imageSubmit", "isClicked"],
+  props: ["title", "contents", "boardSeq", "board", "imageData", "isClicked"],
   methods: {
     setBoard() {
       let data = {
         TITLE: this.title,
         CONTENTS: this.contents,
         USER_ID: this.$store.state.userId,
+        IMAGE: this.imageData,
       };
 
       if (data.TITLE == "") {

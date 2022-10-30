@@ -49,6 +49,7 @@ namespace BootCampus.CMM.Notice.DSL
                 model.WRITE_DATE = Convert.ToDateTime(sqlDataReader["WRITE_DATE"]);
                 model.USER_ID = Convert.ToString(sqlDataReader["USER_ID"]);
                 model.VIEW_COUNT = Convert.ToInt32(sqlDataReader["VIEW_COUNT"]);
+                model.IMAGE_SEQ = Convert.ToInt32(sqlDataReader["IMAGE_SEQ"]);
 
             }
 
@@ -156,6 +157,7 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.Parameters.AddWithValue("@TITLE", newBoard.TITLE);
             cmd.Parameters.AddWithValue("@CONTENTS", newBoard.CONTENTS);
             cmd.Parameters.AddWithValue("@USER_ID", newBoard.USER_ID);
+            //cmd.Parameters.AddWithValue("@IMAGE", newBoard.IMAGE[0][0]);
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();

@@ -22,5 +22,8 @@ namespace BootCampus.Models
 
         public int VIEW_COUNT { get; set; }
 
+        public int IMAGE_SEQ { get; set; }
+
+
     }
 }

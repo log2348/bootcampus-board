@@ -1,11 +1,17 @@
 ﻿using BootCampus.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Net.WebRequestMethods;
 
 namespace BootCampus.CMM.Notice.DSL
 {
@@ -41,34 +47,42 @@ namespace BootCampus.CMM.Notice.DSL
         #endregion
 
         #region 이미지 조회
-        public ImageModel SelectImage(int imageSeq)
+        public string SelectImage(int imageSeq)
         {
             conn = DbConn();
 
-            SqlCommand cmd = new SqlCommand("SELECT Image FROM IMAGE WHERE IMAGE_SEQ = @IMAGE_SEQ", conn);
-            cmd.Parameters.AddWithValue("@IMAGE_SEQ", imageSeq);
-
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            byte[] bImage = null;
-
-            while (reader.Read())
-            {
-                bImage = (byte[])reader[0];
-            }
-
             ImageModel imageModel = new ImageModel();
 
-            if (bImage != null)
-                //imageModel.IMAGE_DATA = new Bitmap(new MemoryStream(bImage));
+            SqlCommand cmd = new SqlCommand("SELECT * FROM [dbo].[TB_IMAGE] WHERE [IMAGE_SEQ] = @IMAGE_SEQ", conn);
+            cmd.Parameters.AddWithValue("@IMAGE_SEQ", imageSeq);
 
-                reader.Close();
+            SqlDataReader sqlDataReader = cmd.ExecuteReader();
+            string base64Data = "";
 
-            conn.Close();
+            if (sqlDataReader.Read())
+            {
+                byte[] data = GetFileBinary(Convert.ToString(sqlDataReader["FILE_NAME"]));
+                base64Data = Convert.ToBase64String(data);
 
-            return imageModel;
+            }
+
+            return base64Data;
         }
         #endregion
+
+        #region byte 변환
+        private static byte[] GetFileBinary(String filepath)
+        {
+            var file = new FileInfo(filepath);
+            var data = new byte[file.Length];
+            using (var stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
+            {
+                stream.Read(data, 0, (int)data.Length);
+            }
+            return data;
+        }
+        #endregion
+
 
     }
 }

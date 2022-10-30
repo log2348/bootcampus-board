@@ -49,7 +49,7 @@
         <br />
 
         <!-- 댓글 수정 폼 -->
-        <div class="container" v-show="isUpdated">
+        <div class="container" v-show="isUpdated" :id="parent.REPLY_SEQ">
           <textarea
             class="form-control"
             rows="3"
@@ -92,7 +92,7 @@
                   type="button"
                   style="color: blue; text-align: end"
                   v-show="$store.state.userId == child.USER_ID"
-                  @click="clickUpdateBtn()"
+                  @click="isReplyUpdated = !isReplyUpdated"
                   >수정</span
                 >&nbsp;<span
                   type="button"
@@ -111,10 +111,24 @@
               <i
                 type="button"
                 class="bi bi-arrow-return-left"
-                @click="clickComment(parent.REPLY_SEQ)"
+                @click="clickComment(parent.REPLY_SEQ, child.REPLY_SEQ)"
               ></i>
             </div>
-
+            <br />
+            <!-- 대댓글 수정 폼 -->
+            <div class="container" v-show="isReplyUpdated">
+              <textarea
+                class="form-control"
+                rows="3"
+                v-model="updateReplyContents"
+              ></textarea>
+              <button
+                class="btn btn-primary"
+                @click="updateReReply(child.REPLY_SEQ)"
+              >
+                수정
+              </button>
+            </div>
             <br />
           </li>
         </ul>
@@ -131,10 +145,12 @@ export default {
       replySeq: "",
       childContents: "",
       updateContents: "",
+      updateReplyContents: "",
       parentSeq: "",
       childSeq: "",
       isReplied: false,
       isUpdated: false,
+      isReplyUpdated: false
     };
   },
   props: ["boardSeq"],
@@ -193,6 +209,7 @@ export default {
       this.$store.commit("GET_REPLY_LIST", this.boardSeq);
     },
 
+    // 댓글 수정
     updateReply(replySeq) {
       let replyData = {
         REPLY_SEQ: replySeq,
@@ -203,6 +220,18 @@ export default {
       this.updateContents = "";
       this.isUpdated = !this.isUpdated;
     },
+
+    // 대댓글 수정
+    updateReReply(replySeq) {
+      let replyData = {
+        REPLY_SEQ: replySeq,
+        REPLY_CONTENTS: this.updateReplyContents,
+      };
+      this.$store.commit("UPDATE_REPLY", replyData);
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
+      this.updateReplyContents = "";
+      this.isReplyUpdated = !this.isReplyUpdated;
+    }
   },
 };
 </script>

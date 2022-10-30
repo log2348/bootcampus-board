@@ -41,9 +41,7 @@ namespace BootCampus.Web.Controllers
         public int Create(BoardModel newBoard)
         {
             BoardBsl boardBsl = new BoardBsl();
-            int result = boardBsl.CreateBoard(newBoard);
-
-            return result;
+            return boardBsl.CreateBoard(newBoard);
         }
 
         /// <summary>
