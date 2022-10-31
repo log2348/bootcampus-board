@@ -174,6 +174,11 @@ export default {
         USER_ID: this.$store.state.userId,
         BOARD_SEQ: this.boardSeq,
       };
+
+      if (replyData.REPLY_CONTENTS == "") {
+        alert("내용을 입력하세요.");
+        return;
+      }
       this.$store.commit("SET_REPLY", replyData);
 
       this.contents = "";

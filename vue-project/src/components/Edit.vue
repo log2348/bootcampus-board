@@ -69,24 +69,24 @@
     <br />
     <br />
 
-    <h4><b>이미지 등록</b></h4>
-
-    <img
-      :src="preview"
-      title="이미지 미리보기"
-      ref="preview"
-      style="width: 250px; height: 250px; margin: 10px"
-    />
-    <form method="post" enctype="multipart/form-data" action="/Image/Create">
-      <input
-        type="file"
-        accept="image/*"
-        name="imageFile"
-        ref="imageFile"
-        @change="onFileSelected()"
-      />
-      <input class="btn btn-primary" type="submit" />
-    </form>
+    <div class="container" v-if="$store.state.mode != 'UPDATE'">
+      <h4><b>이미지 등록</b></h4>
+      <form method="post" enctype="multipart/form-data" action="/Image/Create">
+        <img
+          :src="preview"
+          title="이미지 미리보기"
+          ref="preview"
+          style="width: 250px; height: 250px; margin: 10px"
+        />
+        <input
+          type="file"
+          accept="image/*"
+          name="imageFile"
+          ref="imageFile"
+          @change="onFileSelected()"
+        />
+      </form>
+    </div>
   </div>
 </template>
 
@@ -102,7 +102,7 @@ export default {
       board: "",
       contents: "",
       preview: "",
-      imageFile: ""
+      imageFile: "",
     };
   },
   mounted() {

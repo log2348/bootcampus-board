@@ -54,7 +54,6 @@ namespace BootCampus.CMM.Notice.DSL
             ImageModel imageModel = new ImageModel();
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM [dbo].[TB_IMAGE] WHERE [IMAGE_SEQ] = (SELECT MAX([IMAGE_SEQ]) FROM [dbo].[TB_IMAGE])", conn);
-            //cmd.Parameters.AddWithValue("@IMAGE_SEQ", imageSeq);
 
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
             string base64Data = "";

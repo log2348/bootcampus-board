@@ -168,7 +168,6 @@ namespace BootCampus.CMM.Notice.DSL
             cmd.Parameters.AddWithValue("@TITLE", newBoard.TITLE);
             cmd.Parameters.AddWithValue("@CONTENTS", newBoard.CONTENTS);
             cmd.Parameters.AddWithValue("@USER_ID", newBoard.USER_ID);
-            //cmd.Parameters.AddWithValue("@IMAGE", newBoard.IMAGE[0][0]);
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -198,8 +197,6 @@ namespace BootCampus.CMM.Notice.DSL
 
             // 영향 받은 행 개수 반환, 오류 발생시 -1 반환
             int result = cmd.ExecuteNonQuery();
-
-
 
             return result;
         }

@@ -7,13 +7,10 @@ import router from "../router/index.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [
-    createPersistedState()
-  ],
+  plugins: [createPersistedState()],
   state() {
     return {
       mode: "UPDATE",
-      // 로그인된 유저 정보
       userId: "",
       password: "",
 
@@ -29,7 +26,13 @@ export default new Vuex.Store({
       isAuthenticated: false,
     };
   },
-  actions: {},
+  actions: {
+    /*
+    setReply({commit}, replayData) {
+      commit("SET_REPLY", replayData);
+    }
+    */
+  },
   mutations: {
     /**
      *
@@ -239,7 +242,7 @@ export default new Vuex.Store({
         .deleteReply(replySeq)
         .then((response) => {
           if (response == 1) {
-            console.log(response);
+            alert("댓글이 삭제되었습니다.");
           } else {
             alert("댓글이 삭제되지 않았습니다.");
           }

@@ -17,8 +17,8 @@
       </thead>
 
       <!-- 필터링 되지 않은 리스트 -->
-      <tbody v-if="!$store.state.isFiltered">
-        <tr v-for="item in $store.state.nowPage" :key="item.BOARD_SEQ">
+      <tbody v-if="!isFiltered">
+        <tr v-for="item in nowPage" :key="item.BOARD_SEQ">
           <td style="text-align: center">{{ item.BOARD_SEQ }}</td>
           <td>{{ item.STATE }}</td>
           <router-link
@@ -27,14 +27,16 @@
             <td>{{ item.TITLE }}</td>
           </router-link>
           <td style="text-align: center">{{ item.USER_ID }}</td>
-          <td style="text-align: center">{{ $moment(item.WRITE_DATE).format('YYYY-MM-DD') }}</td>
+          <td style="text-align: center">
+            {{ $moment(item.WRITE_DATE).format("YYYY-MM-DD") }}
+          </td>
           <td style="text-align: center">{{ item.VIEW_COUNT }}</td>
         </tr>
       </tbody>
 
       <!-- 필터링된 리스트 -->
       <tbody v-else>
-        <tr v-for="item in $store.state.filteredList" :key="item.BOARD_SEQ">
+        <tr v-for="item in filteredList" :key="item.BOARD_SEQ">
           <td>{{ item.BOARD_SEQ }}</td>
           <td>{{ item.STATE }}</td>
           <router-link
@@ -43,7 +45,7 @@
             <td>{{ item.TITLE }}</td>
           </router-link>
           <td>{{ item.USER_ID }}</td>
-          <td>{{ $moment(item.WRITE_DATE).format('YYYY-MM-DD') }}</td>
+          <td>{{ $moment(item.WRITE_DATE).format("YYYY-MM-DD") }}</td>
           <td>{{ item.VIEW_COUNT }}</td>
         </tr>
       </tbody>
@@ -51,7 +53,11 @@
 
     <div class="container">
       <ul class="pagination" style="justify-content: center; cursor: pointer">
-        <li class="page-item" v-for="item in $store.state.pageNumbers" :key="item">
+        <li
+          class="page-item"
+          v-for="item in pageNumbers"
+          :key="item"
+        >
           <a class="page-link" @click="changePage(item)">{{ item }}</a>
         </li>
       </ul>
@@ -81,6 +87,7 @@
 
 <script>
 import Xlsx from "xlsx";
+import { mapState } from "vuex";
 import Search from "../components/Search.vue";
 
 export default {
@@ -93,14 +100,13 @@ export default {
     this.$store.commit("GET_BOARD_LIST");
     this.$store.commit("GET_TOTAL_BOARD_COUNT");
     this.$store.commit("GET_PAGE", this.nowPageNumber);
-
   },
   methods: {
     // 엑셀 파일 다운로드
     getExcelFile() {
       const workBook = Xlsx.utils.book_new();
       const workSheet = Xlsx.utils.json_to_sheet(
-        this.$store.state.filteredList
+        this.filteredList
       );
       Xlsx.utils.book_append_sheet(workBook, workSheet, "myLog");
       Xlsx.writeFile(workBook, "myLog.xlsx");
@@ -109,15 +115,13 @@ export default {
     // 엑셀 파일 업로드
     readExcelFile() {
       const file = event.target.files[0];
-      console.log(this.$store.state.boardList);
       let reader = new FileReader();
       reader.onload = () => {
         let data = reader.result;
         let workbook = Xlsx.read(data, { type: "binary" });
         workbook.SheetNames.forEach((sheetName) => {
           const file = Xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-          this.$store.state.nowPage.push(...file);
-          console.log(this.$store.state.boardList);
+          this.nowPage.push(...file);
         });
       };
       reader.readAsBinaryString(file);
@@ -139,6 +143,8 @@ export default {
 
       return dateString;
     },
+
+    ...mapState(["nowPage", "pageNumbers", "isFiltered", "filteredList", "mode"]),
   },
 
   components: {
