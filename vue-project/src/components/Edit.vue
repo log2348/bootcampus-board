@@ -20,9 +20,13 @@
       :title="board.TITLE"
       :contents="board.CONTENTS"
       :board="board"
+    ></Confirm>
+    <Confirm
+      v-else
+      :title="title"
+      :contents="contents"
       @submit="submit"
     ></Confirm>
-    <Confirm v-else :title="title" :contents="contents"></Confirm>
 
     <br />
 
@@ -89,6 +93,7 @@
 <script>
 import service from "../services/service.js";
 import Confirm from "../components/Confirm.vue";
+import axios from "axios";
 
 export default {
   data() {
@@ -97,7 +102,7 @@ export default {
       board: "",
       contents: "",
       preview: "",
-      imageFile: "",
+      imageFile: ""
     };
   },
   mounted() {
@@ -125,15 +130,15 @@ export default {
 
     submit() {
       const formData = new FormData();
-      formData.append('imageFile', this.$refs.imageFile);
-      alert('안타나?');
-      this.$http.post("/Image/Create", formData, {
-        headers: {
-          'Content-Type' : 'multipart/form-data'
-        }
-      }).then((response) => console.log(response));
-
-    }
+      formData.append("imageFile", this.$refs.imageFile.files[0]);
+      axios
+        .post("/Image/Create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => console.log(response));
+    },
   },
   components: {
     Confirm,

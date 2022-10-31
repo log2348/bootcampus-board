@@ -56,6 +56,7 @@ namespace BootCampus.CMM.Notice.DSL
 
                 if (Convert.ToString(sqlDataReader["FILE_NAME"]) != "")
                 {
+                    boardAndImageModel.IMAGE_SEQ = Convert.ToInt32(sqlDataReader["IMAGE_SEQ"]);
                     byte[] data = imageDsl.GetFileBinary(Convert.ToString(sqlDataReader["FILE_NAME"]));
                     base64String = Convert.ToBase64String(data);
                     boardAndImageModel.IMAGE_DATA = base64String;

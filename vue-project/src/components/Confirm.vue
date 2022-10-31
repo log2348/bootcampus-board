@@ -55,8 +55,8 @@ export default {
         alert("내용을 입력하세요.");
         return;
       }
-      this.$store.commit("SET_BOARD", data);
       this.$emit("submit");
+      this.$store.commit("SET_BOARD", data);
     },
 
     updateBoard() {
