@@ -12,12 +12,12 @@ namespace BootCampus.CMM.Notice.BSL
     public class BoardBsl
     {
         #region Board 단건 조회
-        public BoardModel SelectBoard(int boardSeq)
+        public BoardAndImageModel SelectBoard(int boardSeq)
         {
             BoardDsl boardDsl = new BoardDsl();
-            BoardModel boardModel = boardDsl.SelectBoard(boardSeq);
+            BoardAndImageModel boardAndImageModel = boardDsl.SelectBoard(boardSeq);
 
-            return boardModel;
+            return boardAndImageModel;
         }
         #endregion
 

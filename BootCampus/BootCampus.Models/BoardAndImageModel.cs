@@ -18,7 +18,7 @@ namespace BootCampus.Models
 
         public string USER_ID { get; set; }
 
-        public String WRITE_DATE { get; set; }
+        public DateTime WRITE_DATE { get; set; }
 
         public int VIEW_COUNT { get; set; }
 
@@ -26,7 +26,7 @@ namespace BootCampus.Models
 
         public string FILE_NAME { get; set; }
 
-        public byte[] IMAGE_DATA { get; set; }
+        public string IMAGE_DATA { get; set; }
 
 
     }

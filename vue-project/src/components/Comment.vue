@@ -24,7 +24,7 @@
               type="button"
               style="color: blue; text-align: end"
               v-show="$store.state.userId == parent.USER_ID"
-              @click="clickUpdateBtn()"
+              @click="clickUpdateBtn(parent.REPLY_SEQ)"
               >수정</span
             >&nbsp;<span
               type="button"
@@ -150,7 +150,7 @@ export default {
       childSeq: "",
       isReplied: false,
       isUpdated: false,
-      isReplyUpdated: false
+      isReplyUpdated: false,
     };
   },
   props: ["boardSeq"],
@@ -175,12 +175,12 @@ export default {
         BOARD_SEQ: this.boardSeq,
       };
       this.$store.commit("SET_REPLY", replyData);
-      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
 
       this.contents = "";
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
     },
 
-    // 대댓글 등록)
+    // 대댓글 등록
     setReReply(parentSeq) {
       let replyData = {
         USER_ID: this.$store.state.userId,
@@ -189,9 +189,9 @@ export default {
         REPLY_CONTENTS: this.childContents,
       };
       this.$store.commit("SET_REPLY", replyData);
-      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
       this.isReplied = !this.isReplied;
-      this.contents = "";
+      this.childContents = "";
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
     },
 
     // 수정 버튼 클릭
@@ -216,9 +216,9 @@ export default {
         REPLY_CONTENTS: this.updateContents,
       };
       this.$store.commit("UPDATE_REPLY", replyData);
-      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
       this.updateContents = "";
       this.isUpdated = !this.isUpdated;
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
     },
 
     // 대댓글 수정
@@ -228,10 +228,10 @@ export default {
         REPLY_CONTENTS: this.updateReplyContents,
       };
       this.$store.commit("UPDATE_REPLY", replyData);
-      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
       this.updateReplyContents = "";
       this.isReplyUpdated = !this.isReplyUpdated;
-    }
+      this.$store.commit("GET_REPLY_LIST", this.boardSeq);
+    },
   },
 };
 </script>

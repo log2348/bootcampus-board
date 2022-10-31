@@ -9,7 +9,6 @@ import Detail from "../components/Detail.vue";
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: "history",
   routes: [
     {
       name: "login",
@@ -21,16 +20,19 @@ const router = new VueRouter({
       name: "boardList",
       path: "/List",
       component: List,
+      meta: { authRequired: true },
     },
     {
       name: "edit",
       path: "/Edit",
       component: Edit,
+      meta: { authRequired: true },
     },
     {
       name: "detail",
       path: "/Board/Detail/:seq",
       component: Detail,
+      meta: { authRequired: true },
     },
   ],
 });

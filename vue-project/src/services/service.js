@@ -2,7 +2,6 @@ import axios from "axios";
 
 const service = {
   /**
-   *
    * 로그인
    */
   login(userData) {
@@ -19,7 +18,6 @@ const service = {
   },
 
   /**
-   *
    * 게시글 상세 조회
    */
   getBoard(boardSeq) {
@@ -80,7 +78,6 @@ const service = {
    */
   setBoard(boardData) {
     const params = {
-      STATE: boardData.STATE,
       TITLE: boardData.TITLE,
       CONTENTS: boardData.CONTENTS,
       USER_ID: boardData.USER_ID,

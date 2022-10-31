@@ -20,13 +20,9 @@
       :title="board.TITLE"
       :contents="board.CONTENTS"
       :board="board"
+      @submit="submit"
     ></Confirm>
-    <Confirm
-      v-else
-      :title="title"
-      :contents="contents"
-      :imageData="imageData"
-    ></Confirm>
+    <Confirm v-else :title="title" :contents="contents"></Confirm>
 
     <br />
 
@@ -82,9 +78,10 @@
         type="file"
         accept="image/*"
         name="imageFile"
+        ref="imageFile"
         @change="onFileSelected()"
       />
-      <input class="btn btn-primary" type="submit" v-model="imageSubmit" />
+      <input class="btn btn-primary" type="submit" />
     </form>
   </div>
 </template>
@@ -100,7 +97,7 @@ export default {
       board: "",
       contents: "",
       preview: "",
-      imageData: ""
+      imageFile: "",
     };
   },
   mounted() {
@@ -124,10 +121,19 @@ export default {
           window.URL.revokeObjectURL(this.src);
         };
       }
-
-      this.imageData = new FormData();
-      this.imageData.append("IMAGE", this.imageFile);
     },
+
+    submit() {
+      const formData = new FormData();
+      formData.append('imageFile', this.$refs.imageFile);
+      alert('안타나?');
+      this.$http.post("/Image/Create", formData, {
+        headers: {
+          'Content-Type' : 'multipart/form-data'
+        }
+      }).then((response) => console.log(response));
+
+    }
   },
   components: {
     Confirm,

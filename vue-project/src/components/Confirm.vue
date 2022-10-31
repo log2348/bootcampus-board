@@ -12,6 +12,7 @@
           v-if="$store.state.mode == 'UPDATE'"
           size="m"
           variant="success"
+          type="submit"
           @click="updateBoard()"
         >
           확인
@@ -35,7 +36,7 @@
 
 <script>
 export default {
-  props: ["title", "contents", "boardSeq", "board", "imageData", "isClicked"],
+  props: ["title", "contents", "boardSeq", "board", "isClicked"],
   methods: {
     setBoard() {
       let data = {
@@ -55,6 +56,7 @@ export default {
         return;
       }
       this.$store.commit("SET_BOARD", data);
+      this.$emit("submit");
     },
 
     updateBoard() {
@@ -77,7 +79,6 @@ export default {
 </script>
 
 <style>
-/* TODO */
 .close {
   display: none;
 }

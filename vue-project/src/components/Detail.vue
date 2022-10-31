@@ -46,7 +46,11 @@
       </tbody>
     </table>
     <div class="row">
-      <img class="col" :src="imageSrc" style="width: 300px; height: 300px" />
+      <img
+        class="col"
+        :src="imageSrc"
+        style="width: 300px; height: 300px; object-fit: cover"
+      />
       <div class="col border" style="height: 300px">
         {{ board.CONTENTS }}
       </div>
@@ -92,10 +96,8 @@ export default {
     service.getBoard(this.$route.params.seq).then((response) => {
       console.log(response);
       this.board = response;
+      this.imageSrc += response.IMAGE_DATA;
     });
-    service
-      .getImage(17)
-      .then((response) => (this.imageSrc += response));
   },
   components: {
     Comment,

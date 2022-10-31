@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BootCampus.Models;
+using System.Web;
 
 namespace BootCampus.CMM.Notice.DSL
 {
@@ -26,36 +27,45 @@ namespace BootCampus.CMM.Notice.DSL
         #endregion
 
         #region 게시글 상세 조회
-        public BoardModel SelectBoard(int boardSeq)
+        public BoardAndImageModel SelectBoard(int boardSeq)
         {
             conn = DbConn();
 
-            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_R]", conn);
+            SqlCommand cmd = new SqlCommand("[dbo].[UP_BOOTCAMPUS_BOARD_IMAGE_R]", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@BOARD_SEQ", boardSeq);
 
-            BoardModel model = new BoardModel();
+            BoardAndImageModel boardAndImageModel = new BoardAndImageModel();
 
             // 쿼리 결과 불러와서 저장
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
 
+            ImageDsl imageDsl = new ImageDsl();
+            string base64String;
+
             if (sqlDataReader.Read())
             {
-                model.BOARD_SEQ = Convert.ToInt32(sqlDataReader["BOARD_SEQ"]);
-                model.STATE = Convert.ToString(sqlDataReader["STATE"]);
-                model.TITLE = Convert.ToString(sqlDataReader["TITLE"]);
-                model.CONTENTS = Convert.ToString(sqlDataReader["CONTENTS"]);
-                model.WRITE_DATE = Convert.ToDateTime(sqlDataReader["WRITE_DATE"]);
-                model.USER_ID = Convert.ToString(sqlDataReader["USER_ID"]);
-                model.VIEW_COUNT = Convert.ToInt32(sqlDataReader["VIEW_COUNT"]);
-                model.IMAGE_SEQ = Convert.ToInt32(sqlDataReader["IMAGE_SEQ"]);
+                boardAndImageModel.BOARD_SEQ = Convert.ToInt32(sqlDataReader["BOARD_SEQ"]);
+                boardAndImageModel.STATE = Convert.ToString(sqlDataReader["STATE"]);
+                boardAndImageModel.TITLE = Convert.ToString(sqlDataReader["TITLE"]);
+                boardAndImageModel.CONTENTS = Convert.ToString(sqlDataReader["CONTENTS"]);
+                boardAndImageModel.WRITE_DATE = Convert.ToDateTime(sqlDataReader["WRITE_DATE"]);
+                boardAndImageModel.USER_ID = Convert.ToString(sqlDataReader["USER_ID"]);
+                boardAndImageModel.VIEW_COUNT = Convert.ToInt32(sqlDataReader["VIEW_COUNT"]);
 
+                if (Convert.ToString(sqlDataReader["FILE_NAME"]) != "")
+                {
+                    byte[] data = imageDsl.GetFileBinary(Convert.ToString(sqlDataReader["FILE_NAME"]));
+                    base64String = Convert.ToBase64String(data);
+                    boardAndImageModel.IMAGE_DATA = base64String;
+
+                }
             }
 
             conn.Close();
 
-            return model;
+            return boardAndImageModel;
         }
         #endregion
 

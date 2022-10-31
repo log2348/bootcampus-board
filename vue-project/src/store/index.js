@@ -1,11 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import service from "../services/service.js";
+import createPersistedState from "vuex-persistedstate";
 import router from "../router/index.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState()
+  ],
   state() {
     return {
       mode: "UPDATE",

@@ -18,7 +18,7 @@ namespace BootCampus.Web.Controllers
         public ActionResult Detail(int boardSeq)
         {
             BoardBsl boardBsl = new BoardBsl();
-            BoardModel target = boardBsl.SelectBoard(boardSeq);
+            BoardAndImageModel target = boardBsl.SelectBoard(boardSeq);
 
             return Json(target, JsonRequestBehavior.AllowGet);
         }

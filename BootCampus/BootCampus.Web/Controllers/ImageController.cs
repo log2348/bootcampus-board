@@ -23,7 +23,6 @@ namespace BootCampus.Web.Controllers
             ImageModel imageModel = new ImageModel();
             int result = 0;
 
-
             if (HttpContext.Request.Files.Count > 0)
             {
                 HttpContext.Request.Files["imageFile"].InputStream.Position = 0;

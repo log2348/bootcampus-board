@@ -53,8 +53,8 @@ namespace BootCampus.CMM.Notice.DSL
 
             ImageModel imageModel = new ImageModel();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM [dbo].[TB_IMAGE] WHERE [IMAGE_SEQ] = @IMAGE_SEQ", conn);
-            cmd.Parameters.AddWithValue("@IMAGE_SEQ", imageSeq);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM [dbo].[TB_IMAGE] WHERE [IMAGE_SEQ] = (SELECT MAX([IMAGE_SEQ]) FROM [dbo].[TB_IMAGE])", conn);
+            //cmd.Parameters.AddWithValue("@IMAGE_SEQ", imageSeq);
 
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
             string base64Data = "";
@@ -63,7 +63,6 @@ namespace BootCampus.CMM.Notice.DSL
             {
                 byte[] data = GetFileBinary(Convert.ToString(sqlDataReader["FILE_NAME"]));
                 base64Data = Convert.ToBase64String(data);
-
             }
 
             return base64Data;
@@ -71,7 +70,7 @@ namespace BootCampus.CMM.Notice.DSL
         #endregion
 
         #region byte 변환
-        private static byte[] GetFileBinary(String filepath)
+        public byte[] GetFileBinary(String filepath)
         {
             var file = new FileInfo(filepath);
             var data = new byte[file.Length];
@@ -82,7 +81,6 @@ namespace BootCampus.CMM.Notice.DSL
             return data;
         }
         #endregion
-
 
     }
 }
